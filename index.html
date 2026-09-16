@@ -58,6 +58,8 @@ button{cursor:pointer}
 .pdf-btn{background:#ece9e3;color:#3f4447;border:1px solid #d0cbc1}
 .pdf-btn:hover{background:#e2ded6;border-color:#c2bcb1}
 .practice-card.disabled{opacity:.64}
+.practice-card.disabled .open-btn,.practice-card.disabled .pdf-btn{cursor:not-allowed;opacity:.58;background:#e7e3dc;color:#7b7f82;border:1px solid #d2cdc4}
+.practice-card.disabled .open-btn:hover,.practice-card.disabled .pdf-btn:hover{background:#e7e3dc;border-color:#d2cdc4}
 
 /* Practice */
 .app-shell{min-width:1180px;background:var(--bg);min-height:100vh}
@@ -188,37 +190,34 @@ button{cursor:pointer}
           </div>
         </div>
       </article>
-      <article class="practice-card active">
+      <article class="practice-card disabled">
         <div>
-          <div class="card-kicker">Pràctica 2 · Disponible</div>
+          <div class="card-kicker">Pràctica 2 · Properament</div>
           <div class="card-title">Equilibri de mercat</div>
           <div class="card-desc">Oferta, demanda, equilibri, canvis en les condicions del mercat, impostos i subvencions.</div>
         </div>
         <div class="card-action">
-          <span class="status-pill available">Disponible</span>
+          <span class="status-pill">Properament</span>
           <div class="action-buttons">
-            <button class="pdf-btn" id="open-pdf-2" type="button">Veure PDF</button>
-            <button class="open-btn" id="open-practice-2" type="button">Obrir pràctica</button>
+            <button class="pdf-btn" id="open-pdf-2" type="button" disabled>Veure PDF</button>
+            <button class="open-btn" id="open-practice-2" type="button" disabled>Obrir pràctica</button>
           </div>
         </div>
       </article>
-      <article class="practice-card active">
+      <article class="practice-card disabled">
         <div>
-          <div class="card-kicker">Pràctica 3 · Disponible</div>
+          <div class="card-kicker">Pràctica 3 · Properament</div>
           <div class="card-title">Elasticitat-preu de la demanda</div>
           <div class="card-desc">Mètode del punt mig, demanda elàstica i inelàstica, i relació entre preu i despesa total.</div>
         </div>
         <div class="card-action">
-          <span class="status-pill available">Disponible</span>
+          <span class="status-pill">Properament</span>
           <div class="action-buttons">
-            <button class="pdf-btn" id="open-pdf-3" type="button">Veure PDF</button>
-            <button class="open-btn" id="open-practice-3" type="button">Obrir pràctica</button>
+            <button class="pdf-btn" id="open-pdf-3" type="button" disabled>Veure PDF</button>
+            <button class="open-btn" id="open-practice-3" type="button" disabled>Obrir pràctica</button>
           </div>
         </div>
       </article>
-      <article class="practice-card disabled"><div><div class="card-kicker">Pràctica 4</div><div class="card-title">Properament</div><div class="card-desc">Aquesta pràctica s’afegirà més endavant durant el curs.</div></div><div class="card-action"><span class="status-pill">Properament</span></div></article>
-      <article class="practice-card disabled"><div><div class="card-kicker">Pràctica 5</div><div class="card-title">Properament</div><div class="card-desc">Aquesta pràctica s’afegirà més endavant durant el curs.</div></div><div class="card-action"><span class="status-pill">Properament</span></div></article>
-      <article class="practice-card disabled"><div><div class="card-kicker">Pràctica 6</div><div class="card-title">Properament</div><div class="card-desc">Aquesta pràctica s’afegirà més endavant durant el curs.</div></div><div class="card-action"><span class="status-pill">Properament</span></div></article>
     </div>
   </div>
 </section>
