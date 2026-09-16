@@ -162,6 +162,24 @@ button{cursor:pointer}
 .legend-area{width:20px;height:10px;border:1px solid #c8a86b;background:rgba(230,184,92,.20);display:inline-block}
 
 
+/* Compact graph layout for FPP, supply and demand practices */
+.compact-graph-layout{grid-template-columns:320px minmax(420px,520px) minmax(560px,1fr)}
+.compact-graph-layout .chart-card.compact-chart{height:500px;min-height:500px;max-height:500px;align-self:start}
+#supply-chart,#demand-chart{width:100%;height:100%;display:block}
+.legend-line.supply-current{border-color:var(--orange)}
+.legend-line.supply-price,.legend-line.demand-price{border-color:var(--price);border-top-style:dashed}
+.legend-line.demand-current{border-color:var(--blue)}
+@media(max-width:1500px){
+  .compact-graph-layout{grid-template-columns:290px 440px minmax(500px,1fr)}
+  .compact-graph-layout .chart-card.compact-chart{height:470px;min-height:470px;max-height:470px}
+}
+@media(max-width:1180px){
+  .compact-graph-layout .chart-card.compact-chart{height:470px;min-height:470px;max-height:470px}
+}
+@media(max-width:720px){
+  .compact-graph-layout .chart-card.compact-chart{height:410px;min-height:410px;max-height:410px}
+}
+
 </style>
 </head>
 <body>
@@ -190,9 +208,39 @@ button{cursor:pointer}
           </div>
         </div>
       </article>
+      <article class="practice-card active">
+        <div>
+          <div class="card-kicker">Pràctica 2a · Disponible</div>
+          <div class="card-title">Funció i corba d’oferta</div>
+          <div class="card-desc">Moviments i desplaçaments de l’oferta, costos de producció, impostos i subvencions.</div>
+        </div>
+        <div class="card-action">
+          <span class="status-pill available">Disponible</span>
+          <div class="action-buttons">
+            <button class="pdf-btn" id="open-pdf-2a" type="button">Veure PDF</button>
+            <button class="open-btn" id="open-practice-2a" type="button">Obrir pràctica</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="practice-card active">
+        <div>
+          <div class="card-kicker">Pràctica 2b · Disponible</div>
+          <div class="card-title">Funció i corba de demanda</div>
+          <div class="card-desc">Moviments i desplaçaments de la demanda, renda i preus de béns substitutius i complements.</div>
+        </div>
+        <div class="card-action">
+          <span class="status-pill available">Disponible</span>
+          <div class="action-buttons">
+            <button class="pdf-btn" id="open-pdf-2b" type="button">Veure PDF</button>
+            <button class="open-btn" id="open-practice-2b" type="button">Obrir pràctica</button>
+          </div>
+        </div>
+      </article>
+
       <article class="practice-card disabled">
         <div>
-          <div class="card-kicker">Pràctica 2 · Properament</div>
+          <div class="card-kicker">Pràctica 2c · Properament</div>
           <div class="card-title">Equilibri de mercat</div>
           <div class="card-desc">Oferta, demanda, equilibri, canvis en les condicions del mercat, impostos i subvencions.</div>
         </div>
@@ -233,7 +281,7 @@ button{cursor:pointer}
       <label class="student-id">ID alumne <input id="ppc-student-id" value="6380" inputmode="numeric" autocomplete="off" aria-label="ID alumne"></label>
     </header>
 
-    <main class="practice-layout">
+    <main class="practice-layout compact-graph-layout">
       <div class="left-col">
         <section class="section">
           <div class="section-head">MODEL INTERACTIU</div>
@@ -268,7 +316,7 @@ button{cursor:pointer}
       </div>
 
       <div class="center-col">
-        <section class="chart-card" aria-label="Frontera de possibilitats de producció">
+        <section class="chart-card compact-chart" aria-label="Frontera de possibilitats de producció">
           <div class="chart-wrap"><svg id="ppc-chart" role="img" aria-label="Frontera de possibilitats de producció de pizza i pasta"></svg></div>
           <div class="legend">
             <span class="legend-item"><span class="legend-line ppc"></span>FPP</span>
@@ -286,12 +334,138 @@ button{cursor:pointer}
   </div>
 </section>
 
+<section id="practice2a-view" class="hidden">
+  <div class="app-shell">
+    <header class="app-topbar">
+      <div class="app-title-wrap">
+        <button class="back-btn" id="supply-back-to-hub">← Pràctiques</button>
+        <div class="app-title">FUNCIÓ I CORBA D’OFERTA <small>Pràctica 2a · Model interactiu</small></div>
+      </div>
+      <label class="student-id">ID alumne <input id="supply-student-id" value="6380" inputmode="numeric" autocomplete="off" aria-label="ID alumne"></label>
+    </header>
+
+    <main class="practice-layout compact-graph-layout">
+      <div class="left-col">
+        <section class="section">
+          <div class="section-head">MODEL INTERACTIU</div>
+          <table class="model-table" aria-label="Variables del model d'oferta">
+            <thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead>
+            <tbody>
+              <tr><td>Preu dels espaguetis</td><td><input class="model-input" id="supply-price" value="10,00" inputmode="decimal"></td><td>€/plat</td></tr>
+              <tr><td>Preu de la salsa</td><td><input class="model-input" id="supply-sauce" value="3,00" inputmode="decimal"></td><td>€</td></tr>
+              <tr><td>Salari</td><td><input class="model-input" id="supply-wage" value="5,00" inputmode="decimal"></td><td>€/h</td></tr>
+              <tr><td>Impost per unitat</td><td><input class="model-input" id="supply-tax" value="0,00" inputmode="decimal"></td><td>€/plat</td></tr>
+            </tbody>
+          </table>
+          <div class="note">Un impost negatiu representa una subvenció.</div>
+          <div class="model-actions"><button type="button" class="reset-model-btn" id="supply-reset-model">Restablir valors inicials</button></div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">RESULTATS DE L’OFERTA</div>
+          <table class="result-table" aria-label="Resultats de l'oferta">
+            <tbody>
+              <tr><td>Quantitat ofertada</td><td class="result-value" id="supply-qs">—</td><td class="result-unit">plats/dia</td></tr>
+              <tr><td>Ingressos totals</td><td class="result-value" id="supply-revenue">—</td><td class="result-unit">€/dia</td></tr>
+              <tr><td>Preu net del productor</td><td class="result-value" id="supply-net-price">—</td><td class="result-unit">€/plat</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="section">
+          <div class="key-box"><strong>Idea clau</strong>Un canvi en el preu dels espaguetis mou la quantitat al llarg de la corba. Canvis en el salari, el preu de la salsa o l’impost desplacen la corba d’oferta.</div>
+        </section>
+      </div>
+
+      <div class="center-col">
+        <section class="chart-card compact-chart" aria-label="Corba d'oferta">
+          <div class="chart-wrap"><svg id="supply-chart" role="img" aria-label="Corba d'oferta d'espaguetis"></svg></div>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-line supply-current"></span>Oferta</span>
+            <span class="legend-item"><span class="legend-line supply-price"></span>Preu actual</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="questions-col">
+        <div class="questions-title">PREGUNTES · respon directament aquí</div>
+        <div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
+        <div class="questions-body" id="supply-questions-body"></div>
+      </section>
+    </main>
+  </div>
+</section>
+
+
+
+<section id="practice2b-view" class="hidden">
+  <div class="app-shell">
+    <header class="app-topbar">
+      <div class="app-title-wrap">
+        <button class="back-btn" id="demand-back-to-hub">← Pràctiques</button>
+        <div class="app-title">FUNCIÓ I CORBA DE DEMANDA <small>Pràctica 2b · Model interactiu</small></div>
+      </div>
+      <label class="student-id">ID alumne <input id="demand-student-id" value="6380" inputmode="numeric" autocomplete="off" aria-label="ID alumne"></label>
+    </header>
+
+    <main class="practice-layout compact-graph-layout">
+      <div class="left-col">
+        <section class="section">
+          <div class="section-head">MODEL INTERACTIU</div>
+          <table class="model-table" aria-label="Variables del model de demanda">
+            <thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead>
+            <tbody>
+              <tr><td>Preu dels espaguetis</td><td><input class="model-input" id="demand-price" value="18,00" inputmode="decimal"></td><td>€/plat</td></tr>
+              <tr><td>Renda anual</td><td><input class="model-input" id="demand-income" value="20000" inputmode="decimal"></td><td>€</td></tr>
+              <tr><td>Preu dels tacos</td><td><input class="model-input" id="demand-taco" value="6,00" inputmode="decimal"></td><td>€</td></tr>
+              <tr><td>Preu del vi</td><td><input class="model-input" id="demand-wine" value="20,00" inputmode="decimal"></td><td>€</td></tr>
+            </tbody>
+          </table>
+          <div class="note">Canviar el preu dels espaguetis mou el punt al llarg de la corba; canviar renda, tacos o vi desplaça la demanda.</div>
+          <div class="model-actions"><button type="button" class="reset-model-btn" id="demand-reset-model">Restablir valors inicials</button></div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">RESULTATS DE LA DEMANDA</div>
+          <table class="result-table" aria-label="Resultats de la demanda">
+            <tbody>
+              <tr><td>Quantitat demandada</td><td class="result-value" id="demand-qd">—</td><td class="result-unit">plats/dia</td></tr>
+              <tr><td>Despesa total</td><td class="result-value" id="demand-spending">—</td><td class="result-unit">€/dia</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="section">
+          <div class="key-box"><strong>Idea clau</strong>Un canvi en el preu dels espaguetis provoca un moviment al llarg de la corba. Canvis en la renda o en el preu d’altres béns desplacen la corba de demanda.</div>
+        </section>
+      </div>
+
+      <div class="center-col">
+        <section class="chart-card compact-chart" aria-label="Corba de demanda">
+          <div class="chart-wrap"><svg id="demand-chart" role="img" aria-label="Corba de demanda d'espaguetis"></svg></div>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-line demand-current"></span>Demanda</span>
+            <span class="legend-item"><span class="legend-line demand-price"></span>Preu actual</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="questions-col">
+        <div class="questions-title">PREGUNTES · respon directament aquí</div>
+        <div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
+        <div class="questions-body" id="demand-questions-body"></div>
+      </section>
+    </main>
+  </div>
+</section>
+
+
 <section id="practice2-view" class="hidden">
   <div class="app-shell">
     <header class="app-topbar">
       <div class="app-title-wrap">
         <button class="back-btn" id="back-to-hub">← Pràctiques</button>
-        <div class="app-title">EQUILIBRI DE MERCAT <small>Model interactiu</small></div>
+        <div class="app-title">EQUILIBRI DE MERCAT <small>Pràctica 2c · Model interactiu</small></div>
       </div>
       <label class="student-id">ID alumne <input id="student-id" value="6380" inputmode="numeric" autocomplete="off" aria-label="ID alumne"></label>
     </header>
@@ -784,6 +958,8 @@ button{cursor:pointer}
     hubView.classList.add('hidden');
     const p1=document.getElementById('practice1-view'); if(p1) p1.classList.add('hidden');
     const p3=document.getElementById('practice3-view'); if(p3) p3.classList.add('hidden');
+    const p2a=document.getElementById('practice2a-view'); if(p2a) p2a.classList.add('hidden');
+    const p2b=document.getElementById('practice2b-view'); if(p2b) p2b.classList.add('hidden');
     practice2View.classList.remove('hidden');
     // Cada vegada que s'obre la pràctica, el model parteix de les condicions base
     // i del preu d'equilibri corresponent a l'ID actual.
@@ -803,6 +979,8 @@ button{cursor:pointer}
     hubView.classList.add('hidden');
     const p1=document.getElementById('practice1-view'); if(p1) p1.classList.add('hidden');
     const p3=document.getElementById('practice3-view'); if(p3) p3.classList.add('hidden');
+    const p2a=document.getElementById('practice2a-view'); if(p2a) p2a.classList.add('hidden');
+    const p2b=document.getElementById('practice2b-view'); if(p2b) p2b.classList.add('hidden');
     practice2View.classList.remove('hidden');
     resetModelValues();
     requestAnimationFrame(updateModel);
@@ -944,7 +1122,7 @@ button{cursor:pointer}
   function openPdf(){try{const raw=atob(ppcPdfBase64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));const w=window.open(url,'_blank','noopener');if(!w){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click();}setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){alert('No s’ha pogut obrir el PDF.');console.error(e);}}
 
   $('open-pdf-1').addEventListener('click',openPdf);
-  $('open-practice-1').addEventListener('click',()=>{hub.classList.add('hidden');$('practice2-view').classList.add('hidden');const p3=$('practice3-view');if(p3)p3.classList.add('hidden');view.classList.remove('hidden');resetModel();requestAnimationFrame(update);});
+  $('open-practice-1').addEventListener('click',()=>{hub.classList.add('hidden');$('practice2-view').classList.add('hidden');const p3=$('practice3-view');if(p3)p3.classList.add('hidden');const p2a=$('practice2a-view');if(p2a)p2a.classList.add('hidden');const p2b=$('practice2b-view');if(p2b)p2b.classList.add('hidden');view.classList.remove('hidden');resetModel();requestAnimationFrame(update);});
   $('ppc-back-to-hub').addEventListener('click',()=>{view.classList.add('hidden');hub.classList.remove('hidden');});
   $('ppc-reset-model').addEventListener('click',resetModel);
   $('ppc-student-id').addEventListener('input',()=>{resetModel();qdefs.forEach((_,i)=>{const c=$(`ppc-answer-${i+1}`);if(c&&c.value!=='')check(i);});});
@@ -1112,7 +1290,7 @@ button{cursor:pointer}
   }
 
   $('open-pdf-3').addEventListener('click',openPdf);
-  $('open-practice-3').addEventListener('click',()=>{hub.classList.add('hidden');const p1=$('practice1-view');if(p1)p1.classList.add('hidden');const p2=$('practice2-view');if(p2)p2.classList.add('hidden');view.classList.remove('hidden');resetModel();requestAnimationFrame(update);});
+  $('open-practice-3').addEventListener('click',()=>{hub.classList.add('hidden');const p1=$('practice1-view');if(p1)p1.classList.add('hidden');const p2=$('practice2-view');if(p2)p2.classList.add('hidden');const p2a=$('practice2a-view');if(p2a)p2a.classList.add('hidden');const p2b=$('practice2b-view');if(p2b)p2b.classList.add('hidden');view.classList.remove('hidden');resetModel();requestAnimationFrame(update);});
   $('elas-back-to-hub').addEventListener('click',()=>{view.classList.add('hidden');hub.classList.remove('hidden');});
   $('elas-reset-model').addEventListener('click',resetModel);
   $('elas-student-id').addEventListener('input',()=>{resetModel();qdefs.forEach((_,i)=>{const c=$(`elas-answer-${i+1}`);if(c&&c.value!=='')check(i);});});
@@ -1120,6 +1298,362 @@ button{cursor:pointer}
   window.addEventListener('resize',()=>{if(!view.classList.contains('hidden'))update();});
   renderQuestions();resetModel();
   if(new URLSearchParams(location.search).get('practice')==='3'){hub.classList.add('hidden');const p1=$('practice1-view');if(p1)p1.classList.add('hidden');const p2=$('practice2-view');if(p2)p2.classList.add('hidden');view.classList.remove('hidden');resetModel();requestAnimationFrame(update);}
+})();
+</script>
+
+
+<!-- SUPPLY PRACTICE 2A -->
+<script>
+(() => {
+  'use strict';
+  const $=(id)=>document.getElementById(id);
+  const hub=$('hub-view'), view=$('practice2a-view');
+  if(!hub||!view) return;
+  const BASE={price:10,sauce:3,wage:5,tax:0};
+  const fmt0=new Intl.NumberFormat('ca-ES',{maximumFractionDigits:0});
+  const fmt2=new Intl.NumberFormat('ca-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const pdfBase64='JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9TeW1ib2wgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgMTAgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgOSAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNiAwIG9iago8PAovQ29udGVudHMgMTEgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgOSAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNyAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDkgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago4IDAgb2JqCjw8Ci9BdXRob3IgKEludHJvZHVjY2lcMzYzIGEgbFwyMjBlY29ub21pYSkgL0NyZWF0aW9uRGF0ZSAoRDoyMDI2MDkxNjE3MTUxNyswMCcwMCcpIC9DcmVhdG9yIChcKHVuc3BlY2lmaWVkXCkpIC9LZXl3b3JkcyAoKSAvTW9kRGF0ZSAoRDoyMDI2MDkxNjE3MTUxNyswMCcwMCcpIC9Qcm9kdWNlciAoUmVwb3J0TGFiIFBERiBMaWJyYXJ5IC0gXChvcGVuc291cmNlXCkpIAogIC9TdWJqZWN0IChcKHVuc3BlY2lmaWVkXCkpIC9UaXRsZSAoUHJcMzQwY3RpY2EgMmEgXDI2NyBGdW5jaVwzNjMgaSBjb3JiYSBkXDIyMG9mZXJ0YSkgL1RyYXBwZWQgL0ZhbHNlCj4+CmVuZG9iago5IDAgb2JqCjw8Ci9Db3VudCAyIC9LaWRzIFsgNSAwIFIgNiAwIFIgXSAvVHlwZSAvUGFnZXMKPj4KZW5kb2JqCjEwIDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDIwMzAKPj4Kc3RyZWFtCkdhdUhMOFQzP0MnWWBhM11WQVtqWEBRMm1KXF8+VzhXKydWK0RIOHJLc2hqZEtnW3EpUCRpYjs0PilmXC9UczFIOF5sPClhZ1pZOS1cVlIjOz1mITchZHBIUUxYLVlfS0BwPyc6LHBJOGlGWzkrR1hZTiUiQW9ASyU7RDJfcF4saW0+YGY7YFk3c0JoIj4jS0xFKDIlP2A+T21PRURCV3NdZGhzXCdhW2VbO0BcP2JARScuNWlfa2spXXRTTmcnLXJGSTFXTD9pO0NDTT9LVl1zVDBvb2FEX1c3YjRsWT1zJVFoYGImNlAqKTwpLlJcaVdOKy9HYlpVSU8+cy9eRFlcYHAtISUtUj1sbUwkNm1vJjxMJC45alJlRCM+Mis6T19RLVY+IVYsYFE7a2krXCx1TWA9JGszTWY8K1QrVDcrRmlyKTRDOUQ5I3BsKWllWFhaK0wtXjtQKFZbOU5QPFxXMkJmckZTUTtia0xVUTt0VTBZZ1UqYCYkZydYWGZmLD4pOFFpQWM4JmMhPHQtdC46MUouNWRbMk1qVlA5Y01ydTBqa0JQQCUuQjorKTImR25tSjQ0cVVtZzAtKnM7Mj8sWVxII2J0PWZxMTNZJCtzOWU/TDY7Q0ddMmxQa2whU0A3MiY6alw7NUZGXkJcZyw+MS9sUGFEMFEhRSJAb1t0XjAkNkw5PSpHbjNEUWAqKDJvO1s+Y0omWElya0RNaSpHOE4qdG07KzBfNyVrKjdQRCswKWhSXk90QTJQLWdANipLRDNgaWVII2E5SilObktjTFFRIm5DK2xRIT51JkFIdEc9SD5aSzh0PyFBIiYxMXBxW1NfciouNV9dYTcjcFtNPCFzaV9VKkReKWx0YSZTaFoxNDNYI21DPSJnKG9hJWlRa0RhZlRBVWQ8SmhnSyZHITpLOFBRVTpOV2Q7MVA9QmNpSTBRTkNOdD9UaVdELiNUKGxAQlktJCRVKlhjUjVUbT1EJSM7c0UkUkZualo4QCM0cGBlakg9LGZ0VWMhMVBBLC90Ll5ORUNEMWMtTlktKihEISYjRCcyRUddNFosKUJuX3JaPyErVEhsSHA0VjBzIzk5XEw0JDI6TkMvOjlUblZRMi0+bGghSCMpOihaIm0mTVc/NEkzNC1dPmFuInJhJmgxWklVdWInJ0MlJitTckg2JkZUJSJ0PGV0UURGRzBDPz90PzMxZi8/UUVuUSU4QjxFKmFlXF83TjhTTCQ9bjIqRDFXSEk5NjIiTVZGakVdQz0nWWBoOlgkKWEwLyk5X0xXZ0Y8VkcoMTk+RlU3KDQlTWs8ay5SSDFDOz1JSzplLjdtSGNGY0VwSjRvT0A8bFsic0NENXJARGVaTT03Nkd1dSJoTmxeMCZZLj9aQSZxRkUmRihdL1dcJHBIVW4kdHVuVCwiUSxGW2JbVV9OdDVvNG5kIStVKidQRnEiNXJSZU1DUmlhdT48NEhFLENQOGFvXS85JHVHTDdpXmYtOUZ0OjZpMC4hKXJlTHBHV186JEAqLUEiQ11tQHVTJ15UTmVGTVZiN1t1clIoWywzTkJhIS1iQDY6bCQ9KTUoJW82cVclKWFFdVBLUHRzOEdZUEhLa3UmbT4wc2hpZ1QudGJjYF06VUFiZFtUZUpxKWJaVD8kKCdEP2daODFzN1VqaWZiRTpQZ1JSISspSlYjYGRRXihfZHFjWj9iaVJnSlRIO0FUREFgMGEnNj4sXTBLa0RKXy1FSCNLUSouPUgvNyZmTG00Pl5wQXE3XzY1QUcpNVJvI2wxMyMtbD5vXmpNW107ZytZbCFyOSRnVGEkaFkkbGJfZWVELyMnImtmO1xjMj1bRXJ1NmY9WkBJQG9AOF4+JlRiSyhkZTtDLThvbVRcLCkybDoyPUQia25dUDNNXCstQmsjZ2tkcilYKlFgIj1AVElUP1VBXnU0cWtuT0dtWyYxXm5CMDdNSkUwQSZPSkgvPSclWClUI1UyOWpgNFhfQic5dXRKWDdUTGtqPXEpcCgzaSNkIiJrWDo9XUooQDpuY3A9Nk1RS107VVguclkwOHAlUz5xRW9DOlZhayVgOzQxV2VJUkBIOC80T1oqKXBoUEJzX1tJLCZkTTRROHA5PCg2cURFVEgjbCVrZ209LidgRkQ3TjJXTm1FLClxZ24oYGpYY0RWQnJGRSlpcUZNazhccDJqT0tkbzc3I1FpOzRKLGc+InU3aExcPChKLTY+Y3FNOXQ1ZT9cRl4iSWBRJklQaUstSSZkQ1A2b0hbcF5Pc2o+RHI9PFhxLydeZk9WTmdZNGtdJyJfZClmRydXZDRlTTNCYFkzMzxuNlFhYWtIJGtuKm8uXjoyMVtzU2wsdEdkRG0+bFI7P0Q7SU1TXXU3SEhKLk9ITT1xYm1eWTlUUE1aWFlfWmtGJmtab0xeUCpPbjY6NGhhIjBOcWs2YGtPSkotVSxGKl5fOCI7PWRpa2daOiFVcVo7SG06KCNHYFlycVc3UmIuNXU3dG4oYGRYQlFQImRHXEFbSmxUKlBzK2NaSl5xS1FvP0YtWTRUQlJMSzNna1FeUEYkV15IW1slZzZYQDkhX29QKV1ZXmBeZWZxVGJjMW9oVCdUckRhUDtXP2QkVm9GbUElYlZdTXIqKkw5U15JRkxwXU0iK2tkT08kaF9kS0dWKk5eK05NVnEoITlVSjY8a1V0TSxvYV9HQ1xgTn4+ZW5kc3RyZWFtCmVuZG9iagoxMSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAxNzU1Cj4+CnN0cmVhbQpHYiEjWzlvbiRlJkFAc0JiZz9tNFdrTiZSa1RMOFwsIVx0QCcnSkJiL15sPFNNMCgvZyQyV3ViTEFKLio6OW1YIUxbSClbVF10RlpIU11TcCZWXiJAcixaIVNdaWBhZUltdC1rWywrYEcidD9cM2QmWmorZGsiVXU3QDoyKj09LW1DLF4/LzBKJ0VTKDUwbCZzOyVVYD0qYEVzXj1nWj1RPCldKls2KENaOC5YRjtlUCVDKE0uMFhGUVhQdCkjcGFUTzM0ajxidCReZWxjWDhaTS43X09sQytuNzxZZFFHY2c/LjhfWkcxUSQ2WjtkOz06SW48aU07cV4oN1ttUWZnO0o4JnBORGFyQEhnYD8tbDBTRXFCTiw3PyE6JUErQyY0aU8hZjszIWViUTdkQ1c5akBCZHVJI2lJRiw7NE9KNS1xXjg1YVJQXzxYIzAqb01halhUJV5BTDEwaCJxVURXSEE/VlpGSzZPLz9vbytbbyw7NFw4cC9VRGw2ZDk8RDVpXC1GWDdoNU5CKjM7KTRuVWQrX2RfPCxHSSg6PShyKzNyZkozY0RfTSNMLEpIbmRfbnFyVS41ZS9tbDFMWXJBUlRQIW9obyglZUk/Z0A2TiZQOV9ZPkhNWC86RjsrdT1YZCE5Qkg7YXFMZzc4TjUqcF5JcHJOYDhqaj1kYidJSzpBaSxVI1o2NTh0PDVDQl4hI1ZGSF01Z1ZKZm5MNmRrZkxNMmplZjpJaTJiOEModUVoK11qOyhVQCErMiFsTjxpUmZQOWQ7S0FCY1k1PFxyXzZpI0MjQD1bJiVgWGosRS1EamdRKGRRNXVfYjdcW0QpRVFDJUY3YzM2KCtyXnRdTixUXTdTWmowcDFEWC44S011X1FZOz9RaU4yOUUvTWhiaidrOUNJVzAyXDVlOzhYPSYqRDtgRVRZOlNISGYxTlE+PldQTEJzQUdlJ1RLc0YtXDA6PT1vaFYyPFhKZSdZai1gSDxaUjojQWtkSkJJXGEiZ0x1VyY1Qm5DVG5gQTwjM05AR0pTT0FJUzROLDlyUCQiSm9GIiluOCtpKzZdLWIlW1RAUjZgL1dhJUJgOCtXLWB0ZldDZWViP3AjN24ybGYzPkNcM3IpKlltZWomTkJAcTdFaVIjUDspbThDIixnR15DZjg8T1tMTCxZdEN1KTNkdT9PRGtaKWQyPT0zIyU/RyhiYydZLlQ7JXRJLjMzZklQXylzcj8hWzxGb1dVKkU4RlMjcjxPTlhYN3RMVTNcOjwwXXJfYF1XS0w2WFlaYHFjTi9yUWs0cVpFQiMkRkVDYUsmMk5hZTEnX25oSVpMXU1AX2o3SFZsNzgibERxdEZbY2EqZDVrOFZwVE1wLi8iSl86Sj9bdGdCWEpNZlFkailmbFtOdDxwXFFLOiRMIyVzWkpnJmgkIShgOzpiLld0JkBwLF9AQFdGQ1E4MXRBNmBqK2A7OzRdMEt0KC8rSHVRXEonckBKLl0oPF1SUSlORD85QENoXGpAUWRcaEc+aC1QITNIZmo4bHJJLTZuZy5hcVk3aFoiZEtnSi9IP0guTz5JUEBdZ1RTaTQ7bG8kQFJOb1lTL0JtUS5ZWGhQVjUjVkIuYio/LWBDUWVxWjNpS1Y4Y1BzbFY/InRUNmhzaytbQ2I3MlVcMU1uJjtBcCpFPVkuQkRNQnJhNUNSa08kNSNNRTZNOVBySkVQXWwwL1osVj44VGw3QSIuPlVqQXEmW0hiPTshKiQ2XlM6K1l1NSgmWUE8QFdDOVFnJU5EMEEqOThJcXRTIz9jMzs2RTFqIW82WXFIZ0RRJ29USCVWW0FbLSgzP2RoOiNTTCFodFFnSXI3ZzkuZVlScks6W1pZRCkjWSNVOT5dWyhwPkFcQXJBbHBWIzBHOSxgJ2w+Wl0pIz42b0srQ0F1OCVySFNSOipXUk5tUWVkMCJwUiYoZWoqNT42PnBIQUMjXmdtdDg5SFhWai8pcFkqMDgxXDIyIU5xcW88WWEuODE2KEZRUko+JjBzLl41OHFkb21oUCdbaVxgVUlCZG8qRWV1R2hqWSNUKjJPWEUjRkcoMUhLREw9RVpWdHFVPkJDZE9hb1tYWXRlK0RBSGdkMzFWbE51XEEqVVxGTlFDYGc8R2pNSSYsSVJEXCQ1MGd1RE8uRDlEKElWJmxhYmJraVJ0ZzgpVWpoWF5eV2ApcW9PdVAvR05VbFJKRSRxclQzMzchXypuLCkoYkU4WiclL11dMmpIPTFkNVtRQ1ZvaWVnWCwiVj5nXmpxLSRJWzNYXU8rVzsnRipIOmpUaGVObnJySU9iNjdDU3ReSjZdJ2NGUHFbXzthTz1efj5lbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCAxMgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDExMiAwMDAwMCBuIAowMDAwMDAwMjE5IDAwMDAwIG4gCjAwMDAwMDAzMzEgMDAwMDAgbiAKMDAwMDAwMDQwOCAwMDAwMCBuIAowMDAwMDAwNjEyIDAwMDAwIG4gCjAwMDAwMDA4MTYgMDAwMDAgbiAKMDAwMDAwMDg4NCAwMDAwMCBuIAowMDAwMDAxMjE3IDAwMDAwIG4gCjAwMDAwMDEyODIgMDAwMDAgbiAKMDAwMDAwMzQwNCAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9JRCAKWzwzN2M3MDYzNzJjMzlhMWM2NTdhZjc0MDliZGRhYjRjYj48MzdjNzA2MzcyYzM5YTFjNjU3YWY3NDA5YmRkYWI0Y2I+XQolIFJlcG9ydExhYiBnZW5lcmF0ZWQgUERGIGRvY3VtZW50IC0tIGRpZ2VzdCAob3BlbnNvdXJjZSkKCi9JbmZvIDggMCBSCi9Sb290IDcgMCBSCi9TaXplIDEyCj4+CnN0YXJ0eHJlZgo1MjUxCiUlRU9GCg==';
+
+  function parseNum(v){
+    if(typeof v==='number') return Number.isFinite(v)?v:NaN;
+    let s=String(v??'').trim().replace(/\s/g,'');
+    if(!s) return NaN;
+    const comma=s.lastIndexOf(','), dot=s.lastIndexOf('.');
+    if(comma>=0&&dot>=0){const pos=Math.max(comma,dot);s=s.slice(0,pos).replace(/[.,]/g,'')+'.'+s.slice(pos+1);}
+    else if(comma>=0){const p=s.split(',');s=p.length===2?p[0]+'.'+p[1]:p.join('');}
+    else if(dot>=0){const p=s.split('.');if(p.length===2&&p[1].length===3&&Math.abs(Number(p[0]))>=10)s=p.join('');else if(p.length>2)s=p.join('');}
+    return Number(s);
+  }
+  const roundN=(v,n)=>Number.isFinite(v)?Number(v.toFixed(n)):NaN;
+  const mod=(a,m)=>((a%m)+m)%m;
+  function seedFromId(id){const s=String(id??'').trim(),last=s.slice(-4);return /^\d+$/.test(last)?Number(last)%10000:6380;}
+  function pars(seed){
+    return {
+      SA:0.45+0.06*mod(seed*37+11,997)/997,
+      SB:-0.65+0.08*mod(seed*41+17,991)/991,
+      SD:-0.75+0.10*mod(seed*43+23,983)/983,
+      SF:75+mod(seed*47+29,977)/977
+    };
+  }
+  function supplyConst(p,m){return 100*p.SF*Math.pow(m.sauce,p.SB)*Math.pow(m.wage,p.SD);}
+  function qSupply(price,p,m){
+    const S=supplyConst(p,m), net=price-m.tax;
+    return net<=0?0:S*Math.pow(net,p.SA);
+  }
+  function visibleQ(price,p,m){return roundN(qSupply(price,p,m),0);}
+  function visibleRevenue(price,p,m){return roundN(roundN(price,2)*visibleQ(price,p,m),2);}
+  function readModel(){
+    const p=parseNum($('supply-price').value),s=parseNum($('supply-sauce').value),w=parseNum($('supply-wage').value),t=parseNum($('supply-tax').value);
+    return {price:Number.isFinite(p)&&p>=0?p:BASE.price,sauce:Number.isFinite(s)&&s>0?s:BASE.sauce,wage:Number.isFinite(w)&&w>0?w:BASE.wage,tax:Number.isFinite(t)?t:BASE.tax};
+  }
+  function resetModel(){
+    $('supply-price').value='10,00';$('supply-sauce').value='3,00';$('supply-wage').value='5,00';$('supply-tax').value='0,00';update();
+  }
+  function scenario(overrides={}){return {...BASE,...overrides};}
+
+  const qdefs=[
+    {reset:true,q:'Fixa el preu dels espaguetis en 20 €. Quina quantitat s’ofereix?',unit:'plats/dia',kind:'qty',m:{price:20}},
+    {q:'Ara fixa el preu en 10 €. Quina quantitat s’ofereix?',unit:'plats/dia',kind:'qty',m:{price:10}},
+    {reset:true,q:'Amb el preu en 10 €, quins ingressos totals diaris esperen obtenir els productors?',unit:'€/dia',kind:'revenue',m:{price:10}},
+    {reset:true,q:'Amb el preu en 15 €, quins ingressos totals diaris esperen obtenir els productors?',unit:'€/dia',kind:'revenue',m:{price:15}},
+    {reset:true,q:'Fixa el preu en 12 € i augmenta el salari fins a 8 €/h. En quant canvia la quantitat ofertada respecte dels valors inicials?',unit:'plats/dia',kind:'deltaQty',base:{price:12},m:{price:12,wage:8}},
+    {reset:true,q:'Fixa el preu en 12 € i augmenta el preu de la salsa fins a 7 €. L’oferta d’espaguetis augmenta o disminueix?',unit:'',kind:'select',answer:'Disminueix',options:['Augmenta','Disminueix']},
+    {q:'En aquest mateix cas, en quant canvia la quantitat ofertada respecte de quan la salsa valia 3 €?',unit:'plats/dia',kind:'deltaQty',base:{price:12},m:{price:12,sauce:7}},
+    {reset:true,q:'Fixa el preu en 12 € i aplica un impost de 5 €/plat. En quant canvia la quantitat ofertada?',unit:'plats/dia',kind:'deltaQty',base:{price:12},m:{price:12,tax:5}},
+    {reset:true,q:'Fixa el preu en 6 € i aplica un impost de 5 €/plat. En quant canvia la quantitat ofertada?',unit:'plats/dia',kind:'deltaQty',base:{price:6},m:{price:6,tax:5}},
+    {reset:true,q:'Fixa el preu en 12 € i aplica una subvenció de 2 €/plat. En quant canvia la quantitat ofertada?',unit:'plats/dia',kind:'deltaQty',base:{price:12},m:{price:12,tax:-2}},
+    {reset:true,q:'Aplica una subvenció de 5 €/plat. Quin preu dels espaguetis fa que la quantitat ofertada sigui 4.000 plats/dia?',unit:'€/plat',kind:'priceGoal',m:{tax:-5},target:4000},
+    {reset:true,q:'Fixa el preu dels espaguetis en 8 €. Quin salari fa que la quantitat ofertada sigui 2.500 plats/dia?',unit:'€/h',kind:'wageGoal',m:{price:8},target:2500},
+    {reset:true,q:'Fixa el preu en 10 € i després aplica un impost de 5 €/plat. En quant ha d’augmentar el preu per mantenir la quantitat ofertada anterior?',unit:'€/plat',kind:'priceIncrease',base:{price:10},m:{price:10,tax:5}}
+  ];
+
+  function renderQuestions(){
+    const host=$('supply-questions-body');host.innerHTML='';
+    qdefs.forEach((d,i)=>{
+      const row=document.createElement('div');row.className='q-row';
+      const n=document.createElement('div');n.className='q-num';n.textContent=String(i+1);
+      const t=document.createElement('div');t.className='q-text';
+      if(d.reset){const b=document.createElement('strong');b.textContent='Torna als valors inicials. ';t.appendChild(b);}
+      t.appendChild(document.createTextNode(d.q));
+      const a=document.createElement('div');a.className='q-answer';let c;
+      if(d.kind==='select'){
+        c=document.createElement('select');const ph=document.createElement('option');ph.value='';ph.textContent='Selecciona…';c.appendChild(ph);
+        d.options.forEach(o=>{const op=document.createElement('option');op.value=o;op.textContent=o;c.appendChild(op);});
+      }else{c=document.createElement('input');c.type='text';c.inputMode='decimal';c.autocomplete='off';}
+      c.id=`supply-answer-${i+1}`;a.appendChild(c);
+      const u=document.createElement('div');u.className='q-unit';u.textContent=d.unit;
+      const k=document.createElement('div');k.className='q-check blank';k.id=`supply-check-${i+1}`;k.textContent='·';
+      row.append(n,t,a,u,k);host.appendChild(row);
+      c.addEventListener('change',()=>check(i));
+      if(d.kind!=='select'){c.addEventListener('blur',()=>check(i));c.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();c.blur();}});}
+    });
+  }
+
+  function goalCandidates(kind,d,p){
+    const target=d.target, vals=[];
+    if(kind==='priceGoal'){
+      const m=scenario(d.m),S=supplyConst(p,m);
+      const exact=m.tax+Math.pow(target/S,1/p.SA);
+      const center=roundN(exact,2);
+      for(let k=-300;k<=300;k++){
+        const v=roundN(center+k/100,2);if(v<0)continue;
+        if(visibleQ(v,p,m)===target) vals.push(v);
+      }
+    }else if(kind==='wageGoal'){
+      const m=scenario(d.m),net=m.price-m.tax;
+      if(net>0){
+        const denom=100*p.SF*Math.pow(m.sauce,p.SB)*Math.pow(net,p.SA);
+        const exact=Math.pow(target/denom,1/p.SD);
+        const center=roundN(exact,2);
+        for(let k=-500;k<=500;k++){
+          const v=roundN(center+k/100,2);if(v<=0)continue;
+          if(visibleQ(m.price,p,{...m,wage:v})===target) vals.push(v);
+        }
+      }
+    }
+    return [...new Set(vals)];
+  }
+
+  function expected(d,p){
+    if(d.kind==='select') return d.answer;
+    if(d.kind==='qty'){const m=scenario(d.m);return visibleQ(m.price,p,m);}
+    if(d.kind==='revenue'){const m=scenario(d.m);return visibleRevenue(m.price,p,m);}
+    if(d.kind==='deltaQty'){
+      const b=scenario(d.base),m=scenario(d.m);return visibleQ(m.price,p,m)-visibleQ(b.price,p,b);
+    }
+    if(d.kind==='priceIncrease'){
+      const b=scenario(d.base),m=scenario(d.m),q0=visibleQ(b.price,p,b);
+      const S=supplyConst(p,m),exact=m.tax+Math.pow(q0/S,1/p.SA);
+      const candidates=[];const center=roundN(exact,2);
+      for(let k=-200;k<=200;k++){const price=roundN(center+k/100,2);if(price>=0&&visibleQ(price,p,m)===q0)candidates.push(roundN(price-b.price,2));}
+      return [...new Set(candidates)];
+    }
+    if(d.kind==='priceGoal'||d.kind==='wageGoal') return goalCandidates(d.kind,d,p);
+    return NaN;
+  }
+
+  function check(i){
+    const d=qdefs[i],c=$(`supply-answer-${i+1}`),box=$(`supply-check-${i+1}`);if(!c||!box)return;
+    const raw=c.value;if(raw===''){box.className='q-check blank';box.textContent='·';return;}
+    const p=pars(seedFromId($('supply-student-id').value));let ok=false;
+    if(d.kind==='select') ok=raw===expected(d,p);
+    else{
+      const v=parseNum(raw);if(Number.isFinite(v)){
+        const e=expected(d,p);
+        if(Array.isArray(e)) ok=e.some(x=>x===roundN(v,2));
+        else if(d.kind==='revenue') ok=roundN(v,2)===roundN(e,2);
+        else ok=roundN(v,0)===roundN(e,0);
+      }
+    }
+    box.className='q-check '+(ok?'correct':'wrong');box.textContent=ok?'Correcte':'Revisa-ho';
+  }
+
+  function svgEl(name,attrs={}){const el=document.createElementNS('http://www.w3.org/2000/svg',name);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));return el;}
+  function draw(m,p){
+    const svg=$('supply-chart');while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const box=svg.getBoundingClientRect();const W=Math.max(390,Math.round(box.width||500)),H=Math.max(350,Math.round(box.height||430));svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const S=supplyConst(p,m),qNow=qSupply(m.price,p,m);
+    const yMax=Math.max(30,Math.ceil(Math.max(m.price*1.7,m.tax+25)/10)*10);
+    const qAtTop=m.tax<yMax?S*Math.pow(Math.max(yMax-m.tax,0),p.SA):0;
+    const qMax=Math.max(5000,Math.ceil(Math.max(qNow*1.45,qAtTop)*1.08/1000)*1000);
+    const margin={l:55,r:16,t:16,b:48},pw=W-margin.l-margin.r,ph=H-margin.t-margin.b;
+    const X=q=>margin.l+(q/qMax)*pw,Y=pr=>margin.t+ph-(Math.max(0,Math.min(yMax,pr))/yMax)*ph;
+    const grid=svgEl('g');
+    for(let i=0;i<=6;i++){const val=yMax*i/6,yy=Y(val);grid.appendChild(svgEl('line',{x1:margin.l,y1:yy,x2:W-margin.r,y2:yy,stroke:'#d6d4cf','stroke-width':1,'stroke-dasharray':'2 3'}));const t=svgEl('text',{x:margin.l-7,y:yy+3.5,'text-anchor':'end','font-size':9.5,fill:'#555b5e'});t.textContent=fmt0.format(val);grid.appendChild(t);}
+    for(let i=0;i<=5;i++){const val=qMax*i/5,xx=X(val);const t=svgEl('text',{x:xx,y:H-margin.b+17,'text-anchor':'middle','font-size':9.5,fill:'#555b5e'});t.textContent=fmt0.format(val);grid.appendChild(t);}
+    svg.appendChild(grid);svg.appendChild(svgEl('line',{x1:margin.l,y1:margin.t,x2:margin.l,y2:H-margin.b,stroke:'#4e5356','stroke-width':1.2}));svg.appendChild(svgEl('line',{x1:margin.l,y1:H-margin.b,x2:W-margin.r,y2:H-margin.b,stroke:'#4e5356','stroke-width':1.2}));
+    let path='';const N=130;
+    for(let i=0;i<=N;i++){const q=qMax*i/N;const price=m.tax+Math.pow(q/Math.max(S,1e-9),1/p.SA);if(Number.isFinite(price)&&price>=0&&price<=yMax*1.05)path+=(path?' L ':'M ')+X(q)+' '+Y(price);}
+    svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:'#e8682b','stroke-width':3,'stroke-linecap':'round'}));
+    if(m.price>=0&&m.price<=yMax){const yy=Y(m.price);svg.appendChild(svgEl('line',{x1:margin.l,y1:yy,x2:W-margin.r,y2:yy,stroke:'#7a746d','stroke-width':1.4,'stroke-dasharray':'6 5'}));if(Number.isFinite(qNow)&&qNow<=qMax){svg.appendChild(svgEl('circle',{cx:X(qNow),cy:yy,r:4.5,fill:'#e8682b',stroke:'#fff','stroke-width':1.4}));}}
+    const xt=svgEl('text',{x:margin.l+pw/2,y:H-7,'text-anchor':'middle','font-size':11,fill:'#353a3d','font-weight':700});xt.textContent='Quantitat (plats/dia)';svg.appendChild(xt);
+    const yt=svgEl('text',{x:14,y:margin.t+ph/2,'text-anchor':'middle','font-size':11,fill:'#353a3d','font-weight':700,transform:`rotate(-90 14 ${margin.t+ph/2})`});yt.textContent='Preu (€/plat)';svg.appendChild(yt);
+  }
+
+  function update(){
+    const p=pars(seedFromId($('supply-student-id').value)),m=readModel(),q=visibleQ(m.price,p,m);
+    $('supply-qs').textContent=fmt0.format(q);
+    $('supply-revenue').textContent=fmt2.format(roundN(roundN(m.price,2)*q,2));
+    $('supply-net-price').textContent=fmt2.format(roundN(m.price-m.tax,2));
+    draw(m,p);
+    qdefs.forEach((_,i)=>{const c=$(`supply-answer-${i+1}`);if(c&&c.value!=='')check(i);});
+  }
+
+  function openPdf(){
+    try{const raw=atob(pdfBase64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));const w=window.open(url,'_blank','noopener');if(!w){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click();}setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){alert('No s’ha pogut obrir el PDF.');console.error(e);}
+  }
+  function hideOtherViews(){['practice1-view','practice2-view','practice2b-view','practice3-view'].forEach(id=>{const el=$(id);if(el)el.classList.add('hidden');});}
+
+  $('open-pdf-2a').addEventListener('click',openPdf);
+  $('open-practice-2a').addEventListener('click',()=>{hub.classList.add('hidden');hideOtherViews();view.classList.remove('hidden');resetModel();requestAnimationFrame(update);});
+  $('supply-back-to-hub').addEventListener('click',()=>{view.classList.add('hidden');hub.classList.remove('hidden');});
+  $('supply-reset-model').addEventListener('click',resetModel);
+  $('supply-student-id').addEventListener('input',()=>{resetModel();});
+  ['supply-price','supply-sauce','supply-wage','supply-tax'].forEach(id=>$(id).addEventListener('input',update));
+  window.addEventListener('resize',()=>{if(!view.classList.contains('hidden'))update();});
+  renderQuestions();resetModel();
+  if(new URLSearchParams(location.search).get('practice')==='2a'){hub.classList.add('hidden');hideOtherViews();view.classList.remove('hidden');resetModel();requestAnimationFrame(update);}
+})();
+</script>
+
+
+<!-- DEMAND PRACTICE 2B -->
+<script>
+(() => {
+  'use strict';
+  const $=(id)=>document.getElementById(id);
+  const hub=$('hub-view'), view=$('practice2b-view');
+  if(!hub||!view) return;
+  const BASE={price:18,income:20000,taco:6,wine:20};
+  const fmt0=new Intl.NumberFormat('ca-ES',{maximumFractionDigits:0});
+  const fmt2=new Intl.NumberFormat('ca-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const pdfBase64='JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUgo+PgplbmRvYmoKMiAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYSAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyAvTmFtZSAvRjEgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhLUJvbGQgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YyIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNCAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9Db250ZW50cyAxMCAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoSW50cm9kdWNjaVwzNjMgYSBsXDIyMGVjb25vbWlhKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwOTE2MTczMjU3KzAwJzAwJykgL0NyZWF0b3IgKFwodW5zcGVjaWZpZWRcKSkgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwOTE2MTczMjU3KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKFwodW5zcGVjaWZpZWRcKSkgL1RpdGxlIChQclwzNDBjdGljYSAyYiBcMjY3IEZ1bmNpXDM2MyBpIGNvcmJhIGRlIGRlbWFuZGEpIC9UcmFwcGVkIC9GYWxzZQo+PgplbmRvYmoKOCAwIG9iago8PAovQ291bnQgMiAvS2lkcyBbIDQgMCBSIDUgMCBSIF0gL1R5cGUgL1BhZ2VzCj4+CmVuZG9iago5IDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDE5NDQKPj4Kc3RyZWFtCkdiITtkPWA8KFImOldNRDBvdCkpQDc2ITlXInFoTF9eU2lkNWkoZSU/YXM6bkAlXyMpQHE1L19HPVojKC86JFZqIjExNm0udT8nUHE7cyItJXRDU1c5SlYtKkc0PW9fImoxNHMmIVJfO10rOGtvZ08uaWhfJzpVaEpJJW5FT2NOVD1xdENPK2lRRVInSi5kcT0rVHAiXDVpWFBRJGorXVwkXzBeOUksJmlBS2pjJkpFUWFubDVAPzJOXz8xaislJ1IxKyY1WVAtIW50YVVDci04NzgtT11RIzI+V1svck4pXCxsNWRzST85UUkwdWQwampALHBsZ3AmUGJeV0pYMUhWKD1RJCNLVl5sb3I4Uk5TMnRHbWAuXz9JKi5zP0NNc2Y8SVc8RyIocGZTcidSRTAjK1t0bC83Wy1naUtnOTtfJDVBNGtdV2MoSExCbFRnSitrIUFuSSx1UVU6ZCRoZmgyN1hhWklIdSxYbzgxRSk/PXJhbyE4L1o3U19pS0lgU28oYk9cUWtRLjpgN1JMW0xiaD1JJ2BeX0VHWGAyJDYjai9qIyUzL0BTRmZHJ2k5az1WZGdPaSpBLmg7P1JvMy5DbDIvIThDMFAyYSxUOVFtPzQkVEFRKi0+M0hyJz9bQmN0V29lOi0tOnIoISUndF0qRyo7LkwvdCMndDlhVkxyKUdYYSZGNlxPX2RUME1DWCdtQU42IVU3Y0BOUFw0Ny0xXCNgT2xRYT9nIWVRRFtdJk1MP1dEKDYzKWpLYnIwJGRfPkxIPzlyPktRL3RrTm4sJ1IoIzVeIyRZLCctbWM1R2FdbFAlTyZVdGBGPj4haF41ciQlX2IjSihQbkMpWVNfaGpeVC9LVStrQ2UrWjdOSyZBNDRMcDVpSCIkUzlLJit0N2ZyYS9DRFdycTFfU09sdWFdazkqIls0ayNZQjtGNHIyLjgzIkpgRD8xNDpSbiQ7TyRpRVx1O1k+cTxyU2ZzKnIvKmghXnUhMUJOJiwsXyokR1I8KGZkcUNySWYvWkI0PkxhQVI0OWVqTFxMT3FXNC8uUEZCYmx1ZjdNcEg9bkxXdWllUFNMZVduJmhDTTMsISMiJE5DLk0vJV1EOClqdWZuYCdkRyhycyhnMTBILitmXSluWy9sdT1UNENxcDxBQkJwUyxCXS1VLzQvRzhBZ3RgYyxcZSFGOV8jSEBIZCFlR2I2cmgyQFdBWUxAZylldCclOmwtLmNzPDk0VHBEQSc5TDhLLyJoXFg3S1A7Qm8iYGMpNHJyZ0BiZWsmOi1rUlg9bjxPNjYpO04hW0dhPCFDNl03QkpSTExRaDVSIypMO25oLiVIb0IxQ15XUUpNPHUjNFkxRzs1TjA8bk5EZm9FQTxTa0VeUGszTWMxKEdgJVcxYzs9cE9wXTJHNUhldVlfcFdHaSg9Jk0wSyM3NCJpckVqOi1EO1QlM2VIYkNpUyI5dGJJLTZcQl90Sl5KSCQ/Mj4oTmUvVSQkRmRRXWc4V0VIOTVyWU5RcjQxbkdZSFk2KmkqXFBrKURVOVtvR0twUko+IlspJ1MrbloqPkomNjs9ZzAyXiFPViNfcT01MFVBclpCLFoxKml1PDlPJFoxMiNPbzdhRV1MZ2xvPkhFLHFGcUtealVpWnJKUCZNJnJbTkA2R1tzVGs0JzQ1NlQ8Zm0+TVpHXikodF5VKj9QZ2ZgUUhRUDYiL1FIWjw4aDVfcGgrIkdNQ2IvNT0iNEckOjNMXD1TMS10MUwjZVQnMGEoSlJvXkBBYC1uVnMmXzoxXmZcO3FeQ2QpVUwkKkVSdVA5R2FQN1VrKW5iWmdJOz50Ql5XWyskRiYiXHBVWWgsXVJySXBmZjZKPUNiSTg9ITlgSGQvNmNaK1VBTlhea2JNXT9LQWBnQE1iNFAnMiM+Nyw5WGIoMUUvQSI9bjRRLDNJL1lEM1hdWkw/P1dKbGYkWUZgOzhaZyYwJzFcLyJYJUxwTmVLQWhXb1MlP2QuaGFTL2BqMSVxRGYsXigxKzNIK2s8ayI5MGtzbDxBQT4tI01FMG08KFlRMlJROyZySyJsJ0E0PV9EOFNgYEpFUy41XzhRcDheW2RaWk8ocWFnKDhacGpaZUsla0w4dScham9ESyZJblEuJidKSkNcYm8qTy0pJnA+bWJEazNuPChWXkRRaU1uUmVgX2JwcEdrTy9xI1g8TzIxOTdkZ0ldUyUzP1htZydoOT1SRkFCRC9nbFZeaSgtTl5DN0ZHPGBHIjpYUmRbaEZaUW1fSUs7NHMjWDtTc2VnP1RRKXMiQGw9KmBMIVNSWChmT04lVS1mRi9ILm1NN1skLFUvbHVdKkdFQk0uPipSRyYzNFw7MDtnTitOYnIsVkN1RC5Vc25SNVMzTklddDFqO0VzJCtkWm40WDQuW2QhJEUmOiUqQGInLlAsVDxTYzA3Sm88LTtuUkUzMmtwZFxCS2pBQSxTbzpDRmA1XkZQPlJRblpiVlgwRlEkYDcoTUozIi4+Ym03YmkjLFsvLnFxJWZKQVFgRGk8YnRGP1tSaVBeLV82amksL0JkJExqUCJXckVfbSM8XVkrM3BNXHA6MCJbJ28mPlF+PmVuZHN0cmVhbQplbmRvYmoKMTAgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggMTk1MAo+PgpzdHJlYW0KR2F1MERnTiklLCY6Ti8zbSVeIkgoX1lhYTFPV3FTU1RgRlRTPl5AUEpMJjs9JWdnPCJXRllrdWZgYSRcLz90PUMya0hCYFswMVshbVtjUjwiPG1iNG1lPFJbR2RFJykrIVFMWC85X1pFNW4ocXRuOiFDMFQqOU0xS2gyOzJjNkpwI11ZXiNtQjBjbV5BZj9nXCNUNkRVYCU0SFIrdF1JPixgVnRtR2BQSmwzcFlEREMmJWc7bVQnai1UITBEbitBVW8/QTljKHFuZjchSl1iJ2ojTmdtNlU9LGNcVVE1LlhEZCNCcDtHLWIkclNvUEI9WHIoWWhBJGk1IkovKF41cGhYIm8lUUJDJCNbbHQqQCFOIiMoVVVIXjNcUShJTikoNyZUJ1p1PTBHcF09OC4vSGRPSlI1YVZlTGhCJk9vV2RWXyFIQ2IkdUskNDtgOjA0Y0NUZzo1Y21gXmBfVkhCOD1BZSVjR1RoLV10UipEVickK1JeUSgxJTE1ImpnNl0rLlx1QUlGXSdMJkJTa0NJLjdSYEVjZWtuYVFcalY+R0EtXlNUX3UtKClANkhTPitEWXEmXCxjQyJrSiMiOFZvUj9ORThNITNYVG0yMDtBY1gnLTElYU1AOCM6aiYpOjBOQUlVXlU9OiNBMzVncj9oL1I/ITxNUidLQihpWWtXZjw+a2BUR0giajRiVzo9XEAsQ1tWMCZjQEUsQFgpQmI8UydDNTIqTm1XWShIKSRYTkBLdC1eRSlwQ04+JFlrVG5XI1pZZEY0QT8xRjpHTytiJiNsPTBaSnMhXEdaJjQ3Wi5KL2NFKGVxJWcoLzdAb2pOV1o6PDtoP09DVkg5W0wnYUEoTUZuJjk2cS01R0Vha2k9IllSUSZWZkFFPl1dVzlocjohaTpJUDMsIWdiQylDSnRQRTcrRyViOThLX15mXG5ALS9NYDFdLC5nI1hrPyJsIVRkXXUsRUU7J2spX185cnFNOnQ3dWpgZDU4YVUmS00jOmJXb2ZxL0UhKXM8Kj91aisoNCh0TUNnM21RXkkxRWlIWFJqRS1IXmxpaXJTaVhodDBQLSZwU29jczE7RXE3OUxQKHFjVyoqNV4tWiVhPm44JG0lQ0E9QCxXLCdaJCk3VGNia3NlaVIsclczKyhmW1pIK2MmNlNeOzZuRUFRODFIQktSMlJYNUVkQUc+UkJwR3IpT0NoQjljVideNidsallZXCVORzw1dTpdXD4+NFBAIWxkLjo3Ty0mMltcNEo7TG4pYV5YWV0/cjRfTS8mZCIsKVIvMzNFNzdwZkFJKlVldG8lNSc0UlpoamFsTCZKMyo0TlckVjNWJD5mKCtKQT9nRVo3ZylvNGBFWCtpaDExUz4waVQvZGJMNVJhZU4jTl5jVjJKX1dbLmFdQSg0aFxRJkQ5bWUmKG0sU1phRmxgTSVbaGJhPitAZl1aX1JXNzZhcFZZVEo2bl1RWGFjMDlRYVI9bTwvQD9ZcFskcDpDWFEoOClcKCdkM1lkKmRHXGg8UGFnNnQ9aFhnRklyU2RXZzpuVT1pWHJDQ0AlTWtHR2w8TVcmZFJUV2otaHBaN09XWFAxU2Y0RlkmSCU+QXJVdV8ydFBtKV0hP05PRlkpUFNfIiQ8Sk5TOWA1ISlTISJbZ2hdIyxHYW9UXlJwTysvaEcuYFVEPExRSTRNUmxsR2JsKVlmQ3JVPVsmdENBK2s7XTNYYWp0bmVmWzIyPk1rWkBRQGxUXCNqUS8ndCk+RlZwdFJNPis8Oic1cWVgSU5oWSskUD8mdSQxV2ckJF85K3AzQy5NcXRvaVo0LzdUMFBzYjVwazVYVmVuZFNtSDFER0ciXmIsZ1oibGdUUk09IXRUVmI0UjBMJT8oO14wb3V1R0RmPFpFaEB0N1tXcFQ7IydTSG9kNilOMlRscCgqbGMjIipJPjswXC1EYG9lKUhUUU03WENYV15gXzkwQCo+XWJkWFtFdC1QZk45VGgjVVs5WjlhYTxQXGhXTjsnQGNTcmBOdHBBKWBWXD1qPiQzOTAqNjJyMnVSXjNsb0VcJSsjLGlQXE4jYChIW2g6MG9AKlc0WigmNylMaFcvJGY4Smw9b3UmXURyODF0UFpcclNwW2g7UCNKVERxZyI7Jm9UQ1s+Qi0kOS0hQTFtLGZsJHFZKzNKVWQ8MkQ7dU5BVGlXSkdbKmwzQEU7ajpLKVxLa21oP2g6TUtfYlxMQHJGMmhgX1BjOWBSOTdMLDxmIidldUgrcl41K0svNCxKKDcjNFRgbilxMFdFXCY1Uy5sOHMvTkgmRG4uVUAoVnQ6SnBwc1QoVSZZZStMIWdvQj5GXV1YcGYwTyo2ayRKLGYmN2x0PjA2LCpyYnVrRy5gKCZpNFVSXmw9NENZck5AMCpNUFFUajVmYD5vOnFwbFAqYVxGWz05VSM7Vk1mMmZXI1Q+PyosXU88bmQpKTlERypNPVkpJiZOLjlITSxCW0tGZDg3SGdVY14iLmtNaUwpMCRmM203Q3Q0UU5cWGddRmNIPyVHN0U1dEpCJ1EtSWJkaDEoYDdhSGo/PDJOMjsmKEckM3NNKCk0YVUqMzI4ZCxyO11ETUhsMn4+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgMTEKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDYxIDAwMDAwIG4gCjAwMDAwMDAxMDIgMDAwMDAgbiAKMDAwMDAwMDIwOSAwMDAwMCBuIAowMDAwMDAwMzIxIDAwMDAwIG4gCjAwMDAwMDA1MjQgMDAwMDAgbiAKMDAwMDAwMDcyOCAwMDAwMCBuIAowMDAwMDAwNzk2IDAwMDAwIG4gCjAwMDAwMDExMjggMDAwMDAgbiAKMDAwMDAwMTE5MyAwMDAwMCBuIAowMDAwMDAzMjI4IDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDY5MzJjZTM4MWFmZjEyYTdmMzk1NTY2NjhiZTQxNWU1Pjw2OTMyY2UzODFhZmYxMmE3ZjM5NTU2NjY4YmU0MTVlNT5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gNyAwIFIKL1Jvb3QgNiAwIFIKL1NpemUgMTEKPj4Kc3RhcnR4cmVmCjUyNzAKJSVFT0YK';
+
+  function parseNum(v){
+    if(typeof v==='number') return Number.isFinite(v)?v:NaN;
+    let s=String(v??'').trim().replace(/\s/g,'');
+    if(!s) return NaN;
+    const comma=s.lastIndexOf(','),dot=s.lastIndexOf('.');
+    if(comma>=0&&dot>=0){const pos=Math.max(comma,dot);s=s.slice(0,pos).replace(/[.,]/g,'')+'.'+s.slice(pos+1);}
+    else if(comma>=0){const p=s.split(',');s=p.length===2?p[0]+'.'+p[1]:p.join('');}
+    else if(dot>=0){const p=s.split('.');if(p.length===2&&p[1].length===3&&Math.abs(Number(p[0]))>=10)s=p.join('');else if(p.length>2)s=p.join('');}
+    return Number(s);
+  }
+  const roundN=(v,n)=>Number.isFinite(v)?Number(v.toFixed(n)):NaN;
+  const mod=(a,m)=>((a%m)+m)%m;
+  function seedFromId(id){const s=String(id??'').trim(),last=s.slice(-4);return /^\d+$/.test(last)?Number(last)%10000:6380;}
+  function pars(seed){
+    return {
+      DA:0.17+0.06*mod(seed*53+31,971)/971,
+      DB:0.66+0.08*mod(seed*59+37,967)/967,
+      DD:-0.85+0.10*mod(seed*61+41,953)/953,
+      DE:0.17+0.06*mod(seed*67+43,947)/947,
+      DF:-0.13+0.03*mod(seed*71+47,941)/941
+    };
+  }
+  function demandConst(p,m){return 100*p.DA*Math.pow(m.income,p.DB)*Math.pow(m.taco,p.DE)*Math.pow(m.wine,p.DF);}
+  function qDemand(price,p,m){const D=demandConst(p,m);return D*Math.pow(Math.max(price,0.000001),p.DD);}
+  function visibleQ(price,p,m){return roundN(qDemand(price,p,m),0);}
+  function visibleSpending(price,p,m){return roundN(roundN(price,2)*visibleQ(price,p,m),2);}
+  function readModel(){
+    const pr=parseNum($('demand-price').value),inc=parseNum($('demand-income').value),ta=parseNum($('demand-taco').value),wi=parseNum($('demand-wine').value);
+    return {price:Number.isFinite(pr)&&pr>0?pr:BASE.price,income:Number.isFinite(inc)&&inc>0?inc:BASE.income,taco:Number.isFinite(ta)&&ta>0?ta:BASE.taco,wine:Number.isFinite(wi)&&wi>0?wi:BASE.wine};
+  }
+  function resetModel(){
+    $('demand-price').value='18,00';$('demand-income').value='20000';$('demand-taco').value='6,00';$('demand-wine').value='20,00';update();
+  }
+  function scenario(overrides={}){return {...BASE,...overrides};}
+
+  const qdefs=[
+    {reset:true,q:'Fixa el preu dels espaguetis en 25 €. Quina quantitat es demanda?',unit:'plats/dia',kind:'qty',m:{price:25}},
+    {q:'Ara fixa el preu en 15 €. Quina quantitat es demanda?',unit:'plats/dia',kind:'qty',m:{price:15}},
+    {reset:true,q:'Amb el preu en 25 €, quina despesa total diària volen fer els consumidors en espaguetis?',unit:'€/dia',kind:'spending',m:{price:25}},
+    {reset:true,q:'Amb el preu en 15 €, quina despesa total diària volen fer els consumidors en espaguetis?',unit:'€/dia',kind:'spending',m:{price:15}},
+    {reset:true,q:'Fixa el preu en 12 € i augmenta la renda fins a 25.000 €. En quant augmenta la quantitat demandada respecte dels valors inicials?',unit:'plats/dia',kind:'deltaQty',base:{price:12},m:{price:12,income:25000}},
+    {reset:true,q:'Fixa el preu en 12 € i augmenta el preu del vi fins a 35 €. La demanda d’espaguetis augmenta o disminueix?',unit:'',kind:'selectWine',options:['Augmenta','Disminueix']},
+    {q:'En aquest mateix cas, en quant canvia la quantitat demandada respecte de quan el vi valia 20 €?',unit:'plats/dia',kind:'deltaQty',base:{price:12},m:{price:12,wine:35}},
+    {reset:true,q:'Fixa el preu en 12 €. Quina renda anual fa que la quantitat demandada sigui 5.000 plats/dia?',unit:'€',kind:'incomeGoal',m:{price:12},target:5000},
+    {reset:true,q:'Fixa el preu en 12 €. Quin preu del vi fa que la quantitat demandada sigui 2.000 plats/dia?',unit:'€',kind:'wineGoal',m:{price:12},target:2000},
+    {reset:true,q:'Fixa la renda en 30.000 € i la resta de variables als valors inicials. Quin preu dels espaguetis fa que la demanda sigui 4.000 plats/dia?',unit:'€/plat',kind:'priceGoal',m:{income:30000},target:4000},
+    {reset:true,q:'Fixa la renda en 30.000 € i la resta de variables als valors inicials. Quin preu dels espaguetis fa que la demanda sigui 5.000 plats/dia?',unit:'€/plat',kind:'priceGoal',m:{income:30000},target:5000},
+    {q:'En aquest model, els tacos i els espaguetis són substitutius o complements?',unit:'',kind:'relation',options:['Substitutius','Complements']}
+  ];
+
+  function renderQuestions(){
+    const host=$('demand-questions-body');host.innerHTML='';
+    qdefs.forEach((d,i)=>{
+      const row=document.createElement('div');row.className='q-row';
+      const n=document.createElement('div');n.className='q-num';n.textContent=String(i+1);
+      const t=document.createElement('div');t.className='q-text';
+      if(d.reset){const b=document.createElement('strong');b.textContent='Torna als valors inicials. ';t.appendChild(b);}
+      t.appendChild(document.createTextNode(d.q));
+      const a=document.createElement('div');a.className='q-answer';let c;
+      if(d.options){c=document.createElement('select');const ph=document.createElement('option');ph.value='';ph.textContent='Selecciona…';c.appendChild(ph);d.options.forEach(o=>{const op=document.createElement('option');op.value=o;op.textContent=o;c.appendChild(op);});}
+      else{c=document.createElement('input');c.type='text';c.inputMode='decimal';c.autocomplete='off';}
+      c.id=`demand-answer-${i+1}`;a.appendChild(c);
+      const u=document.createElement('div');u.className='q-unit';u.textContent=d.unit;
+      const k=document.createElement('div');k.className='q-check blank';k.id=`demand-check-${i+1}`;k.textContent='·';
+      row.append(n,t,a,u,k);host.appendChild(row);
+      c.addEventListener('change',()=>check(i));
+      if(!d.options){c.addEventListener('blur',()=>check(i));c.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();c.blur();}});}
+    });
+  }
+
+  function expected(d,p){
+    if(d.kind==='selectWine') return p.DF<0?'Disminueix':'Augmenta';
+    if(d.kind==='relation') return p.DE>0?'Substitutius':'Complements';
+    if(d.kind==='qty'){const m=scenario(d.m);return visibleQ(m.price,p,m);}
+    if(d.kind==='spending'){const m=scenario(d.m);return visibleSpending(m.price,p,m);}
+    if(d.kind==='deltaQty'){const b=scenario(d.base),m=scenario(d.m);return visibleQ(m.price,p,m)-visibleQ(b.price,p,b);}
+    return NaN;
+  }
+
+  function goalWorks(d,p,given){
+    if(!Number.isFinite(given)||given<=0) return false;
+    const m=scenario(d.m);
+    if(d.kind==='incomeGoal') return visibleQ(m.price,p,{...m,income:given})===d.target;
+    if(d.kind==='wineGoal') return visibleQ(m.price,p,{...m,wine:given})===d.target;
+    if(d.kind==='priceGoal') return visibleQ(given,p,m)===d.target;
+    return false;
+  }
+
+  function check(i){
+    const d=qdefs[i],c=$(`demand-answer-${i+1}`),box=$(`demand-check-${i+1}`);if(!c||!box)return;
+    const raw=c.value;if(raw===''){box.className='q-check blank';box.textContent='·';return;}
+    const p=pars(seedFromId($('demand-student-id').value));let ok=false;
+    if(d.options) ok=raw===expected(d,p);
+    else{
+      const v=parseNum(raw);if(Number.isFinite(v)){
+        if(d.kind==='incomeGoal'||d.kind==='wineGoal'||d.kind==='priceGoal') ok=goalWorks(d,p,v);
+        else{const e=expected(d,p);if(d.kind==='spending')ok=roundN(v,2)===roundN(e,2);else ok=roundN(v,0)===roundN(e,0);}
+      }
+    }
+    box.className='q-check '+(ok?'correct':'wrong');box.textContent=ok?'Correcte':'Revisa-ho';
+  }
+
+  function svgEl(name,attrs={}){const el=document.createElementNS('http://www.w3.org/2000/svg',name);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));return el;}
+  function draw(m,p){
+    const svg=$('demand-chart');while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const box=svg.getBoundingClientRect();const W=Math.max(390,Math.round(box.width||500)),H=Math.max(350,Math.round(box.height||430));svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const qNow=qDemand(m.price,p,m),yMax=Math.max(40,Math.ceil(m.price*1.7/10)*10);
+    const lowPrice=Math.max(1,yMax*0.035),qAtLow=qDemand(lowPrice,p,m);
+    const qMax=Math.min(50000,Math.max(5000,Math.ceil(Math.max(qNow*1.5,qAtLow)*1.05/1000)*1000));
+    const margin={l:55,r:16,t:16,b:48},pw=W-margin.l-margin.r,ph=H-margin.t-margin.b;
+    const X=q=>margin.l+(Math.max(0,Math.min(qMax,q))/qMax)*pw,Y=pr=>margin.t+ph-(Math.max(0,Math.min(yMax,pr))/yMax)*ph;
+    const grid=svgEl('g');
+    for(let i=0;i<=6;i++){const val=yMax*i/6,yy=Y(val);grid.appendChild(svgEl('line',{x1:margin.l,y1:yy,x2:W-margin.r,y2:yy,stroke:'#d6d4cf','stroke-width':1,'stroke-dasharray':'2 3'}));const t=svgEl('text',{x:margin.l-7,y:yy+3.5,'text-anchor':'end','font-size':9.5,fill:'#555b5e'});t.textContent=fmt0.format(val);grid.appendChild(t);}
+    for(let i=0;i<=5;i++){const val=qMax*i/5,xx=X(val);const t=svgEl('text',{x:xx,y:H-margin.b+17,'text-anchor':'middle','font-size':9.5,fill:'#555b5e'});t.textContent=fmt0.format(val);grid.appendChild(t);}
+    svg.appendChild(grid);svg.appendChild(svgEl('line',{x1:margin.l,y1:margin.t,x2:margin.l,y2:H-margin.b,stroke:'#4e5356','stroke-width':1.2}));svg.appendChild(svgEl('line',{x1:margin.l,y1:H-margin.b,x2:W-margin.r,y2:H-margin.b,stroke:'#4e5356','stroke-width':1.2}));
+    let path='';const N=150;
+    for(let i=0;i<=N;i++){const price=lowPrice+(yMax-lowPrice)*i/N,q=qDemand(price,p,m);if(Number.isFinite(q)&&q>=0&&q<=qMax*1.02)path+=(path?' L ':'M ')+X(q)+' '+Y(price);}
+    svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:'#1f6d95','stroke-width':3,'stroke-linecap':'round'}));
+    if(m.price>0&&m.price<=yMax){const yy=Y(m.price);svg.appendChild(svgEl('line',{x1:margin.l,y1:yy,x2:W-margin.r,y2:yy,stroke:'#7a746d','stroke-width':1.4,'stroke-dasharray':'6 5'}));if(Number.isFinite(qNow)&&qNow<=qMax)svg.appendChild(svgEl('circle',{cx:X(qNow),cy:yy,r:4.5,fill:'#1f6d95',stroke:'#fff','stroke-width':1.4}));}
+    const xt=svgEl('text',{x:margin.l+pw/2,y:H-7,'text-anchor':'middle','font-size':11,fill:'#353a3d','font-weight':700});xt.textContent='Quantitat (plats/dia)';svg.appendChild(xt);
+    const yt=svgEl('text',{x:14,y:margin.t+ph/2,'text-anchor':'middle','font-size':11,fill:'#353a3d','font-weight':700,transform:`rotate(-90 14 ${margin.t+ph/2})`});yt.textContent='Preu (€/plat)';svg.appendChild(yt);
+  }
+
+  function update(){
+    const p=pars(seedFromId($('demand-student-id').value)),m=readModel(),q=visibleQ(m.price,p,m);
+    $('demand-qd').textContent=fmt0.format(q);
+    $('demand-spending').textContent=fmt2.format(roundN(roundN(m.price,2)*q,2));
+    draw(m,p);
+    qdefs.forEach((_,i)=>{const c=$(`demand-answer-${i+1}`);if(c&&c.value!=='')check(i);});
+  }
+
+  function openPdf(){
+    try{const raw=atob(pdfBase64),bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));const w=window.open(url,'_blank','noopener');if(!w){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click();}setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){alert('No s’ha pogut obrir el PDF.');console.error(e);}
+  }
+  function hideOtherViews(){['practice1-view','practice2a-view','practice2-view','practice3-view'].forEach(id=>{const el=$(id);if(el)el.classList.add('hidden');});}
+
+  $('open-pdf-2b').addEventListener('click',openPdf);
+  $('open-practice-2b').addEventListener('click',()=>{hub.classList.add('hidden');hideOtherViews();view.classList.remove('hidden');resetModel();requestAnimationFrame(update);});
+  $('demand-back-to-hub').addEventListener('click',()=>{view.classList.add('hidden');hub.classList.remove('hidden');});
+  $('demand-reset-model').addEventListener('click',resetModel);
+  $('demand-student-id').addEventListener('input',()=>{resetModel();});
+  ['demand-price','demand-income','demand-taco','demand-wine'].forEach(id=>$(id).addEventListener('input',update));
+  window.addEventListener('resize',()=>{if(!view.classList.contains('hidden'))update();});
+  renderQuestions();resetModel();
+  if(new URLSearchParams(location.search).get('practice')==='2b'){hub.classList.add('hidden');hideOtherViews();view.classList.remove('hidden');resetModel();requestAnimationFrame(update);}
 })();
 </script>
 
