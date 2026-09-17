@@ -1,0 +1,23 @@
+PORTAL MODULAR DE PRÀCTIQUES
+============================
+
+Per publicar/amagar/ordenar pràctiques, edita NOMÉS practiques.json.
+
+- visible: true  -> la targeta es veu
+- visible: false -> la targeta desapareix
+- disponible: true  -> es pot obrir
+- disponible: false -> surt com “Properament”
+- ordre: número que determina la posició
+
+No cal tocar index.html per aquestes operacions.
+
+Estructura:
+  index.html              portal
+  practiques.json         configuració del portal
+  styles.css              estils compartits d'Economia
+  portal.js               lògica del portal
+  practiques/economia/    una pràctica per fitxer
+  practiques/estadistica/ pràctiques d'Estadística
+  assets/pdf/             PDFs de les pràctiques
+
+Per desplegar-ho a GitHub Pages, substitueix el contingut actual del repositori per aquesta estructura mantenint les carpetes.

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Frontera de possibilitats de producció · Pràctiques interactives</title>
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<section id="practice1-view">
+<div class="app-shell">
+<header class="app-topbar">
+<div class="app-title-wrap">
+<a class="back-btn" href="../../index.html?area=economia">← Pràctiques</a>
+<div class="app-title">FRONTERA DE POSSIBILITATS DE PRODUCCIÓ <small>Model interactiu</small></div>
+</div>
+<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="ppc-student-id" inputmode="numeric" value="6380"/></label>
+</header>
+<main class="practice-layout compact-graph-layout">
+<div class="left-col">
+<section class="section">
+<div class="section-head">MODEL INTERACTIU</div>
+<table aria-label="Variables del model FPP" class="model-table">
+<thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead>
+<tbody>
+<tr><td>Producció de pizza</td><td><input class="model-input" id="ppc-pizza" inputmode="decimal" value="30,00"/></td><td>unitats</td></tr>
+<tr><td>Treball disponible</td><td><input class="model-input" id="ppc-labor" inputmode="decimal" value="100,00"/></td><td>unitats</td></tr>
+<tr><td>Eficiència de la pizza</td><td><input class="model-input" id="ppc-ex" inputmode="decimal" value="0,50"/></td><td>índex</td></tr>
+<tr><td>Eficiència de la pasta</td><td><input class="model-input" id="ppc-ey" inputmode="decimal" value="0,60"/></td><td>índex</td></tr>
+</tbody>
+</table>
+<div class="note">Canviar la pizza mou el punt al llarg de la FPP; canviar treball o eficiència desplaça la frontera.</div>
+<div class="model-actions"><button class="reset-model-btn" id="ppc-reset-model" type="button">Restablir valors inicials</button></div>
+</section>
+<section class="section">
+<div class="section-head">RESULTATS DE PRODUCCIÓ</div>
+<table aria-label="Resultats de la FPP" class="result-table">
+<tbody>
+<tr><td>Pasta màxima</td><td class="result-value" id="ppc-pasta-max">—</td><td class="result-unit">unitats</td></tr>
+<tr><td>Pizza màxima</td><td class="result-value" id="ppc-pizza-max">—</td><td class="result-unit">unitats</td></tr>
+<tr><td>Pasta màxima si pizza = 0</td><td class="result-value" id="ppc-pasta-end">—</td><td class="result-unit">unitats</td></tr>
+<tr><td>Cost d'oportunitat de +1 pizza</td><td class="result-value" id="ppc-oc">—</td><td class="result-unit">pasta</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section">
+<div class="key-box"><strong>Idea clau</strong>Sobre la FPP: assolible i eficient. Dins de la FPP: assolible però ineficient. Fora de la FPP: inassolible.</div>
+</section>
+</div>
+<div class="center-col">
+<section aria-label="Frontera de possibilitats de producció" class="chart-card compact-chart">
+<div class="chart-wrap"><svg aria-label="Frontera de possibilitats de producció de pizza i pasta" id="ppc-chart" role="img"></svg></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-line ppc"></span>FPP</span>
+<span class="legend-item"><span class="legend-dot"></span>Punt eficient actual</span>
+</div>
+</section>
+</div>
+<section class="questions-col">
+<div class="questions-title">PREGUNTES · respon directament aquí</div>
+<div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
+<div class="questions-body" id="ppc-questions-body"></div>
+</section>
+</main>
+</div>
+</section>
+<script src="fpp.js"></script>
+</body>
+</html>

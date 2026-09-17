@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Funció i corba de demanda · Pràctiques interactives</title>
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<section id="practice2b-view">
+<div class="app-shell">
+<header class="app-topbar">
+<div class="app-title-wrap">
+<a class="back-btn" href="../../index.html?area=economia">← Pràctiques</a>
+<div class="app-title">FUNCIÓ I CORBA DE DEMANDA <small>Pràctica 2b · Model interactiu</small></div>
+</div>
+<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="demand-student-id" inputmode="numeric" value="6380"/></label>
+</header>
+<main class="practice-layout compact-graph-layout">
+<div class="left-col">
+<section class="section">
+<div class="section-head">MODEL INTERACTIU</div>
+<table aria-label="Variables del model de demanda" class="model-table">
+<thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead>
+<tbody>
+<tr><td>Preu dels espaguetis</td><td><input class="model-input" id="demand-price" inputmode="decimal" value="18,00"/></td><td>€/plat</td></tr>
+<tr><td>Renda anual</td><td><input class="model-input" id="demand-income" inputmode="decimal" value="20000"/></td><td>€</td></tr>
+<tr><td>Preu dels tacos</td><td><input class="model-input" id="demand-taco" inputmode="decimal" value="6,00"/></td><td>€</td></tr>
+<tr><td>Preu del vi</td><td><input class="model-input" id="demand-wine" inputmode="decimal" value="20,00"/></td><td>€</td></tr>
+</tbody>
+</table>
+<div class="note">Canviar el preu dels espaguetis mou el punt al llarg de la corba; canviar renda, tacos o vi desplaça la demanda.</div>
+<div class="model-actions"><button class="reset-model-btn" id="demand-reset-model" type="button">Restablir valors inicials</button></div>
+</section>
+<section class="section">
+<div class="section-head">RESULTATS DE LA DEMANDA</div>
+<table aria-label="Resultats de la demanda" class="result-table">
+<tbody>
+<tr><td>Quantitat demandada</td><td class="result-value" id="demand-qd">—</td><td class="result-unit">plats/dia</td></tr>
+<tr><td>Despesa total</td><td class="result-value" id="demand-spending">—</td><td class="result-unit">€/dia</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section">
+<div class="key-box"><strong>Idea clau</strong>Un canvi en el preu dels espaguetis provoca un moviment al llarg de la corba. Canvis en la renda o en el preu d’altres béns desplacen la corba de demanda.</div>
+</section>
+</div>
+<div class="center-col">
+<section aria-label="Corba de demanda" class="chart-card compact-chart">
+<div class="chart-wrap"><svg aria-label="Corba de demanda d'espaguetis" id="demand-chart" role="img"></svg></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-line demand-current"></span>Demanda</span>
+<span class="legend-item"><span class="legend-line demand-price"></span>Preu actual</span>
+</div>
+</section>
+</div>
+<section class="questions-col">
+<div class="questions-title">PREGUNTES · respon directament aquí</div>
+<div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
+<div class="questions-body" id="demand-questions-body"></div>
+</section>
+</main>
+</div>
+</section>
+<script src="demanda.js"></script>
+</body>
+</html>

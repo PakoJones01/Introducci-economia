@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Equilibri de mercat · Pràctiques interactives</title>
+<link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+<section id="practice2-view">
+<div class="app-shell">
+<header class="app-topbar">
+<div class="app-title-wrap">
+<a class="back-btn" href="../../index.html?area=economia">← Pràctiques</a>
+<div class="app-title">EQUILIBRI DE MERCAT <small>Pràctica 2c · Model interactiu</small></div>
+</div>
+<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="student-id" inputmode="numeric" value="6380"/></label>
+</header>
+<main class="practice-layout">
+<div class="left-col">
+<section class="section">
+<div class="section-head">MODEL INTERACTIU</div>
+<table aria-label="Variables del model" class="model-table">
+<thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead>
+<tbody>
+<tr><td>Preu dels espaguetis</td><td><input class="model-input" id="price" inputmode="decimal" value="10,00"/></td><td>€/plat</td></tr>
+<tr><td>Renda anual</td><td><input class="model-input" id="income" inputmode="decimal" value="20000"/></td><td>€</td></tr>
+<tr><td>Preu dels tacos</td><td><input class="model-input" id="taco" inputmode="decimal" value="6,00"/></td><td>€</td></tr>
+<tr><td>Preu del vi</td><td><input class="model-input" id="wine" inputmode="decimal" value="20,00"/></td><td>€</td></tr>
+<tr><td>Preu de la salsa</td><td><input class="model-input" id="sauce" inputmode="decimal" value="3,00"/></td><td>€</td></tr>
+<tr><td>Salari</td><td><input class="model-input" id="wage" inputmode="decimal" value="5,00"/></td><td>€/h</td></tr>
+<tr><td>Impost per unitat</td><td><input class="model-input" id="tax" inputmode="decimal" value="0,00"/></td><td>€/plat</td></tr>
+</tbody>
+</table>
+<div class="note">Un impost negatiu representa una subvenció.</div>
+<div class="model-actions"><button class="reset-model-btn" id="reset-model" type="button">Restablir valors inicials</button></div>
+</section>
+<section class="section">
+<div class="section-head">RESULTATS DEL MERCAT</div>
+<table aria-label="Resultats del mercat" class="result-table">
+<tbody>
+<tr><td>Quantitat demandada</td><td class="result-value" id="qd">—</td><td class="result-unit">plats/dia</td></tr>
+<tr><td>Quantitat ofertada</td><td class="result-value" id="qs">—</td><td class="result-unit">plats/dia</td></tr>
+<tr><td>Excés de demanda</td><td class="result-value" id="excess">—</td><td class="result-unit">plats/dia</td></tr>
+<tr><td>Situació</td><td class="result-value" id="situation">—</td><td class="result-unit"></td></tr>
+<tr><td>Preu d'equilibri</td><td class="result-value" id="peq">—</td><td class="result-unit">€/plat</td></tr>
+<tr><td>Quantitat d'equilibri</td><td class="result-value" id="qeq">—</td><td class="result-unit">plats/dia</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section">
+<div class="key-box"><strong>Idea clau</strong>Excés de demanda = Qd − Qs. Si és positiu, el preu tendeix a pujar; si és negatiu, tendeix a baixar. Considerem que el mercat és en equilibri quan la diferència és prou petita per ser compatible amb l’arrodoniment dels valors mostrats.</div>
+</section>
+</div>
+<div class="center-col">
+<section aria-label="Gràfic d'oferta i demanda" class="chart-card">
+<div class="chart-wrap"><svg aria-label="Corbes d'oferta i demanda amb preu actual" id="market-chart" role="img"></svg></div>
+<div class="legend">
+<span class="legend-item"><span class="legend-line demand"></span>Demanda</span>
+<span class="legend-item"><span class="legend-line supply"></span>Oferta</span>
+<span class="legend-item"><span class="legend-line current"></span>Preu actual</span>
+</div>
+</section>
+</div>
+<section class="questions-col">
+<div class="questions-title">PREGUNTES · respon directament aquí</div>
+<div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
+<div class="questions-body" id="questions-body"></div>
+</section>
+</main>
+</div>
+</section>
+<script src="equilibri.js"></script>
+</body>
+</html>
