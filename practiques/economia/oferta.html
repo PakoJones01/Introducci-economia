@@ -5,8 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Funció i corba d’oferta · Pràctiques interactives</title>
 <link rel="stylesheet" href="../../styles.css" />
+<style>
+  .pilot-id-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pilot-id-tools button,.pilot-submit-btn{border:0;border-radius:7px;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
+  .pilot-id-tools button{background:#f0eee9;color:#303538}
+  .pilot-id-tools button:disabled,.pilot-submit-btn:disabled{opacity:.55;cursor:default}
+  .pilot-status{font-size:12px;color:#62676a}
+  .pilot-status.ok,.pilot-submit-status.ok{color:#236b3d}
+  .pilot-status.bad,.pilot-submit-status.bad{color:#a1322f}
+  .pilot-justifications{margin:0 16px 18px}
+  .pilot-just-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .pilot-just-card{border:1px solid #d8d5cf;border-radius:10px;padding:12px;background:#fff}
+  .pilot-just-card label{display:block;font-weight:700;margin-bottom:7px;line-height:1.35}
+  .pilot-just-card textarea{width:100%;min-height:92px;box-sizing:border-box;resize:vertical;border:1px solid #c9c6bf;border-radius:7px;padding:9px;font:inherit;line-height:1.35}
+  .pilot-note{font-size:12px;color:#62676a;margin-top:5px}
+  .pilot-submit{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .pilot-submit-btn{background:#303538;color:#fff}
+  .pilot-submit-status{font-size:13px;color:#62676a}
+  @media(max-width:850px){.pilot-just-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<!-- Compatibilitat amb l'script original d'Oferta, que espera aquest element. -->
+<div id="hub-view" class="hidden" aria-hidden="true"></div>
+
 <section id="practice2a-view">
 <div class="app-shell">
 <header class="app-topbar">
@@ -14,8 +36,13 @@
 <a class="back-btn" href="../../index.html?area=economia">← Pràctiques</a>
 <div class="app-title">FUNCIÓ I CORBA D’OFERTA <small>Pràctica 2a · Model interactiu</small></div>
 </div>
-<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="supply-student-id" inputmode="numeric" value="6380"/></label>
+<div class="pilot-id-tools">
+<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="supply-student-id" inputmode="numeric" maxlength="6" placeholder="6 dígits"/></label>
+<button id="supply-validate-id" type="button">Validar ID</button>
+<span class="pilot-status" id="supply-id-status"></span>
+</div>
 </header>
+
 <main class="practice-layout compact-graph-layout">
 <div class="left-col">
 <section class="section">
@@ -32,6 +59,7 @@
 <div class="note">Un impost negatiu representa una subvenció.</div>
 <div class="model-actions"><button class="reset-model-btn" id="supply-reset-model" type="button">Restablir valors inicials</button></div>
 </section>
+
 <section class="section">
 <div class="section-head">RESULTATS DE L’OFERTA</div>
 <table aria-label="Resultats de l'oferta" class="result-table">
@@ -42,10 +70,12 @@
 </tbody>
 </table>
 </section>
+
 <section class="section">
 <div class="key-box"><strong>Idea clau</strong>Un canvi en el preu dels espaguetis mou la quantitat al llarg de la corba. Canvis en el salari, el preu de la salsa o l’impost desplacen la corba d’oferta.</div>
 </section>
 </div>
+
 <div class="center-col">
 <section aria-label="Corba d'oferta" class="chart-card compact-chart">
 <div class="chart-wrap"><svg aria-label="Corba d'oferta d'espaguetis" id="supply-chart" role="img"></svg></div>
@@ -55,14 +85,46 @@
 </div>
 </section>
 </div>
+
 <section class="questions-col">
 <div class="questions-title">PREGUNTES · respon directament aquí</div>
 <div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
 <div class="questions-body" id="supply-questions-body"></div>
 </section>
 </main>
+
+<section class="section pilot-justifications">
+<div class="section-head">JUSTIFICACIÓ · explica el raonament econòmic</div>
+<div class="pilot-just-grid">
+  <div class="pilot-just-card">
+    <label for="supply-just-1">1. Quan canvies només el preu dels espaguetis, per què diem que hi ha un moviment al llarg de la corba d’oferta i no un desplaçament de la corba?</label>
+    <textarea id="supply-just-1"></textarea>
+  </div>
+  <div class="pilot-just-card">
+    <label for="supply-just-2">2. A la pregunta 6, explica per què l’augment del preu de la salsa modifica l’oferta encara que el preu dels espaguetis es mantingui.</label>
+    <textarea id="supply-just-2"></textarea>
+  </div>
+  <div class="pilot-just-card">
+    <label for="supply-just-3">3. A les preguntes 8 i 9, explica què fa l’impost al preu net que rep el productor i com això afecta la quantitat ofertada.</label>
+    <textarea id="supply-just-3"></textarea>
+  </div>
+  <div class="pilot-just-card">
+    <label for="supply-just-4">4. A la pregunta 10, explica per què una subvenció per unitat desplaça l’oferta en sentit contrari a un impost.</label>
+    <textarea id="supply-just-4"></textarea>
+  </div>
+</div>
+<div class="pilot-note">No cal repetir els càlculs: justifica el mecanisme econòmic amb les teves paraules.</div>
+<div class="pilot-submit">
+  <button class="pilot-submit-btn" id="supply-submit" type="button">Entrega la pràctica</button>
+  <span class="pilot-submit-status" id="supply-submit-status"></span>
 </div>
 </section>
+
+</div>
+</section>
+
+<script src="../../tracking.js"></script>
 <script src="oferta.js"></script>
+<script src="oferta-pilot.js"></script>
 </body>
 </html>
