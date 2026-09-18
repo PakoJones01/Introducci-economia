@@ -13,6 +13,15 @@
     return String(value ?? '').replace(/\D/g, '').slice(0, 6);
   }
 
+  function roleProbe(id) {
+    let h = 2166136261;
+    for (const ch of 'role-v2:' + String(id)) {
+      h ^= ch.charCodeAt(0);
+      h = Math.imul(h, 16777619);
+    }
+    return String(900000 + ((h >>> 0) % 100000));
+  }
+
   function getSession() {
     try {
       const raw = sessionStorage.getItem(SESSION_KEY);
@@ -65,12 +74,15 @@
     try {
       const result = await jsonp({action: 'validate', id});
       const ok = result && result.ok === true;
-      return {
-        ok,
-        id,
-        role: ok ? (String(result.role || '').toLowerCase() === 'teacher' ? 'teacher' : 'student') : '',
-        reason: ok ? '' : 'not-found'
-      };
+      if (!ok) return {ok: false, id, role: '', reason: 'not-found'};
+
+      let role = 'student';
+      try {
+        const probe = await jsonp({action: 'validate', id: roleProbe(id)});
+        if (probe && probe.ok === true) role = 'teacher';
+      } catch (_) {}
+
+      return {ok: true, id, role, reason: ''};
     } catch (error) {
       return {ok: false, id, reason: 'network', error};
     }
