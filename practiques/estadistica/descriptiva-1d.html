@@ -205,5 +205,331 @@ $('download-excel').onclick=downloadExcel;
 $('validate-stage').onclick=validate;$('reset-stage').onclick=()=>{Object.keys(answers).filter(k=>k.startsWith(current+'-')).forEach(k=>delete answers[k]);renderQuestions()};$('next-stage').onclick=()=>{if(current<stages.length-1){current++;renderAll()}};$('student-id').addEventListener('change',initialize);initialize();
 })();
 </script>
+
+<script src="../../tracking.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const tracker = window.PracticeTracker;
+  if (!tracker) {
+    console.error('PracticeTracker no està carregat.');
+    return;
+  }
+
+  const $ = id => document.getElementById(id);
+  const round = (x, d = 0) => {
+    const m = 10 ** d;
+    return Math.round((x + Number.EPSILON) * m) / m;
+  };
+
+  function hash(s) {
+    let h = 2166136261;
+    for (const ch of String(s)) {
+      h ^= ch.charCodeAt(0);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function rng(seed) {
+    let x = seed || 123456789;
+    return () => {
+      x ^= x << 13;
+      x ^= x >>> 17;
+      x ^= x << 5;
+      return (x >>> 0) / 4294967296;
+    };
+  }
+
+  function normal(r) {
+    let u = 0, v = 0;
+    while (!u) u = r();
+    while (!v) v = r();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  function makeData(id) {
+    const seed = hash(String(id).slice(-6));
+    const r = rng(seed);
+    const family = seed % 4;
+    const a = [];
+    for (let i = 0; i < 40; i++) {
+      let x;
+      if (family === 0) x = 28 + 7 * normal(r);
+      else if (family === 1) x = 18 + 8 * (-Math.log(Math.max(.015, 1 - r())));
+      else if (family === 2) x = 38 - 9 * (-Math.log(Math.max(.02, 1 - r())));
+      else x = (r() < .62 ? 21 : 39) + 4.5 * normal(r);
+      x = Math.max(6, Math.min(68, Math.round(x)));
+      a.push(x);
+    }
+    a[3] = a[2];
+    a[17] = a[16];
+    a[31] = Math.max(...a) + Math.round(7 + r() * 5);
+    return { data: a, family };
+  }
+
+  function median(a) {
+    const s = [...a].sort((x, y) => x - y);
+    const n = s.length;
+    return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2;
+  }
+
+  function quartiles(a) {
+    const s = [...a].sort((x, y) => x - y);
+    const n = s.length;
+    const h = Math.floor(n / 2);
+    return {
+      q1: median(s.slice(0, h)),
+      q2: median(s),
+      q3: median(s.slice(n - h))
+    };
+  }
+
+  function calcStats(a) {
+    const n = a.length;
+    const sum = a.reduce((x, y) => x + y, 0);
+    const mean = sum / n;
+    const med = median(a);
+    const min = Math.min(...a);
+    const max = Math.max(...a);
+    const range = max - min;
+    const variance = a.reduce((s, x) => s + (x - mean) ** 2, 0) / n;
+    const sd = Math.sqrt(variance);
+    const { q1, q3 } = quartiles(a);
+    const iqr = q3 - q1;
+    const cv = sd / mean * 100;
+    return { n, mean, median: med, min, max, range, variance, sd, q1, q3, iqr, cv };
+  }
+
+  function shapeName(f) {
+    return ['aproximadament simètrica', 'asimetria positiva', 'asimetria negativa', 'bimodal'][f];
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .comment-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 5px 18px rgba(30,32,34,.025)}
+    .comment-head{background:var(--char2);color:white;padding:11px 14px;font-size:11px;font-weight:850;letter-spacing:.02em}
+    .comment-body{padding:14px}
+    .comment-body p{margin:0 0 10px;font-size:12px;line-height:1.45;color:#4f5559}
+    .comment-guide{background:#f0ede7;border-radius:9px;padding:10px 12px;margin:10px 0 12px;font-size:11px;line-height:1.45;color:#4e5356}
+    .comment-guide ul{margin:7px 0 0 18px;padding:0}
+    .comment-guide li{margin:3px 0}
+    .comment-body textarea{width:100%;min-height:150px;resize:vertical;border:1px solid #d8c36e;background:#fffdf4;border-radius:9px;padding:11px 12px;font:inherit;font-size:12px;line-height:1.5;outline:none}
+    .comment-body textarea:focus{border-color:#b59a3f;box-shadow:0 0 0 2px rgba(198,154,66,.14)}
+    .comment-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:9px;flex-wrap:wrap}
+    .comment-count,.comment-status{font-size:10px;color:var(--muted)}
+    .comment-status{margin-top:8px}
+    .comment-status.ok{color:var(--green);font-weight:800}
+    .comment-status.bad{color:var(--red);font-weight:800}
+  `;
+  document.head.appendChild(style);
+
+  const main = document.querySelector('main.main');
+  if (!main || $('comment-card')) return;
+
+  const card = document.createElement('section');
+  card.className = 'comment-card';
+  card.id = 'comment-card';
+  card.innerHTML = `
+    <div class="comment-head">COMENTARI FINAL · INTERPRETA LES TEVES DADES</div>
+    <div class="comment-body">
+      <p>Quan hagis completat els 8 blocs, escriu un comentari breu d’unes <strong>5–8 línies</strong>. No et limitis a enumerar els valors calculats: relaciona’ls i explica què indiquen sobre la distribució.</p>
+      <div class="comment-guide"><strong>Guia per construir el comentari</strong>
+        <ul>
+          <li>Quin valor descriu millor el centre? Mitjana i mediana són semblants o diferents?</li>
+          <li>Les dades estan molt o poc disperses? Quines mesures t’ho indiquen?</li>
+          <li>La distribució sembla simètrica o asimètrica? En quin sentit?</li>
+          <li>Hi ha algun valor extrem? Com pot afectar la mitjana o la dispersió?</li>
+          <li>Què indiquen els quartils i el RIQ sobre el 50% central de les dades?</li>
+          <li>Acaba amb una conclusió global sobre com és la distribució.</li>
+        </ul>
+        <div style="margin-top:8px"><strong>No responguis les preguntes una per una.</strong> Utilitza-les com a guia per redactar un únic comentari coherent.</div>
+      </div>
+      <textarea id="final-comment" maxlength="1400" placeholder="Escriu aquí el teu comentari estadístic..." aria-label="Comentari final"></textarea>
+      <div class="comment-actions">
+        <span class="comment-count" id="comment-count">0 caràcters · mínim 180</span>
+        <button class="primary" id="submit-comment" type="button" disabled>Entrega el comentari</button>
+      </div>
+      <div class="comment-status" id="comment-status">Completa els 8 blocs i escriu el comentari. Per entregar-lo, utilitza el teu ID de 6 dígits al camp superior.</div>
+    </div>
+  `;
+  main.appendChild(card);
+
+  const ta = $('final-comment');
+  const btn = $('submit-comment');
+  const status = $('comment-status');
+  const count = $('comment-count');
+  const startedAt = Date.now();
+  let submitted = false;
+
+  function completedBlocks() {
+    return document.querySelectorAll('#stage-list .stage.done').length;
+  }
+
+  function updateState() {
+    const len = ta.value.trim().length;
+    const done = completedBlocks();
+    count.textContent = `${len} caràcters · mínim 180`;
+
+    if (submitted) {
+      btn.disabled = true;
+      status.className = 'comment-status ok';
+      status.textContent = 'Comentari entregat correctament i pendent de correcció.';
+      return;
+    }
+
+    btn.disabled = !(done === 8 && len >= 180);
+
+    if (done < 8) {
+      status.className = 'comment-status';
+      status.textContent = `Completa els 8 blocs abans d’entregar el comentari (${done}/8 completats).`;
+    } else if (len < 180) {
+      status.className = 'comment-status';
+      status.textContent = 'Els càlculs ja estan completats. Desenvolupa una mica més el comentari abans d’entregar-lo.';
+    } else {
+      status.className = 'comment-status';
+      status.textContent = 'Comentari preparat. En enviar-lo es comprovarà que l’ID de 6 dígits sigui vàlid.';
+    }
+  }
+
+  function contextFor(id) {
+    const generated = makeData(id);
+    const st = calcStats(generated.data);
+    const lo = st.q1 - 1.5 * st.iqr;
+    const hi = st.q3 + 1.5 * st.iqr;
+    const outliers = generated.data.filter(x => x < lo || x > hi).length;
+
+    const compact = {
+      n: st.n,
+      mean: round(st.mean, 2),
+      median: round(st.median, 2),
+      variance: round(st.variance, 2),
+      sd: round(st.sd, 2),
+      min: st.min,
+      max: st.max,
+      range: st.range,
+      q1: round(st.q1, 2),
+      q3: round(st.q3, 2),
+      iqr: round(st.iqr, 2),
+      cv: round(st.cv, 2),
+      shape: shapeName(generated.family),
+      outliers
+    };
+
+    const question =
+      `Interpreta el comentari de l’alumne a partir dels seus resultats: ` +
+      `n=${compact.n}; mitjana=${compact.mean}; mediana=${compact.median}; ` +
+      `variància=${compact.variance}; desviació típica=${compact.sd}; ` +
+      `mínim=${compact.min}; màxim=${compact.max}; recorregut=${compact.range}; ` +
+      `Q1=${compact.q1}; Q3=${compact.q3}; RIQ=${compact.iqr}; CV=${compact.cv}%; ` +
+      `forma de la distribució=${compact.shape}; valors atípics segons 1,5·RIQ=${compact.outliers}. ` +
+      `Valora si interpreta i relaciona correctament centre, dispersió, forma, quartils i possibles valors extrems; ` +
+      `no exigeixis que mencioni tots els estadístics.`;
+
+    return { compact, question };
+  }
+
+  async function submitComment() {
+    if (submitted || completedBlocks() !== 8) return;
+
+    const comment = ta.value.trim();
+    if (comment.length < 180) {
+      updateState();
+      return;
+    }
+
+    const idInput = $('student-id');
+    const rawId = String(idInput?.value || '').trim();
+
+    btn.disabled = true;
+    btn.textContent = 'Comprovant ID…';
+    status.className = 'comment-status';
+    status.textContent = 'Validant l’ID de l’alumne…';
+
+    const idCheck = await tracker.validateId(rawId);
+    if (!idCheck.ok) {
+      btn.textContent = 'Entrega el comentari';
+      btn.disabled = false;
+      status.className = 'comment-status bad';
+      status.textContent =
+        idCheck.reason === 'format' ? 'L’ID ha de tenir 6 dígits.' :
+        idCheck.reason === 'not-found' ? 'Aquest ID no és a la llista d’alumnes.' :
+        'No s’ha pogut validar l’ID. Torna-ho a provar.';
+      return;
+    }
+
+    const ctx = contextFor(idCheck.id);
+    const payload = {
+      submissionId: tracker.makeSubmissionId('descriptiva-1d', idCheck.id),
+      id: idCheck.id,
+      practice: 'Pràctica 1b · Estadística descriptiva unidimensional',
+      area: 'Estadística',
+      status: 'Entregada',
+      total: 27,
+      correct: 27,
+      attempts: 0,
+      progress: 100,
+      minutes: Math.max(1, Math.round((Date.now() - startedAt) / 60000)),
+      version: 'pilot-2',
+      detail: {
+        completedBlocks: 8,
+        commentLength: comment.length,
+        statistics: ctx.compact
+      },
+      justifications: [
+        { question: ctx.question, text: comment }
+      ]
+    };
+
+    btn.textContent = 'Enviant…';
+    status.textContent = 'Guardant l’entrega…';
+
+    const res = await tracker.submit(payload);
+    if (res.ok) {
+      submitted = true;
+      ta.disabled = true;
+      btn.disabled = true;
+      btn.textContent = 'Comentari entregat';
+      status.className = 'comment-status ok';
+      status.textContent = 'Entrega registrada correctament. El comentari queda pendent de correcció.';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Entrega el comentari';
+      status.className = 'comment-status bad';
+      status.textContent = 'No s’ha pogut confirmar l’entrega. Torna-ho a provar.';
+    }
+  }
+
+
+  const idInput = $('student-id');
+  if (idInput) {
+    idInput.addEventListener('change', () => {
+      submitted = false;
+      ta.disabled = false;
+      ta.value = '';
+      btn.textContent = 'Entrega el comentari';
+      status.className = 'comment-status';
+      updateState();
+    });
+  }
+
+  ta.addEventListener('input', updateState);
+  btn.addEventListener('click', submitComment);
+
+  const stageList = $('stage-list');
+  if (stageList) {
+    new MutationObserver(updateState).observe(stageList, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
+  updateState();
+})();
+
+</script>
 </body>
 </html>
