@@ -3,10 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pràctiques interactives</title>
+<title>Materials de l'assignatura</title>
 <link rel="stylesheet" href="styles.css" />
 <style>
 .portal-link{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.hub-marks{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+#content-mark{background:var(--accent)}
+#content-mark:hover{background:#245e54}
+@media(max-width:720px){.hub-hero{align-items:flex-start}.hub-marks{gap:8px}.hub-mark{width:52px;height:52px;border-radius:14px}}
 </style>
 </head>
 <body>
@@ -19,7 +23,10 @@
         <div class="hub-sub" id="hub-sub"></div>
         <div class="portal-area-note" id="area-note"></div>
       </div>
-      <button class="hub-mark" id="area-mark" type="button" title="Canvia a Estadística" aria-label="Canvia a Estadística">E</button>
+      <div class="hub-marks" aria-label="Selectors del portal">
+        <button class="hub-mark" id="area-mark" type="button" title="Canvia a Estadística" aria-label="Canvia a Estadística">E</button>
+        <button class="hub-mark" id="content-mark" type="button" title="Canvia a Apunts" aria-label="Canvia a Apunts">P</button>
+      </div>
     </div>
     <div class="practice-grid" id="practice-grid"></div>
   </div>
