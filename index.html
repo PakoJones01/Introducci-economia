@@ -3,19 +3,32 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Materials de l'assignatura</title>
+<title>Aula Interactiva</title>
 <link rel="stylesheet" href="styles.css" />
-<style>
-.portal-link{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-.hub-marks{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-#content-mark{background:var(--accent)}
-#content-mark:hover{background:#245e54}
-@media(max-width:720px){.hub-hero{align-items:flex-start}.hub-marks{gap:8px}.hub-mark{width:52px;height:52px;border-radius:14px}}
-</style>
 </head>
 <body>
-<section id="hub-view">
+<section id="login-view" class="login-view">
+  <div class="login-card">
+    <div class="login-kicker">AULA INTERACTIVA</div>
+    <h1>Portal de l’assignatura</h1>
+    <p>Introdueix el teu codi personal per accedir als materials i a les pràctiques.</p>
+    <label class="login-label" for="login-id">Codi d’alumne</label>
+    <div class="login-row">
+      <input id="login-id" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="6 dígits" aria-label="Codi d'alumne" />
+      <button id="login-button" type="button">Entrar</button>
+    </div>
+    <div id="login-status" class="login-status" aria-live="polite"></div>
+    <div class="login-note">El teu codi és personal. No el comparteixis.</div>
+  </div>
+</section>
+
+<section id="hub-view" class="hidden">
   <div class="hub-shell">
+    <div class="session-bar">
+      <span id="session-role">Alumne</span>
+      <strong id="session-id"></strong>
+      <button id="logout-button" type="button">Sortir</button>
+    </div>
     <div class="hub-hero">
       <div>
         <div class="hub-eyebrow" id="hub-eyebrow">Introducció a l'economia</div>
@@ -31,6 +44,8 @@
     <div class="practice-grid" id="practice-grid"></div>
   </div>
 </section>
+
+<script src="tracking.js"></script>
 <script src="portal.js"></script>
 </body>
 </html>

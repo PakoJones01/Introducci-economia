@@ -1,8 +1,9 @@
 (() => {
   'use strict';
 
+  const tracker = window.PracticeTracker;
   const fallbackPractiques = {
-    versio: 1,
+    versio: 2,
     arees: {
       economia: {
         nom: 'Economia', simbol: 'E', eyebrow: "Introducció a l'economia",
@@ -42,11 +43,7 @@
     }
   };
 
-  const configs = {
-    practiques: fallbackPractiques,
-    apunts: fallbackApunts
-  };
-
+  const configs = {practiques: fallbackPractiques, apunts: fallbackApunts};
   const qs = new URLSearchParams(location.search);
   let area = qs.get('area') === 'estadistica' ? 'estadistica' : 'economia';
   let mode = qs.get('mode') === 'apunts' ? 'apunts' : 'practiques';
@@ -56,18 +53,79 @@
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 
-  function saveState(){
+  function setLoginStatus(kind, text) {
+    const el = $('login-status');
+    el.className = 'login-status ' + (kind || '');
+    el.textContent = text || '';
+  }
+
+  function normalizeLoginInput() {
+    const input = $('login-id');
+    input.value = tracker.normalizeId(input.value);
+    return input.value;
+  }
+
+  function saveState() {
     const u = new URL(location.href);
     u.searchParams.set('area', area);
     u.searchParams.set('mode', mode);
+    u.searchParams.delete('next');
     history.replaceState(null, '', u);
   }
 
-  function render(){
+  function showPortal(session) {
+    $('login-view').classList.add('hidden');
+    $('hub-view').classList.remove('hidden');
+    $('session-role').textContent = session.role === 'teacher' ? 'Professor' : 'ID';
+    $('session-id').textContent = session.id;
+    render();
+  }
+
+  function showLogin() {
+    $('hub-view').classList.add('hidden');
+    $('login-view').classList.remove('hidden');
+    $('login-id').focus();
+  }
+
+  async function handleLogin() {
+    const id = normalizeLoginInput();
+    $('login-button').disabled = true;
+    setLoginStatus('checking', 'Comprovant codi…');
+
+    const result = await tracker.login(id);
+    $('login-button').disabled = false;
+
+    if (!result.ok) {
+      setLoginStatus(
+        'bad',
+        result.reason === 'format' ? 'El codi ha de tenir 6 dígits.' :
+        result.reason === 'not-found' ? 'Aquest codi no correspon a cap alumne.' :
+        'No s’ha pogut validar el codi. Torna-ho a provar.'
+      );
+      return;
+    }
+
+    setLoginStatus('ok', 'Codi correcte · entrant…');
+    const next = qs.get('next');
+    if (next && next.startsWith('/')) {
+      setTimeout(() => { location.href = next; }, 180);
+      return;
+    }
+    setTimeout(() => showPortal(result.session), 120);
+  }
+
+  function render() {
+    const session = tracker.getSession();
+    if (!session) {
+      showLogin();
+      return;
+    }
+
+    const teacher = session.role === 'teacher';
     const isApunts = mode === 'apunts';
     const config = configs[mode] || (isApunts ? fallbackApunts : fallbackPractiques);
     const a = config.arees?.[area] || config.arees?.economia;
-    if(!a) return;
+    if (!a) return;
 
     $('hub-eyebrow').textContent = a.eyebrow || a.nom || '';
     $('hub-title').textContent = a.titol || (isApunts ? 'Apunts' : 'Pràctiques interactives');
@@ -86,48 +144,76 @@
     $('area-note').textContent = `${a.nom} · ${isApunts ? 'Apunts' : 'Pràctiques'} · ${a.simbol} canvia l’àrea · ${isApunts ? 'A' : 'P'} canvia Apunts/Pràctiques`;
 
     const source = isApunts ? (a.apunts || []) : (a.practiques || []);
-    const list = source.filter(p => p.visible !== false).sort((x,y) => (x.ordre || 0) - (y.ordre || 0));
+    const list = source
+      .filter(p => p.visible !== false)
+      .sort((x, y) => (x.ordre || 0) - (y.ordre || 0));
     const grid = $('practice-grid');
 
-    if(!list.length){
+    if (!list.length) {
       grid.innerHTML = `<div class="portal-empty">${isApunts ? 'Encara no hi ha apunts publicats en aquesta àrea.' : 'No hi ha pràctiques visibles en aquesta àrea.'}</div>`;
       return;
     }
 
     grid.innerHTML = list.map(p => {
-      const available = p.disponible === true;
-      const status = available ? 'Disponible' : 'Properament';
+      const published = p.disponible === true;
+      const canOpen = published || teacher;
+      const preview = teacher && !published;
+      const status = preview ? 'Professor' : published ? 'Disponible' : 'Properament';
 
       let buttons = '';
-      if(isApunts){
-        buttons = available
-          ? `<a class="open-btn portal-link" href="${esc(p.fitxer)}" target="_blank" rel="noopener">Obrir apunts</a>`
-          : `<button class="open-btn" disabled>Obrir apunts</button>`;
+      if (isApunts) {
+        buttons = canOpen
+          ? `<a class="open-btn portal-link material-link" data-title="${esc(p.titol)}" data-area="${esc(a.nom)}" href="${esc(p.fitxer)}" target="_blank" rel="noopener">Obrir apunts</a>`
+          : '<button class="open-btn" disabled>Obrir apunts</button>';
       } else {
         const pdfBtn = p.pdf
-          ? (available
-              ? `<a class="pdf-btn portal-link" href="${esc(p.pdf)}" target="_blank" rel="noopener">Veure PDF</a>`
-              : `<button class="pdf-btn" disabled>Veure PDF</button>`)
+          ? (canOpen
+              ? `<a class="pdf-btn portal-link material-link" data-title="${esc(p.titol)} · PDF" data-area="${esc(a.nom)}" href="${esc(p.pdf)}" target="_blank" rel="noopener">Veure PDF</a>`
+              : '<button class="pdf-btn" disabled>Veure PDF</button>')
           : '';
-        const openBtn = available
+        const openBtn = canOpen
           ? `<a class="open-btn portal-link" href="${esc(p.fitxer)}">Obrir pràctica</a>`
-          : `<button class="open-btn" disabled>Obrir pràctica</button>`;
-        buttons = `${pdfBtn}${openBtn}`;
+          : '<button class="open-btn" disabled>Obrir pràctica</button>';
+        buttons = pdfBtn + openBtn;
       }
 
-      return `<article class="practice-card ${available ? 'active' : 'disabled'}">
+      return `<article class="practice-card ${canOpen ? 'active' : 'disabled'} ${preview ? 'teacher-preview' : ''}">
         <div>
           <div class="card-kicker">${esc(p.codi)} · ${status}</div>
           <div class="card-title">${esc(p.titol)}</div>
           <div class="card-desc">${esc(p.descripcio)}</div>
         </div>
         <div class="card-action">
-          <span class="status-pill ${available ? 'available' : ''}">${status}</span>
+          <span class="status-pill ${published ? 'available' : ''} ${preview ? 'teacher' : ''}">${status}</span>
           <div class="action-buttons">${buttons}</div>
         </div>
       </article>`;
     }).join('');
+
+    grid.querySelectorAll('.material-link').forEach(link => {
+      link.addEventListener('click', () => {
+        tracker.logActivity('OPEN_MATERIAL', {
+          practice: link.dataset.title || 'Material',
+          area: link.dataset.area || a.nom,
+          title: link.dataset.title || ''
+        });
+      });
+    });
   }
+
+  $('login-id').addEventListener('input', normalizeLoginInput);
+  $('login-id').addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleLogin();
+    }
+  });
+  $('login-button').addEventListener('click', handleLogin);
+
+  $('logout-button').addEventListener('click', () => {
+    tracker.logout();
+    location.href = 'index.html';
+  });
 
   $('area-mark').addEventListener('click', () => {
     area = area === 'economia' ? 'estadistica' : 'economia';
@@ -142,14 +228,22 @@
   });
 
   fetch('practiques.json', {cache:'no-store'})
-    .then(r => { if(!r.ok) throw new Error('practiques'); return r.json(); })
-    .then(c => { if(c?.arees) configs.practiques = c; render(); })
+    .then(r => { if (!r.ok) throw new Error('practiques'); return r.json(); })
+    .then(c => { if (c?.arees) configs.practiques = c; render(); })
     .catch(() => render());
 
   fetch('apunts.json', {cache:'no-store'})
-    .then(r => { if(!r.ok) throw new Error('apunts'); return r.json(); })
-    .then(c => { if(c?.arees) configs.apunts = c; render(); })
+    .then(r => { if (!r.ok) throw new Error('apunts'); return r.json(); })
+    .then(c => { if (c?.arees) configs.apunts = c; render(); })
     .catch(() => render());
 
-  render();
+  const session = tracker.getSession();
+  if (session) {
+    showPortal(session);
+    if (session.role === 'student') {
+      tracker.logActivity('OPEN_PORTAL', {practice: 'Portal', area: 'Sistema', title: 'Aula Interactiva'});
+    }
+  } else {
+    showLogin();
+  }
 })();

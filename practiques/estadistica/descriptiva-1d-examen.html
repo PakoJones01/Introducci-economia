@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pràctica 1c · Estadística descriptiva unidimensional</title>
+<style>
+:root{--bg:#f2efe9;--paper:#fbfaf7;--ink:#222629;--muted:#6d7377;--line:#d8d3ca;--char:#41474b;--char2:#596065;--green:#28643f;--greenbg:#e7f4eb;--red:#8e342d;--redbg:#f8e7e4;--input:#fff0b8;--accent:#2c6f62}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}button,input,select,textarea{font:inherit}.hidden{display:none!important}
+.top{background:var(--char);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800}.title{font-size:19px;font-weight:850}.sub{font-size:10.5px;color:#d7dbdd;margin-top:3px}.who{font-size:11px;color:#d7dbdd}.who strong{color:#fff}
+.shell{max-width:1180px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}.head{background:var(--char2);color:#fff;padding:10px 13px;font-size:11px;font-weight:850;letter-spacing:.02em}.body{padding:14px}.intro{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.intro h1{font-size:25px;margin:0 0 7px}.intro p{font-size:12px;line-height:1.5;color:var(--muted);margin:0;max-width:760px}.tag{border:1px solid #c6c0b5;border-radius:999px;padding:7px 10px;font-size:10.5px;font-weight:850;color:#555;background:#fff}
+.exam-note{background:#f0ede7;border-radius:9px;padding:10px 12px;font-size:11px;line-height:1.45;color:#4e5356}.exam-note strong{color:#272c2f}.data-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;margin-top:10px}.datum{background:#fff;border:1px solid #e2ddd4;border-radius:6px;padding:6px;text-align:center;font-size:11px;font-weight:750}
+.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:8px;padding:9px 11px;font-weight:800;cursor:pointer}.btn.primary{background:var(--char);color:#fff}.btn.secondary{background:#f7fbf9;color:#285f55;border:1px solid #b9cfc8}.btn:disabled{opacity:.45;cursor:default}.file{font-size:11px}.filemsg{font-size:10.5px;color:var(--muted)}
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.q{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}.q label{display:block;font-size:11px;line-height:1.35;font-weight:700;margin-bottom:7px}.q input,.q select{width:100%;border:1px solid #dfca77;background:var(--input);border-radius:7px;padding:8px;outline:none;font-size:11px;font-weight:750}.q input:focus,.q select:focus{border-color:#b99c35;background:#ffe8a0}.q small{display:block;margin-top:5px;color:var(--muted);font-size:9.5px}.wide{grid-column:1/-1}.wide textarea{width:100%;min-height:155px;resize:vertical;border:1px solid #dfca77;background:#fffdf4;border-radius:8px;padding:10px;font-size:11.5px;line-height:1.5;outline:none}.count{font-size:10px;color:var(--muted);margin-top:5px;text-align:right}
+.submitbox{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.submitstatus{font-size:11px;color:var(--muted);line-height:1.4}.submitstatus.ok{color:var(--green);font-weight:800}.submitstatus.bad{color:var(--red);font-weight:800}.score{background:#eef4f1;border:1px solid #bdd4cb;border-radius:10px;padding:10px 12px;font-size:12px;color:#2e6458}.score strong{font-size:18px}
+@media(max-width:760px){.qgrid{grid-template-columns:1fr}.intro{grid-template-columns:1fr}.data-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">UNIDIMENSIONAL · RESOLUCIÓ AUTÒNOMA</div><div class="sub">Pràctica 1c · nivell examen</div></div></div>
+  <div class="who">Sessió: <strong id="student-code">—</strong></div>
+</header>
+<main class="shell">
+  <section class="card"><div class="body intro"><div><h1>Analitza la mostra i defensa les conclusions</h1><p>Treballa com ho faries en un examen. No hi ha pistes ni correcció durant la resolució. Pots utilitzar Excel per calcular i representar les dades. La correcció automàtica només s’executa quan entregues.</p></div><div class="tag">APRENC → APLICO → DEMOSTRO</div></div></section>
+
+  <section class="card"><div class="head">CAS I DADES</div><div class="body">
+    <div class="exam-note"><strong>Context.</strong> Les dades representen el temps, en minuts, que ha necessitat una mostra d’estudiants per completar una tasca. Analitza la distribució, identifica les mesures adequades i justifica les conclusions. No cal seguir cap ordre concret a Excel.</div>
+    <div class="data-grid" id="data-grid"></div>
+    <div class="actions"><button class="btn secondary" id="download-excel" type="button">↓ Descarrega el teu Excel</button><span class="filemsg">El fitxer conté DADES, ENTREGA i un full lliure d’ANÀLISI.</span></div>
+  </div></section>
+
+  <section class="card"><div class="head">RESPOSTES · SENSE CORRECCIÓ INTERMÈDIA</div><div class="body"><div class="qgrid" id="questions"></div></div></section>
+
+  <section class="card"><div class="head">FITXER EXCEL</div><div class="body">
+    <div class="exam-note">Adjunta el fitxer que has utilitzat. Es comprovarà només en el moment d’entregar: conservació de les dades, ús de fórmules, coherència dels resultats i existència d’almenys un gràfic.</div>
+    <div class="actions"><input class="file" id="excel-upload" type="file" accept=".xlsx,.xlsm"><span class="filemsg" id="filemsg">Encara no has seleccionat cap fitxer.</span></div>
+  </div></section>
+
+  <section class="card"><div class="head">COMENTARI FINAL</div><div class="body">
+    <div class="q wide"><label for="final-comment">Redacta una conclusió global de 5–8 línies sobre centre, dispersió, forma i possibles valors atípics. Justifica quina mesura de centre consideres més representativa.</label><textarea id="final-comment" maxlength="1600" placeholder="Escriu una conclusió coherent, no una llista de resultats."></textarea><div class="count" id="comment-count">0 caràcters · mínim 180</div></div>
+  </div></section>
+
+  <section class="card"><div class="body submitbox"><div class="submitstatus" id="submit-status">Completa totes les respostes, adjunta l’Excel i escriu el comentari abans d’entregar.</div><button class="btn primary" id="submit" type="button">Entrega la pràctica</button></div></section>
+  <section class="score hidden" id="score-box"></section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="../../tracking.js"></script>
+<script>
+(() => {
+'use strict';
+const tracker=window.PracticeTracker,$=id=>document.getElementById(id);
+let dataset=[],family=0,stats=null,qdefs=[],selectedFile=null,submitted=false,startedAt=Date.now();
+
+function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let x=seed||123456789;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return(x>>>0)/4294967296}}
+function normal(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function median(a){const s=[...a].sort((x,y)=>x-y),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2}
+function quartiles(a){const s=[...a].sort((x,y)=>x-y),h=Math.floor(s.length/2);return{q1:median(s.slice(0,h)),q2:median(s),q3:median(s.slice(s.length-h))}}
+function uniqueMode(a){const c={};a.forEach(x=>c[x]=(c[x]||0)+1);const max=Math.max(...Object.values(c)),modes=Object.keys(c).filter(k=>c[k]===max).map(Number);return{value:modes[0],count:max,unique:modes.length===1}}
+function makeData(id){
+  const seed=hash(id+'-exam-1c'),r=rng(seed);family=seed%3;const a=[];
+  for(let i=0;i<48;i++){
+    let x;if(family===0)x=31+6.5*normal(r);else if(family===1)x=17+7.5*(-Math.log(Math.max(.02,1-r())));else x=49-7.5*(-Math.log(Math.max(.02,1-r())));
+    a.push(Math.max(8,Math.min(68,Math.round(x))));
+  }
+  const target=Math.max(12,Math.min(58,Math.round(median(a))));
+  for(let i=0;i<6;i++)a[i]=target;
+  for(let guard=0;guard<20;guard++){
+    const counts={};a.forEach(x=>counts[x]=(counts[x]||0)+1);let changed=false;
+    Object.entries(counts).forEach(([k,n])=>{const v=Number(k);if(v!==target&&n>=6){let need=n-5;for(let i=6;i<a.length&&need>0;i++){if(a[i]===v){a[i]=Math.min(68,Math.max(8,v+(i%2?1:-1)));need--;changed=true}}}});
+    if(!changed)break;
+  }
+  if(family===1)a[a.length-1]=Math.min(85,Math.max(...a)+14);if(family===2)a[a.length-1]=Math.max(2,Math.min(...a)-14);
+  return a;
+}
+function calc(a){const n=a.length,sum=a.reduce((s,x)=>s+x,0),mean=sum/n,med=median(a),min=Math.min(...a),max=Math.max(...a),variance=a.reduce((s,x)=>s+(x-mean)**2,0)/n,sd=Math.sqrt(variance),{q1,q3}=quartiles(a),iqr=q3-q1,lo=q1-1.5*iqr,hi=q3+1.5*iqr,mode=uniqueMode(a),out=a.filter(x=>x<lo||x>hi);return{n,mean,median:med,min,max,range:max-min,variance,sd,q1,q3,iqr,lo,hi,mode:mode.value,modeCount:mode.count,outliers:out}}
+function round(x,d=2){const m=10**d;return Math.round((x+Number.EPSILON)*m)/m}
+function parseNum(v){let s=String(v??'').trim().replace(/\s/g,'');if(!s)return NaN;if(s.includes(',')&&s.includes('.'))s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'');else s=s.replace(',','.');return Number(s)}
+function fmt(x,d=2){return Number(x).toLocaleString('ca-ES',{minimumFractionDigits:d,maximumFractionDigits:d})}
+
+function buildQuestions(){
+  const start=Math.floor(stats.q1/5)*5,end=start+10,threshold=Math.round(stats.median),freq=dataset.filter(x=>x>=start&&x<end).length,cum=dataset.filter(x=>x<=threshold).length/dataset.length*100;
+  const shape=['Aproximadament simètrica','Asimetria positiva','Asimetria negativa'][family];
+  qdefs=[
+    {q:'1. Quin tipus de variable és el temps de resolució?',type:'select',a:'Quantitativa contínua',opts:['Qualitativa nominal','Quantitativa discreta','Quantitativa contínua']},
+    {q:'2. Nombre d’observacions (n).',type:'num',a:stats.n,tol:.001},
+    {q:`3. Freqüència absoluta de l’interval [${start}, ${end}).`,type:'num',a:freq,tol:.001},
+    {q:`4. Freqüència relativa acumulada fins a ${threshold} min inclosos (%).`,type:'num',a:cum,tol:.06},
+    {q:'5. Mitjana (2 decimals).',type:'num',a:stats.mean,tol:.011},
+    {q:'6. Mediana.',type:'num',a:stats.median,tol:.011},
+    {q:'7. Moda.',type:'num',a:stats.mode,tol:.001},
+    {q:'8. Variància descriptiva, dividint per n (2 decimals).',type:'num',a:stats.variance,tol:.02},
+    {q:'9. Desviació típica descriptiva (2 decimals).',type:'num',a:stats.sd,tol:.02},
+    {q:'10. Primer quartil Q1.',type:'num',a:stats.q1,tol:.011},
+    {q:'11. Tercer quartil Q3.',type:'num',a:stats.q3,tol:.011},
+    {q:'12. Recorregut interquartílic (RIQ).',type:'num',a:stats.iqr,tol:.011},
+    {q:'13. Límit inferior per detectar valors atípics amb 1,5·RIQ.',type:'num',a:stats.lo,tol:.02},
+    {q:'14. Límit superior per detectar valors atípics amb 1,5·RIQ.',type:'num',a:stats.hi,tol:.02},
+    {q:'15. Nombre de valors atípics segons el criteri 1,5·RIQ.',type:'num',a:stats.outliers.length,tol:.001},
+    {q:'16. Quina forma descriu millor la distribució?',type:'select',a:shape,opts:['Aproximadament simètrica','Asimetria positiva','Asimetria negativa','Bimodal']},
+    {q:'17. Si vols reduir l’efecte dels valors atípics, quina mesura de centre és més robusta?',type:'select',a:'Mediana',opts:['Mitjana','Mediana','Moda']},
+    {q:'18. Si substituïm una observació central per un valor molt alt, què passarà habitualment?',type:'select',a:'La mitjana augmentarà més que la mediana',opts:['La mitjana augmentarà més que la mediana','La mediana augmentarà més que la mitjana','Mitjana i mediana canviaran exactament igual']}
+  ];
+}
+function renderData(){$('data-grid').innerHTML=dataset.map((x,i)=>`<div class="datum"><span style="color:#8a8e91;font-weight:500">${i+1}</span><br>${x}</div>`).join('')}
+function renderQuestions(){$('questions').innerHTML=qdefs.map((d,i)=>{let c;if(d.type==='select')c=`<select id="ans-${i}"><option value="">— Tria —</option>${d.opts.map(o=>`<option>${o}</option>`).join('')}</select>`;else c=`<input id="ans-${i}" inputmode="decimal" placeholder="Resposta">`;return`<div class="q"><label for="ans-${i}">${d.q}</label>${c}</div>`}).join('')}
+
+function makeWorkbook(){
+  if(!window.XLSX)return;
+  const id=tracker.getSession()?.id||'';
+  const data=[['Pràctica 1c · Estadística descriptiva unidimensional'],[],['ID alumne',id],[],['Observació','Temps de resolució (min)'],...dataset.map((v,i)=>[i+1,v])];
+  const entrega=[['ENTREGA · resultats finals'],['Utilitza fórmules o referències sempre que sigui possible.'],[],['Mesura','Resultat'],['n',''],['Mitjana',''],['Mediana',''],['Moda',''],['Variància descriptiva',''],['Desviació típica',''],['Q1',''],['Q3',''],['RIQ',''],['Límit inferior 1,5·RIQ',''],['Límit superior 1,5·RIQ',''],['Nombre de valors atípics','']];
+  const analysis=[['ANÀLISI LLIURE'],['Construeix aquí la taula de freqüències i els càlculs que necessitis. Crea també un gràfic adequat.']];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(data),'DADES');XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(entrega),'ENTREGA');XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(analysis),'ANALISI');
+  wb.Sheets.DADES['!cols']=[{wch:12},{wch:27}];wb.Sheets.ENTREGA['!cols']=[{wch:30},{wch:18}];wb.Sheets.ANALISI['!cols']=[{wch:90}];XLSX.writeFile(wb,`estadistica_1c_${id}.xlsx`);
+}
+
+function checkAnswer(d,v){if(d.type==='select')return String(v||'')===d.a;const x=parseNum(v);return Number.isFinite(x)&&Math.abs(x-d.a)<=d.tol}
+async function inspectWorkbook(){
+  const report={readable:false,dataPreserved:false,formulaCount:0,excelCorrect:0,excelTotal:12,chart:false};if(!selectedFile||!window.XLSX)return report;
+  const buf=await selectedFile.arrayBuffer();try{
+    const wb=XLSX.read(buf,{type:'array',cellFormula:true});const d=wb.Sheets.DADES,e=wb.Sheets.ENTREGA;if(!d||!e)return report;report.readable=true;
+    report.dataPreserved=dataset.every((v,i)=>Number(d['B'+(i+6)]?.v)===v);
+    const expected=[stats.n,stats.mean,stats.median,stats.mode,stats.variance,stats.sd,stats.q1,stats.q3,stats.iqr,stats.lo,stats.hi,stats.outliers.length];
+    for(let i=0;i<12;i++){const cell=e['B'+(i+5)];if(cell?.f)report.formulaCount++;const x=Number(cell?.v);const tol=(i===0||i===3||i===11)?0.001:0.03;if(Number.isFinite(x)&&Math.abs(x-expected[i])<=tol)report.excelCorrect++}
+    if(window.JSZip){const zip=await JSZip.loadAsync(buf);report.chart=Object.keys(zip.files).some(n=>/^xl\/charts\/chart\d+\.xml$/i.test(n))}
+  }catch(_){}return report;
+}
+
+async function submitExam(){
+  if(submitted)return;const values=qdefs.map((_,i)=>String($('ans-'+i)?.value||'').trim()),comment=$('final-comment').value.trim();
+  if(values.some(v=>!v)){setStatus('bad','Falten respostes. Revisa el formulari abans d’entregar.');return}if(!selectedFile){setStatus('bad','Adjunta el fitxer Excel abans d’entregar.');return}if(comment.length<180){setStatus('bad','El comentari final ha de tenir com a mínim 180 caràcters.');return}
+  $('submit').disabled=true;$('submit').textContent='Corregint…';setStatus('','Analitzant les respostes i el fitxer Excel…');
+  const workbook=await inspectWorkbook();if(!workbook.readable){$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut llegir l’Excel. Desa’l com a .xlsx o .xlsm i torna-ho a provar.');return}
+  const detail=qdefs.map((d,i)=>({question:i+1,answer:values[i],correct:checkAnswer(d,values[i])})),correct=detail.filter(x=>x.correct).length;
+  const objectiveScore=correct/qdefs.length*7;const excelScore=(workbook.dataPreserved?.4:0)+(Math.min(workbook.formulaCount,8)/8*.8)+(workbook.excelCorrect/workbook.excelTotal*.5)+(workbook.chart?.3:0);const autoScore=Math.round((objectiveScore+excelScore)*100)/100;
+  const id=tracker.getSession()?.id||'';const shape=['aproximadament simètrica','asimetria positiva','asimetria negativa'][family];
+  const payload={submissionId:tracker.makeSubmissionId('descriptiva-1d-examen',id),id,practice:'Pràctica 1c · Estadística descriptiva unidimensional',area:'Estadística',status:'Entregada',total:qdefs.length,correct,attempts:1,progress:100,minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'exam-1',detail:{autoScoreOutOf9:autoScore,objectiveCorrect:correct,objectiveTotal:qdefs.length,workbook,statistics:{mean:round(stats.mean),median:stats.median,variance:round(stats.variance),sd:round(stats.sd),q1:stats.q1,q3:stats.q3,iqr:stats.iqr,outliers:stats.outliers,shape},answers:detail},justifications:[{question:`Valora el comentari final de la pràctica 1c. La distribució és ${shape}; mitjana=${round(stats.mean)}; mediana=${stats.median}; desviació típica=${round(stats.sd)}; Q1=${stats.q1}; Q3=${stats.q3}; RIQ=${stats.iqr}; valors atípics=${stats.outliers.length}. Avalua si interpreta de manera coherent centre, dispersió, forma, outliers i l’elecció de la mesura de centre. Aquesta part val 1 punt.`,text:comment}]};
+  $('submit').textContent='Enviant…';setStatus('','Guardant l’entrega i la correcció inicial…');const res=await tracker.submit(payload);
+  if(res.ok){submitted=true;document.querySelectorAll('#questions input,#questions select,#final-comment,#excel-upload').forEach(x=>x.disabled=true);$('submit').disabled=true;$('submit').textContent='Pràctica entregada';setStatus('ok',res.teacher?'Mode professor: correcció simulada; no s’ha registrat cap entrega.':'Entrega registrada correctament.');$('score-box').classList.remove('hidden');$('score-box').innerHTML=`<strong>${fmt(autoScore,2)} / 9</strong> · correcció automàtica inicial. El comentari final s’ha enviat també a la primera correcció amb IA (1 punt).`}
+  else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut confirmar l’entrega. Torna-ho a provar.')}
+}
+function setStatus(kind,text){$('submit-status').className='submitstatus '+(kind||'');$('submit-status').textContent=text}
+function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;dataset=makeData(s.id);stats=calc(dataset);buildQuestions();renderData();renderQuestions();$('download-excel').addEventListener('click',makeWorkbook);$('excel-upload').addEventListener('change',e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Encara no has seleccionat cap fitxer.'});$('final-comment').addEventListener('input',()=>{$('comment-count').textContent=`${$('final-comment').value.trim().length} caràcters · mínim 180`});$('submit').addEventListener('click',submitExam)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,110));else setTimeout(init,110);
+})();
+</script>
+</body>
+</html>
