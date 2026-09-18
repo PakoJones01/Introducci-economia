@@ -1,0 +1,33 @@
+{
+  "versio": 1,
+  "ajuda": "Els apunts publicats són PDF. visible controla si la targeta es mostra i disponible si es pot obrir.",
+  "arees": {
+    "economia": {
+      "nom": "Economia",
+      "simbol": "E",
+      "eyebrow": "Introducció a l'economia",
+      "titol": "Apunts",
+      "subtitol": "Materials de teoria de l’assignatura. Els temes s’aniran incorporant progressivament.",
+      "apunts": []
+    },
+    "estadistica": {
+      "nom": "Estadística",
+      "simbol": "Σ",
+      "eyebrow": "Estadística",
+      "titol": "Apunts",
+      "subtitol": "Materials de teoria per preparar les pràctiques i repassar els conceptes del curs.",
+      "apunts": [
+        {
+          "id": "tema-1-descriptiva-unidimensional",
+          "ordre": 1,
+          "visible": true,
+          "disponible": true,
+          "codi": "Tema 1",
+          "titol": "Estadística descriptiva unidimensional",
+          "descripcio": "Dades i freqüències, mesures de centre, dispersió, quartils, valors atípics, boxplot i interpretació conjunta d’una distribució.",
+          "fitxer": "apunts/estadistica/tema-1-descriptiva-unidimensional.pdf"
+        }
+      ]
+    }
+  }
+}
