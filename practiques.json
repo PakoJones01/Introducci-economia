@@ -7,7 +7,7 @@
       "simbol": "E",
       "eyebrow": "Introducció a l'economia",
       "titol": "Pràctiques interactives",
-      "subtitol": "Activitats del curs en un únic espai. Les noves pràctiques s’aniran incorporant aquí.",
+      "subtitol": "Activitats del curs. Les noves pràctiques s’aniran incorporant aquí.",
       "practiques": [
         {
           "id": "fpp",
@@ -24,7 +24,7 @@
           "id": "oferta",
           "ordre": 2,
           "visible": true,
-          "disponible": true,
+          "disponible": false,
           "codi": "Pràctica 2a",
           "titol": "Funció i corba d’oferta",
           "descripcio": "Moviments i desplaçaments de l’oferta, costos de producció, impostos i subvencions.",
@@ -35,7 +35,7 @@
           "id": "demanda",
           "ordre": 3,
           "visible": true,
-          "disponible": true,
+          "disponible": false,
           "codi": "Pràctica 2b",
           "titol": "Funció i corba de demanda",
           "descripcio": "Moviments i desplaçaments de la demanda, renda i preus de béns substitutius i complements.",
@@ -75,9 +75,9 @@
       "practiques": [
         {
           "id": "descriptiva-1d",
-          "ordre": 1,
+          "ordre": 2,
           "visible": true,
-          "disponible": true,
+          "disponible": false,
           "codi": "Pràctica 1",
           "titol": "Estadística descriptiva unidimensional",
           "descripcio": "Dades, distribucions, mesures de centre i dispersió, quartils, valors extrems i interpretació amb Excel.",
@@ -88,7 +88,7 @@
           "id": "descriptiva-2d",
           "ordre": 3,
           "visible": true,
-          "disponible": true,
+          "disponible": false,
           "codi": "Pràctica 2",
           "titol": "Estadística descriptiva bidimensional",
           "descripcio": "Núvol de punts, covariància, correlació, regressió lineal, residus, R², extrapolació i interpretació amb Excel.",
@@ -108,7 +108,7 @@
         },
         {
           "id": "freq-var",
-          "ordre": 2,
+          "ordre": 1,
           "visible": true,
           "disponible": true,
           "codi": "Pràctica 1b",
