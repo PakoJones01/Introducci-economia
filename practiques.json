@@ -1,5 +1,5 @@
 {
-  "versio": 1,
+  "versio": 2,
   "ajuda": "Canvia visible a false per amagar una targeta. Canvia disponible a true/false per activar o desactivar l'accés. ordre controla la posició.",
   "arees": {
     "economia": {
@@ -115,6 +115,17 @@
           "titol": "Taules de freqüències i dispersió",
           "descripcio": "Construcció amb Excel de taules de freqüències, mitjana, variància i desviació típica per a tres distribucions.",
           "fitxer": "practiques/estadistica/freq-var.html",
+          "pdf": null
+        },
+        {
+          "id": "descriptiva-1d-examen",
+          "ordre": 2.5,
+          "visible": true,
+          "disponible": false,
+          "codi": "Pràctica 1c",
+          "titol": "Estadística unidimensional · nivell examen",
+          "descripcio": "Resolució autònoma amb dades individualitzades, Excel, interpretació global i primera correcció automàtica completa.",
+          "fitxer": "practiques/estadistica/descriptiva-1d-examen.html",
           "pdf": null
         }
       ]
