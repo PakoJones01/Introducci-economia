@@ -1,5 +1,5 @@
 {
-  "versio": 2,
+  "versio": 3,
   "ajuda": "Canvia visible a false per amagar una targeta. Canvia disponible a true/false per activar o desactivar l'accés. ordre controla la posició.",
   "arees": {
     "economia": {
@@ -148,6 +148,39 @@
           "titol": "Estadística bidimensional · nivell examen",
           "descripcio": "Cas global sense procediment pautat: l’alumne decideix l’anàlisi, construeix l’Excel i sintetitza relació, model, punt influent, predicció i causalitat.",
           "fitxer": "practiques/estadistica/descriptiva-2d-examen.html",
+          "pdf": null
+        },
+        {
+          "id": "series-temporals-3a",
+          "ordre": 6,
+          "visible": true,
+          "disponible": false,
+          "codi": "Pràctica 3a",
+          "titol": "Sèries temporals · guiada",
+          "descripcio": "Variacions absolutes i percentuals, punts percentuals, nombres índex, tendència, estacionalitat, comparacions temporals i mitjanes mòbils amb guia pas a pas.",
+          "fitxer": "practiques/estadistica/series-temporals-3a.html",
+          "pdf": null
+        },
+        {
+          "id": "series-temporals-3b",
+          "ordre": 7,
+          "visible": true,
+          "disponible": false,
+          "codi": "Pràctica 3b",
+          "titol": "Sèries temporals · aplicada amb Excel",
+          "descripcio": "Cas laboral amb 24 mesos de dades, índexs base 100, comparacions interanuals, mitjanes mòbils, gràfics i interpretació final.",
+          "fitxer": "practiques/estadistica/series-temporals-3b.html",
+          "pdf": null
+        },
+        {
+          "id": "series-temporals-3c",
+          "ordre": 8,
+          "visible": true,
+          "disponible": false,
+          "codi": "Pràctica 3c",
+          "titol": "Sèries temporals · nivell examen",
+          "descripcio": "Cas global de 36 mesos sense procediment pautat: recomptes i taxes, patrons temporals, índexs, suavització i conclusió amb Excel lliure.",
+          "fitxer": "practiques/estadistica/series-temporals-3c.html",
           "pdf": null
         }
       ]
