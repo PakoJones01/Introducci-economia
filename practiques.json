@@ -85,6 +85,17 @@
           "pdf": null
         },
         {
+          "id": "descriptiva-2d",
+          "ordre": 3,
+          "visible": true,
+          "disponible": true,
+          "codi": "Pràctica 2",
+          "titol": "Estadística descriptiva bidimensional",
+          "descripcio": "Núvol de punts, covariància, correlació, regressió lineal, residus, R², extrapolació i interpretació amb Excel.",
+          "fitxer": "practiques/estadistica/descriptiva-2d.html",
+          "pdf": null
+        },
+        {
           "id": "excel-zero",
           "ordre": 0,
           "visible": true,
@@ -93,6 +104,17 @@
           "titol": "Primer contacte amb Excel",
           "descripcio": "Fórmules, referències relatives i absolutes, funcions bàsiques, ordenar, filtrar i crear un primer gràfic.",
           "fitxer": "practiques/estadistica/excel-zero.html",
+          "pdf": null
+        },
+        {
+          "id": "freq-var",
+          "ordre": 2,
+          "visible": true,
+          "disponible": true,
+          "codi": "Pràctica 1b",
+          "titol": "Taules de freqüències i dispersió",
+          "descripcio": "Construcció amb Excel de taules de freqüències, mitjana, variància i desviació típica per a tres distribucions.",
+          "fitxer": "practiques/estadistica/freq-var.html",
           "pdf": null
         }
       ]
