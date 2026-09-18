@@ -59,7 +59,7 @@
           "visible": true,
           "disponible": false,
           "codi": "Pràctica 3",
-          "titol": "Elasticitat-preu de la demanda",
+          "titol": "Elasticitat de la demanda",
           "descripcio": "Mètode del punt mig, demanda elàstica i inelàstica, i relació entre preu i despesa total.",
           "fitxer": "practiques/economia/elasticitat.html",
           "pdf": "assets/pdf/elasticitat.pdf"
