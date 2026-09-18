@@ -17,6 +17,13 @@ button,input,select{font:inherit} button{cursor:pointer}.hidden{display:none!imp
 .brand{display:flex;align-items:center;gap:12px;min-width:0}.brandmark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:#fff;color:var(--char);font-weight:900}
 .title{font-weight:780;font-size:20px;line-height:1.08}.subtitle{font-size:11px;color:#d7dbdd;margin-top:4px}
 .student{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700}.student input{width:100px;border:1px solid #d8c36e;background:var(--input);padding:7px 8px;border-radius:7px;text-align:center;font-weight:800;outline:none}
+.idtools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.validate-id{border:1px solid rgba(255,255,255,.30);background:#fff;color:var(--char);border-radius:7px;padding:7px 10px;font-size:11px;font-weight:850}
+.validate-id:disabled{opacity:.55;cursor:not-allowed}
+.idstatus{font-size:10px;color:#e1e5e6;min-width:150px}.idstatus.ok{color:#bce7c8}.idstatus.bad{color:#ffd0ca}.idstatus.checking{color:#ffe6a8}
+.practice-lock-banner{max-width:1500px;margin:12px auto 0;padding:10px 14px;border:1px solid #d8c36e;background:#fff7d4;border-radius:10px;font-size:11px;font-weight:780;color:#5f562f}
+.practice-locked .shell{opacity:.48;pointer-events:none;user-select:none}
+
 .shell{max-width:1500px;margin:0 auto;padding:14px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px}
 .sidebar{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px;align-self:start;position:sticky;top:76px;box-shadow:0 5px 18px rgba(30,32,34,.03)}
 .sidehead{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;padding:4px 6px 10px}.stage-list{display:flex;flex-direction:column;gap:5px}
@@ -42,12 +49,17 @@ button,input,select{font:inherit} button{cursor:pointer}.hidden{display:none!imp
 @media(max-width:650px){.hero-tools{align-items:flex-start}.excel-sub{text-align:left}.topbar{align-items:flex-start;flex-wrap:wrap}.shell{padding:8px}.stage-list{grid-template-columns:repeat(2,1fr)}.hero{flex-direction:column}.visual{height:330px}.data-panel{height:210px}.data-grid{grid-template-columns:repeat(4,minmax(60px,1fr))}.qrow{grid-template-columns:24px minmax(0,1fr) 94px 64px}.stats{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
-<body>
+<body class="practice-locked">
 <header class="topbar">
   <div style="display:flex;align-items:center;gap:12px;min-width:0"><a class="portal-back" href="../../index.html?area=estadistica">← Pràctiques</a>
   <div class="brand"><div class="brandmark">σ</div><div><div class="title">LABORATORI D’ESTADÍSTICA DESCRIPTIVA</div><div class="subtitle">Una variable, moltes maneres d’explicar-la</div></div></div></div>
-  <label class="student">ID alumne <input id="student-id" value="6380" inputmode="numeric" aria-label="ID alumne"></label>
+  <div class="idtools">
+    <label class="student">ID alumne <input id="student-id" inputmode="numeric" maxlength="6" placeholder="6 dígits" aria-label="ID alumne"></label>
+    <button class="validate-id" id="validate-id" type="button">Validar ID</button>
+    <span class="idstatus" id="id-status">Valida l’ID per començar.</span>
+  </div>
 </header>
+<div class="practice-lock-banner" id="practice-lock-banner">Introdueix i valida el teu ID de 6 dígits per generar la teva mostra i començar la pràctica.</div>
 <div class="shell">
   <aside class="sidebar">
     <div class="sidehead">Recorregut</div>
@@ -114,7 +126,7 @@ const stages=[
  {t:'Informe final',s:'Interpretar i resumir'}
 ];
 let current=0,completed=new Set(),dataset=[],baseData=[],family=0,bins=7,extremeValue=0,answers={},dataMode='raw';
-function initialize(){const g=makeData($('student-id').value||'6380');dataset=[...g.data];baseData=[...g.data];family=g.family;extremeValue=Math.max(...dataset);current=0;completed.clear();answers={};dataMode='raw';renderAll();}
+function initialize(){const g=makeData($('student-id').value||'');dataset=[...g.data];baseData=[...g.data];family=g.family;extremeValue=Math.max(...dataset);current=0;completed.clear();answers={};dataMode='raw';renderAll();}
 function stageButtons(){const box=$('stage-list');box.innerHTML='';stages.forEach((st,i)=>{const b=document.createElement('button');b.className='stage'+(i===current?' active':'')+(completed.has(i)?' done':'');b.innerHTML=`<span class="num">${completed.has(i)?'✓':i+1}</span><span><div class="stage-title">${st.t}</div><div class="stage-sub">${st.s}</div></span>`;b.onclick=()=>{current=i;renderAll()};box.appendChild(b)});$('progress-fill').style.width=(completed.size/stages.length*100)+'%';$('progress-text').textContent=`${completed.size} de ${stages.length} blocs completats`;}
 function svgBase(title=''){return `<svg id="chart" viewBox="0 0 760 405" role="img" aria-label="${title}"></svg>`}
 function drawAxes(svg,xmin,xmax,ymin,ymax,xlabel,ylabel){const NS='http://www.w3.org/2000/svg',m={l:58,r:20,t:18,b:48},W=760,H=405,pw=W-m.l-m.r,ph=H-m.t-m.b;const X=x=>m.l+(x-xmin)/(xmax-xmin)*pw,Y=y=>m.t+ph-(y-ymin)/(ymax-ymin)*ph;for(let j=0;j<=5;j++){const y=ymin+(ymax-ymin)*j/5;let l=document.createElementNS(NS,'line');l.setAttribute('x1',m.l);l.setAttribute('x2',W-m.r);l.setAttribute('y1',Y(y));l.setAttribute('y2',Y(y));l.setAttribute('class','gridline');svg.appendChild(l);let tx=document.createElementNS(NS,'text');tx.setAttribute('x',m.l-9);tx.setAttribute('y',Y(y)+3);tx.setAttribute('text-anchor','end');tx.setAttribute('class','tick');tx.textContent=fmt(y,0);svg.appendChild(tx)}
@@ -185,7 +197,7 @@ function renderInsight(){const msgs=[
  'Comparar distribucions exigeix mirar conjuntament centre i dispersió.',
  'Una bona descripció combina centre, dispersió i forma; cap estadístic únic explica tota la distribució.'
  ];$('insight').innerHTML='<strong>Idea clau:</strong> '+msgs[current]}
-function renderAll(resetData=true){if(current!==3&&resetData)dataset=[...baseData];stageButtons();renderQuestions();renderDataPanel();renderVisual();renderStats();renderInsight();$('hero-title').textContent=current===7?'Construeix el teu informe final':'Radiografia d’un conjunt de dades';$('dataset-badge').textContent=`Mostra ${String($('student-id').value||'6380').slice(-4)} · n = ${dataset.length}`;}
+function renderAll(resetData=true){if(current!==3&&resetData)dataset=[...baseData];stageButtons();renderQuestions();renderDataPanel();renderVisual();renderStats();renderInsight();$('hero-title').textContent=current===7?'Construeix el teu informe final':'Radiografia d’un conjunt de dades';$('dataset-badge').textContent=`Mostra ${String($('student-id').value||'').slice(-4)} · n = ${dataset.length}`;}
 function validate(){const list=questions(current);let all=true;list.forEach((qq,j)=>{const key=current+'-'+j,raw=answers[key],ck=$(`ck-${current}-${j}`);let ok=false;if(qq.type==='num'){const v=parse(raw);ok=Number.isFinite(v)&&Math.abs(v-qq.answer)<=Math.max(.005,Math.abs(qq.answer)*.00001)}else ok=raw===qq.answer;ck.className='check '+(ok?'ok':'bad');ck.textContent=ok?'Correcte':'Revisa';if(!ok)all=false});if(all){completed.add(current);renderAll(false);if(current===2)dotplot(true);$('validate-stage').classList.add('hidden');if(current<stages.length-1)$('next-stage').classList.remove('hidden')}else{$('insight').innerHTML='<strong>Encara no:</strong> revisa les respostes marcades. Pots utilitzar el gràfic i les dades, però la solució no es mostra.'}}
 
 function xmlEsc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;')}
@@ -197,7 +209,7 @@ function le16(n){return new Uint8Array([n&255,(n>>>8)&255])}
 function le32(n){return new Uint8Array([n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255])}
 function cat(parts){const len=parts.reduce((s,a)=>s+a.length,0),out=new Uint8Array(len);let p=0;for(const a of parts){out.set(a,p);p+=a.length}return out}
 function makeZip(files){const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;const now=new Date(),dt=((now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1))&65535,dd=(((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate())&65535;for(const f of files){const name=enc.encode(f.name),data=typeof f.data==='string'?enc.encode(f.data):f.data,crc=crc32(data);const local=cat([le32(0x04034b50),le16(20),le16(0),le16(0),le16(dt),le16(dd),le32(crc),le32(data.length),le32(data.length),le16(name.length),le16(0),name,data]);locals.push(local);const cen=cat([le32(0x02014b50),le16(20),le16(20),le16(0),le16(0),le16(dt),le16(dd),le32(crc),le32(data.length),le32(data.length),le16(name.length),le16(0),le16(0),le16(0),le16(0),le32(0),le32(offset),name]);centrals.push(cen);offset+=local.length}const central=cat(centrals),eocd=cat([le32(0x06054b50),le16(0),le16(0),le16(files.length),le16(files.length),le32(central.length),le32(offset),le16(0)]);return cat([...locals,central,eocd])}
-function excelRows(){const id=String($('student-id').value||'6380').trim(),a=[...baseData],b=compareData();const D=[];D.push([{v:'Pràctica d’estadística descriptiva · Dades de l’alumne',s:1},null]);D.push([]);D.push([{v:'ID alumne',s:2},{v:id,s:3}]);D.push([]);D.push([{v:'Observació',s:2},{v:'Temps de desplaçament (min)',s:2}]);a.forEach((v,k)=>D.push([k+1,v]));const T=[];T.push([{v:'Full de treball · construeix aquí els teus càlculs',s:1},null,null,null,null,null,null,null,null]);T.push([]);T.push([{v:'Mesura / tasca',s:2},{v:'Resultat',s:2},{v:'Unitat',s:2},{v:'Notes / fórmula utilitzada',s:2},null,null,null,{v:'Mostra A',s:2},{v:'Mostra B',s:2}]);const tasks=[['n','','observ.',''],['Mínim','','min',''],['Màxim','','min',''],['Recorregut','','min',''],['Mitjana','','min',''],['Mediana','','min',''],['Moda / freqüència modal','','',''],['Variància descriptiva','','min²',''],['Desviació típica','','min',''],['Coeficient de variació','','%',''],['Q1','','min',''],['Q3','','min',''],['RIQ','','min',''],['Experiment valor extrem','','','Canvia l’observació 32 al valor indicat al web i recalcula la mitjana.']];const n=Math.max(tasks.length,a.length);for(let k=0;k<n;k++){const left=k<tasks.length?tasks[k]:['','','',''];T.push([left[0],left[1],left[2],left[3],null,null,null,k<a.length?a[k]:'',k<b.length?b[k]:''])}const I=[];I.push([{v:'Informe final · resumeix la distribució amb criteri',s:1},null,null]);I.push([]);I.push([{v:'Aspecte',s:2},{v:'Valor / elecció',s:2},{v:'Justificació breu',s:2}]);[['Mesura de centre','',''],['Mesura de dispersió','',''],['Forma de la distribució','',''],['Valors atípics','',''],['Conclusió en 2-3 frases','','']].forEach(r=>I.push(r));return {id,D,T,I}}
+function excelRows(){const id=String($('student-id').value||'').trim(),a=[...baseData],b=compareData();const D=[];D.push([{v:'Pràctica d’estadística descriptiva · Dades de l’alumne',s:1},null]);D.push([]);D.push([{v:'ID alumne',s:2},{v:id,s:3}]);D.push([]);D.push([{v:'Observació',s:2},{v:'Temps de desplaçament (min)',s:2}]);a.forEach((v,k)=>D.push([k+1,v]));const T=[];T.push([{v:'Full de treball · construeix aquí els teus càlculs',s:1},null,null,null,null,null,null,null,null]);T.push([]);T.push([{v:'Mesura / tasca',s:2},{v:'Resultat',s:2},{v:'Unitat',s:2},{v:'Notes / fórmula utilitzada',s:2},null,null,null,{v:'Mostra A',s:2},{v:'Mostra B',s:2}]);const tasks=[['n','','observ.',''],['Mínim','','min',''],['Màxim','','min',''],['Recorregut','','min',''],['Mitjana','','min',''],['Mediana','','min',''],['Moda / freqüència modal','','',''],['Variància descriptiva','','min²',''],['Desviació típica','','min',''],['Coeficient de variació','','%',''],['Q1','','min',''],['Q3','','min',''],['RIQ','','min',''],['Experiment valor extrem','','','Canvia l’observació 32 al valor indicat al web i recalcula la mitjana.']];const n=Math.max(tasks.length,a.length);for(let k=0;k<n;k++){const left=k<tasks.length?tasks[k]:['','','',''];T.push([left[0],left[1],left[2],left[3],null,null,null,k<a.length?a[k]:'',k<b.length?b[k]:''])}const I=[];I.push([{v:'Informe final · resumeix la distribució amb criteri',s:1},null,null]);I.push([]);I.push([{v:'Aspecte',s:2},{v:'Valor / elecció',s:2},{v:'Justificació breu',s:2}]);[['Mesura de centre','',''],['Mesura de dispersió','',''],['Forma de la distribució','',''],['Valors atípics','',''],['Conclusió en 2-3 frases','','']].forEach(r=>I.push(r));return {id,D,T,I}}
 function buildXlsx(){const {id,D,T,I}=excelRows();const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><color rgb="FFFFFFFF"/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF41474B"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FF596065"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="0" fontId="1" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;const wb=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="DADES" sheetId="1" r:id="rId1"/><sheet name="TREBALL" sheetId="2" r:id="rId2"/><sheet name="INFORME" sheetId="3" r:id="rId3"/></sheets></workbook>`;const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;const wrels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>`;const files=[{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:rels},{name:'xl/workbook.xml',data:wb},{name:'xl/_rels/workbook.xml.rels',data:wrels},{name:'xl/styles.xml',data:styles},{name:'xl/worksheets/sheet1.xml',data:worksheetXml(D,[14,28],['A1:B1'])},{name:'xl/worksheets/sheet2.xml',data:worksheetXml(T,[28,14,12,34,3,3,3,14,14],['A1:D1'])},{name:'xl/worksheets/sheet3.xml',data:worksheetXml(I,[24,20,42],['A1:C1'])}];return {id,bytes:makeZip(files)}}
 function downloadExcel(){const {id,bytes}=buildXlsx(),blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`estadistica_${id||'alumne'}.xlsx`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500)}
 $('download-excel').onclick=downloadExcel;
@@ -218,6 +230,91 @@ $('validate-stage').onclick=validate;$('reset-stage').onclick=()=>{Object.keys(a
   }
 
   const $ = id => document.getElementById(id);
+
+  let validatedPracticeId = '';
+
+  function normalizePracticeId() {
+    const input = $('student-id');
+    const value = String(input?.value || '').replace(/\D/g, '').slice(0, 6);
+    if (input) input.value = value;
+    return value;
+  }
+
+  function setPracticeIdStatus(kind, text) {
+    const e = $('id-status');
+    if (!e) return;
+    e.className = 'idstatus ' + (kind || '');
+    e.textContent = text;
+  }
+
+  function lockPractice(message = 'Valida l’ID per començar.') {
+    validatedPracticeId = '';
+    document.body.classList.add('practice-locked');
+    const banner = $('practice-lock-banner');
+    if (banner) {
+      banner.hidden = false;
+      banner.textContent = 'Introdueix i valida el teu ID de 6 dígits per generar la teva mostra i començar la pràctica.';
+    }
+    setPracticeIdStatus('', message);
+  }
+
+  function unlockPractice() {
+    document.body.classList.remove('practice-locked');
+    const banner = $('practice-lock-banner');
+    if (banner) banner.hidden = true;
+  }
+
+  async function validatePracticeId() {
+    const button = $('validate-id');
+    const id = normalizePracticeId();
+    if (button) button.disabled = true;
+    setPracticeIdStatus('checking', 'Comprovant ID…');
+
+    const result = await tracker.validateId(id);
+
+    if (button) button.disabled = false;
+
+    if (!result.ok) {
+      lockPractice(
+        result.reason === 'format' ? 'L’ID ha de tenir 6 dígits.' :
+        result.reason === 'not-found' ? 'Aquest ID no és a la llista.' :
+        'No s’ha pogut validar l’ID.'
+      );
+      return;
+    }
+
+    validatedPracticeId = result.id;
+    const input = $('student-id');
+    if (input) input.value = validatedPracticeId;
+
+    // La pràctica original ja sap regenerar totes les dades quan canvia l'ID.
+    if (input) input.dispatchEvent(new Event('change'));
+
+    unlockPractice();
+    setPracticeIdStatus('ok', 'ID correcte · mostra generada.');
+  }
+
+  const validateIdButton = $('validate-id');
+  if (validateIdButton) validateIdButton.addEventListener('click', validatePracticeId);
+
+  const practiceIdInput = $('student-id');
+  if (practiceIdInput) {
+    practiceIdInput.addEventListener('input', () => {
+      normalizePracticeId();
+      if (validatedPracticeId && practiceIdInput.value !== validatedPracticeId) {
+        lockPractice('Has canviat l’ID. Torna’l a validar.');
+      }
+    });
+    practiceIdInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        validatePracticeId();
+      }
+    });
+  }
+
+  lockPractice();
+
   const round = (x, d = 0) => {
     const m = 10 ** d;
     return Math.round((x + Number.EPSILON) * m) / m;
@@ -442,6 +539,13 @@ $('validate-stage').onclick=validate;$('reset-stage').onclick=()=>{Object.keys(a
     const idInput = $('student-id');
     const rawId = String(idInput?.value || '').trim();
 
+    if (!validatedPracticeId || rawId !== validatedPracticeId) {
+      status.className = 'comment-status bad';
+      status.textContent = 'Valida l’ID abans d’entregar el comentari.';
+      lockPractice('Valida l’ID abans d’entregar.');
+      return;
+    }
+
     btn.disabled = true;
     btn.textContent = 'Comprovant ID…';
     status.className = 'comment-status';
@@ -504,7 +608,11 @@ $('validate-stage').onclick=validate;$('reset-stage').onclick=()=>{Object.keys(a
 
   const idInput = $('student-id');
   if (idInput) {
+    let lastCommentId = '';
     idInput.addEventListener('change', () => {
+      const now = String(idInput.value || '').trim();
+      if (now === lastCommentId) return;
+      lastCommentId = now;
       submitted = false;
       ta.disabled = false;
       ta.value = '';
