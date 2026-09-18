@@ -1,6 +1,8 @@
 (() => {
   'use strict';
 
+  if (window.PracticeTracker?.version === 'v2') return;
+
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzwnq5YjykYa80K1RtK6aTWyc5iLqQJD0KEAcPvhHEKOE-pHxGKj_be-bXfCqs7R8R_/exec';
   const SESSION_KEY = 'aula-interactiva-session-v2';
   const TEACHER_ID = '142857';
@@ -306,6 +308,7 @@
   }
 
   window.PracticeTracker = Object.freeze({
+    version: 'v2',
     endpoint: ENDPOINT,
     normalizeId,
     validateId,
