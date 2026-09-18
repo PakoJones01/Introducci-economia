@@ -40,7 +40,12 @@ button,input,select{font:inherit} button{cursor:pointer}.hidden{display:none!imp
 .visual{height:390px;position:relative;padding:10px 12px 6px}.visual svg{width:100%;height:100%;display:block}.visual-footer{min-height:45px;border-top:1px solid #ece8e1;padding:8px 12px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.hint{font-size:10.5px;color:var(--muted);line-height:1.35}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mini-btn{border:1px solid var(--line);background:white;color:#4f5559;border-radius:7px;padding:5px 8px;font-size:9.5px;font-weight:800}.mini-btn.active{background:#e7efec;color:#285f55;border-color:#b7ccc6}
 
 .question-card{display:flex;flex-direction:column;min-height:560px}.qhead{padding:12px 14px;border-bottom:1px solid var(--line)}.qkicker{font-size:10px;color:var(--accent);font-weight:850;text-transform:uppercase;letter-spacing:.07em}.qtitle{font-size:17px;font-weight:800;margin-top:3px}.qintro{font-size:11px;color:var(--muted);line-height:1.4;margin-top:5px}
-.qbody{padding:9px 12px;display:flex;flex-direction:column;gap:7px;flex:1;overflow:auto}.qrow{display:grid;grid-template-columns:25px minmax(0,1fr) 112px 74px;gap:6px;align-items:center;padding:7px 6px;border-bottom:1px solid #eeeae3;font-size:11px;min-height:44px}.qrow:last-child{border-bottom:0}.qno{font-weight:850;text-align:center}.qtext{line-height:1.3}.tool-tag{display:inline-block;border-radius:5px;padding:2px 5px;margin-right:5px;font-size:8px;line-height:1.15;font-weight:900;letter-spacing:.04em;vertical-align:1px}.tool-tag.excel{background:#e5f1e9;color:#2d6a43;border:1px solid #bcd7c6}.tool-tag.web{background:#e9eef2;color:#4c6676;border:1px solid #ccd8df}
+.qbody{padding:9px 12px;display:flex;flex-direction:column;gap:7px;flex:1;overflow:auto}
+.excel-howto{border:1px solid #c9d8d3;background:#f4f8f6;border-radius:9px;padding:10px 11px;margin-bottom:4px;font-size:10.5px;line-height:1.42;color:#46504d}
+.excel-howto strong{color:#285f55}.excel-howto ol{margin:7px 0 7px 18px;padding:0}.excel-howto li{margin:3px 0}
+.excel-howto .formula{font-family:Consolas,Monaco,monospace;background:white;border:1px solid #d7e1dd;border-radius:5px;padding:2px 5px;white-space:nowrap}
+.excel-howto .method{margin-top:8px;padding-top:8px;border-top:1px solid #d7e1dd}
+.qrow{display:grid;grid-template-columns:25px minmax(0,1fr) 112px 74px;gap:6px;align-items:center;padding:7px 6px;border-bottom:1px solid #eeeae3;font-size:11px;min-height:44px}.qrow:last-child{border-bottom:0}.qno{font-weight:850;text-align:center}.qtext{line-height:1.3}.tool-tag{display:inline-block;border-radius:5px;padding:2px 5px;margin-right:5px;font-size:8px;line-height:1.15;font-weight:900;letter-spacing:.04em;vertical-align:1px}.tool-tag.excel{background:#e5f1e9;color:#2d6a43;border:1px solid #bcd7c6}.tool-tag.web{background:#e9eef2;color:#4c6676;border:1px solid #ccd8df}
 .ans input,.ans select{width:100%;border:1px solid #e1cc7c;background:var(--input);border-radius:6px;padding:7px 6px;text-align:center;outline:none;font-size:11px;font-weight:700}.ans select{text-align:left}.ans input:disabled,.ans select:disabled{background:#eeeae3;border-color:#d4cec3;color:#888}
 .check{height:100%;min-height:29px;border-radius:6px;display:grid;place-items:center;text-align:center;font-size:9.5px;font-weight:820;color:transparent}.check.ok{background:var(--greenbg);color:var(--green);border:1px solid #b8d8c3}.check.bad{background:var(--redbg);color:var(--red);border:1px solid #e3b9b3}
 .qactions{border-top:1px solid var(--line);padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}.secondary,.primary{border-radius:8px;padding:8px 11px;font-size:11px;font-weight:800}.secondary{background:white;border:1px solid var(--line);color:#4a5054}.primary{background:var(--char);border:1px solid var(--char);color:white}.primary:disabled,.secondary:disabled{opacity:.4;cursor:not-allowed}
@@ -336,6 +341,25 @@ function renderQuestions(){
   if(!validatedId)return;
   const qs=questions(current);$('q-kicker').textContent=`Bloc ${current+1} de ${stages.length}`;$('q-title').textContent=stages[current].t;$('q-intro').textContent=stages[current].intro;
   const host=$('qbody');host.innerHTML='';
+  if(current===4){
+    const help=document.createElement('div');
+    help.className='excel-howto';
+    help.innerHTML=`<strong>Com fer la regressió lineal a Excel</strong>
+      <ol>
+        <li>Al full <strong>DADES</strong>, identifica les columnes <strong>X = hores d’estudi</strong> i <strong>Y = puntuació</strong>. Mantén cada parella X–Y a la mateixa fila.</li>
+        <li>Selecciona les dues columnes i ves a <strong>Inserció → Dispersió (XY)</strong>. Tria el gràfic només amb punts.</li>
+        <li>Fes clic sobre els punts i afegeix una <strong>línia de tendència lineal</strong>.</li>
+        <li>Activa <strong>Mostra l’equació al gràfic</strong> i <strong>Mostra el valor R² al gràfic</strong>.</li>
+        <li>Llegeix l’equació com <strong>ŷ = a + b·x</strong>: el coeficient que multiplica x és el <strong>pendent b</strong> i el terme independent és <strong>a</strong>.</li>
+      </ol>
+      <div class="method"><strong>Alternativa amb fórmules:</strong>
+        <span class="formula">=PENDIENTE(rang_Y;rang_X)</span> per obtenir b i
+        <span class="formula">=INTERSECCION.EJE(rang_Y;rang_X)</span> per obtenir a.
+        Si el teu Excel està en anglès, les funcions són <span class="formula">SLOPE</span> i <span class="formula">INTERCEPT</span>.
+      </div>
+      <div class="method"><strong>Important:</strong> fes la regressió amb les teves dades d’Excel i després introdueix aquí els valors que hagis obtingut.</div>`;
+    host.appendChild(help);
+  }
   qs.forEach((d,j)=>{
     const key=`${current}-${j}`,row=document.createElement('div');row.className='qrow';
     const no=document.createElement('div');no.className='qno';no.textContent=j+1;
@@ -450,7 +474,7 @@ function worksheetXml(rows,widths,merges=[]){let out='<?xml version="1.0" encodi
 function excelRows(){
   const id=validatedId,D=[];D.push([{v:'Pràctica 2 · Estadística descriptiva bidimensional',s:1},null,null]);D.push([]);D.push([{v:'ID alumne',s:2},{v:id,s:3}]);D.push([]);D.push([{v:'Observació',s:2},{v:'Hores d’estudi X',s:2},{v:'Puntuació Y',s:2}]);dataset.forEach((d,i)=>D.push([i+1,d.x,d.y]));
   const T=[];T.push([{v:'TREBALL · calcula les mesures bidimensionals',s:1},null,null,null]);T.push([]);T.push([{v:'Mesura / tasca',s:2},{v:'Resultat',s:2},{v:'Unitat',s:2},{v:'Notes / fórmula utilitzada',s:2}]);
-  [['n','','parelles',''],['Mitjana X','','h',''],['Mitjana Y','','punts',''],['Covariància descriptiva','','h·punts','Divideix per n.'],['Correlació r','','',''],['Pendent b','','punts/h',''],['Intercept a','','punts',''],['Predicció per X=8','','punts',''],['R²','','',''],['R² (%)','','%','']].forEach(r=>T.push(r));
+  [['n','','parelles',''],['Mitjana X','','h',''],['Mitjana Y','','punts',''],['Covariància descriptiva','','h·punts','Divideix per n.'],['Correlació r','','',''],['Pendent b','','punts/h','Gràfic XY + línia de tendència o =PENDIENTE(rang_Y;rang_X)'],['Intercept a','','punts','Equació del gràfic o =INTERSECCION.EJE(rang_Y;rang_X)'],['Predicció per X=8','','punts','Substitueix x=8 a ŷ = a + b·x'],['R²','','','Activa “Mostra el valor R² al gràfic” a la línia de tendència'],['R² (%)','','%','Multiplica R² per 100']].forEach(r=>T.push(r));
   T.push([]);T.push([{v:'OBSERVACIÓ 19',s:2},null,null,null]);T.push(['X observat',dataset[18].x,'h','']);T.push(['Y observat',dataset[18].y,'punts','']);T.push(['Ŷ segons la recta','','punts','']);T.push(['Residual y−ŷ','','punts','']);
   const I=[];I.push([{v:'INFORME FINAL · interpreta abans de concloure',s:1},null,null]);I.push([]);I.push([{v:'Aspecte',s:2},{v:'Resposta',s:2},{v:'Justificació breu',s:2}]);[['Direcció de la relació','',''],['Intensitat de la relació','',''],['Forma aproximada','',''],['Punts especials / extrems','',''],['Interpretació del pendent','',''],['Interpretació de R²','',''],['Causalitat: què podem afirmar?','',''],['Conclusió en 2-3 frases','','']].forEach(r=>I.push(r));return {D,T,I,id}
 }
