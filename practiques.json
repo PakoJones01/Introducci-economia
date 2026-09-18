@@ -89,9 +89,9 @@
           "ordre": 3,
           "visible": true,
           "disponible": false,
-          "codi": "Pràctica 2",
-          "titol": "Estadística descriptiva bidimensional",
-          "descripcio": "Núvol de punts, covariància, correlació, regressió lineal, residus, R², extrapolació i interpretació amb Excel.",
+          "codi": "Pràctica 2a",
+          "titol": "Estadística descriptiva bidimensional · guiada",
+          "descripcio": "Parelles de dades, núvol de punts, covariància, correlació, regressió, residuals, R² i extrapolació amb guia pas a pas i suport d’Excel.",
           "fitxer": "practiques/estadistica/descriptiva-2d.html",
           "pdf": null
         },
@@ -126,6 +126,28 @@
           "titol": "Estadística unidimensional · nivell examen",
           "descripcio": "Resolució autònoma amb dades individualitzades, Excel, interpretació global i primera correcció automàtica completa.",
           "fitxer": "practiques/estadistica/descriptiva-1d-examen.html",
+          "pdf": null
+        },
+        {
+          "id": "descriptiva-2d-aplicada",
+          "ordre": 4,
+          "visible": true,
+          "disponible": false,
+          "codi": "Pràctica 2b",
+          "titol": "Estadística bidimensional · aplicada amb Excel",
+          "descripcio": "Anàlisi aplicada amb dades individualitzades, gràfic XY, covariància, correlació, regressió, predicció, residuals, R² i interpretació final.",
+          "fitxer": "practiques/estadistica/descriptiva-2d-aplicada.html",
+          "pdf": null
+        },
+        {
+          "id": "descriptiva-2d-examen",
+          "ordre": 5,
+          "visible": true,
+          "disponible": false,
+          "codi": "Pràctica 2c",
+          "titol": "Estadística bidimensional · nivell examen",
+          "descripcio": "Cas global sense guiatge, dades individualitzades, Excel, punt influent, regressió i interpretació amb primera correcció automàtica completa.",
+          "fitxer": "practiques/estadistica/descriptiva-2d-examen.html",
           "pdf": null
         }
       ]
