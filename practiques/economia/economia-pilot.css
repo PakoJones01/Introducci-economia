@@ -1,0 +1,18 @@
+.pilot-id-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pilot-id-tools button,.pilot-submit-btn{border:0;border-radius:7px;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
+.pilot-id-tools button{background:#f0eee9;color:#303538}
+.pilot-id-tools button:disabled,.pilot-submit-btn:disabled{opacity:.55;cursor:default}
+.pilot-status,.pilot-submit-status{display:inline-block;font-size:12px;line-height:1.25;border-radius:7px;padding:5px 8px;color:#e8eaeb;background:rgba(255,255,255,.10)}
+.pilot-status.ok,.pilot-submit-status.ok{color:#1d5632;background:#e7f4eb;border:1px solid #b8d8c3}
+.pilot-status.bad,.pilot-submit-status.bad{color:#7d2b27;background:#f8e7e4;border:1px solid #e3b9b3}
+.pilot-status.checking{color:#3f4b51;background:#edf0f2;border:1px solid #ccd3d7}
+.pilot-justifications{margin:0 16px 18px}
+.pilot-just-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pilot-just-card{border:1px solid #d8d5cf;border-radius:10px;padding:12px;background:#fff}
+.pilot-just-card label{display:block;font-weight:700;margin-bottom:7px;line-height:1.35}
+.pilot-just-card textarea{width:100%;min-height:92px;box-sizing:border-box;resize:vertical;border:1px solid #c9c6bf;border-radius:7px;padding:9px;font:inherit;line-height:1.35;background:#fff;color:#222629}
+.pilot-just-card textarea:disabled{background:#f2f0eb;color:#777}
+.pilot-note{font-size:12px;color:#62676a;margin-top:5px}
+.pilot-submit{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.pilot-submit-btn{background:#303538;color:#fff}
+@media(max-width:850px){.pilot-just-grid{grid-template-columns:1fr}}

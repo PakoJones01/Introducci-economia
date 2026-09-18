@@ -5,64 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elasticitat-preu de la demanda · Pràctiques interactives</title>
 <link rel="stylesheet" href="../../styles.css" />
+<link rel="stylesheet" href="economia-pilot.css" />
 </head>
 <body>
-<section id="practice3-view">
-<div class="app-shell">
-<header class="app-topbar">
-<div class="app-title-wrap">
-<a class="back-btn" href="../../index.html?area=economia">← Pràctiques</a>
-<div class="app-title">ELASTICITAT-PREU DE LA DEMANDA <small>Model interactiu</small></div>
-</div>
-<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="elas-student-id" inputmode="numeric" value="6380"/></label>
-</header>
+<div id="hub-view" class="hidden" aria-hidden="true"></div>
+
+<section id="practice3-view"><div class="app-shell">
+<header class="app-topbar"><div class="app-title-wrap"><a class="back-btn" href="../../index.html?area=economia">← Pràctiques</a>
+<div class="app-title">ELASTICITAT-PREU DE LA DEMANDA <small>Pràctica 3 · Model interactiu</small></div></div>
+<div class="pilot-id-tools">
+<label class="student-id">ID alumne <input aria-label="ID alumne" autocomplete="off" id="elas-student-id" inputmode="numeric" maxlength="6" placeholder="6 dígits"/></label>
+<button id="elas-validate-id" type="button">Validar ID</button>
+<span class="pilot-status" id="elas-id-status"></span>
+</div></header>
 <main class="practice-layout">
 <div class="left-col">
-<section class="section">
-<div class="section-head">MODEL INTERACTIU</div>
-<table aria-label="Variables del model d'elasticitat" class="model-table">
-<thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead>
-<tbody>
+<section class="section"><div class="section-head">MODEL INTERACTIU</div>
+<table aria-label="Variables del model d'elasticitat" class="model-table"><thead><tr><th>Variable</th><th>Valor</th><th>Unitat</th></tr></thead><tbody>
 <tr><td>Preu dels espaguetis</td><td><input class="model-input" id="elas-price" inputmode="decimal" value="18,00"/></td><td>€/plat</td></tr>
 <tr><td>Renda anual</td><td><input class="model-input" id="elas-income" inputmode="decimal" value="20000"/></td><td>€</td></tr>
 <tr><td>Preu dels tacos</td><td><input class="model-input" id="elas-taco" inputmode="decimal" value="6,00"/></td><td>€</td></tr>
 <tr><td>Preu del vi</td><td><input class="model-input" id="elas-wine" inputmode="decimal" value="20,00"/></td><td>€</td></tr>
-</tbody>
-</table>
+</tbody></table>
 <div class="note">Per calcular els canvis percentuals, utilitza el mètode del punt mig.</div>
-<div class="model-actions"><button class="reset-model-btn" id="elas-reset-model" type="button">Restablir valors inicials</button></div>
-</section>
-<section class="section">
-<div class="section-head">RESULTATS DE LA DEMANDA</div>
-<table aria-label="Resultats de la demanda" class="result-table">
-<tbody>
+<div class="model-actions"><button class="reset-model-btn" id="elas-reset-model" type="button">Restablir valors inicials</button></div></section>
+<section class="section"><div class="section-head">RESULTATS DE LA DEMANDA</div>
+<table aria-label="Resultats de la demanda" class="result-table"><tbody>
 <tr><td>Quantitat demandada</td><td class="result-value" id="elas-qd">—</td><td class="result-unit">plats/dia</td></tr>
 <tr><td>Despesa total (P × Q)</td><td class="result-value" id="elas-spending">—</td><td class="result-unit">€/dia</td></tr>
-</tbody>
-</table>
-</section>
-<section class="section">
-<div class="key-box"><strong>Idea clau</strong>L'elasticitat no és el pendent. En una demanda lineal, el pendent és constant però l'elasticitat varia al llarg de la corba.</div>
-</section>
+</tbody></table></section>
+<section class="section"><div class="key-box"><strong>Idea clau</strong>L'elasticitat no és el pendent. En una demanda lineal, el pendent és constant però l'elasticitat varia al llarg de la corba.</div></section>
 </div>
-<div class="center-col">
-<section aria-label="Corba de demanda i despesa total" class="chart-card">
+<div class="center-col"><section aria-label="Corba de demanda i despesa total" class="chart-card">
 <div class="chart-wrap"><svg aria-label="Corba de demanda amb el punt actual i la despesa total" id="elas-chart" role="img"></svg></div>
-<div class="legend">
-<span class="legend-item"><span class="legend-line demand"></span>Demanda</span>
-<span class="legend-item"><span class="legend-area"></span>Despesa P × Q</span>
-<span class="legend-item"><span class="legend-dot"></span>Punt actual</span>
-</div>
-</section>
-</div>
-<section class="questions-col">
-<div class="questions-title">PREGUNTES · respon directament aquí</div>
+<div class="legend"><span class="legend-item"><span class="legend-line demand"></span>Demanda</span><span class="legend-item"><span class="legend-area"></span>Despesa P × Q</span><span class="legend-item"><span class="legend-dot"></span>Punt actual</span></div>
+</section></div>
+<section class="questions-col"><div class="questions-title">PREGUNTES · respon directament aquí</div>
 <div class="questions-grid header"><div>#</div><div>Pregunta</div><div>Resposta</div><div>Unitat</div><div>Correcció</div></div>
-<div class="questions-body" id="elas-questions-body"></div>
-</section>
+<div class="questions-body" id="elas-questions-body"></div></section>
 </main>
+<section class="section pilot-justifications">
+<div class="section-head">JUSTIFICACIÓ · explica el raonament econòmic</div>
+<div class="pilot-just-grid">
+  <div class="pilot-just-card">
+    <label for="elas-just-1">1. Per què el mètode del punt mig és útil per calcular canvis percentuals quan comparem dos preus i dues quantitats?</label>
+    <textarea id="elas-just-1"></textarea>
+  </div>
+  <div class="pilot-just-card">
+    <label for="elas-just-2">2. Explica per què l’elasticitat-preu no és el mateix que el pendent i per què pot variar al llarg d’una corba de demanda.</label>
+    <textarea id="elas-just-2"></textarea>
+  </div>
+  <div class="pilot-just-card">
+    <label for="elas-just-3">3. Quan el preu baixa, com es relaciona el fet que la demanda sigui elàstica o inelàstica amb el canvi de la despesa total dels consumidors?</label>
+    <textarea id="elas-just-3"></textarea>
+  </div>
+  <div class="pilot-just-card">
+    <label for="elas-just-4">4. Compara els diferents trams analitzats a la pràctica i explica què significa econòmicament que la mateixa demanda pugui ser més o menys elàstica segons el punt.</label>
+    <textarea id="elas-just-4"></textarea>
+  </div>
+</div>
+<div class="pilot-note">No cal repetir els càlculs: justifica el mecanisme econòmic amb les teves paraules.</div>
+<div class="pilot-submit">
+  <button class="pilot-submit-btn" id="elas-submit" type="button">Entrega la pràctica</button>
+  <span class="pilot-submit-status" id="elas-submit-status"></span>
 </div>
 </section>
+</div></section>
+<script src="../../tracking.js"></script>
 <script src="elasticitat.js"></script>
-</body>
-</html>
+<script>
+window.EconomyPracticePilotConfig = {
+  slug: "elasticitat",
+  practice: "Pràctica 3 · Elasticitat",
+  area: "Economia",
+  version: "pilot-2",
+  questionCount: 19,
+  answerPrefix: "elas",
+  idInput: "elas-student-id",
+  validateButton: "elas-validate-id",
+  idStatus: "elas-id-status",
+  submitButton: "elas-submit",
+  submitStatus: "elas-submit-status",
+  minJustificationChars: 40,
+  justifications: [
+    {id:"elas-just-1", question:"Mètode del punt mig per als canvis percentuals"},
+    {id:"elas-just-2", question:"Diferència entre pendent i elasticitat-preu"},
+    {id:"elas-just-3", question:"Elasticitat i despesa total dels consumidors"},
+    {id:"elas-just-4", question:"Variació de l’elasticitat al llarg de la demanda"}
+  ]
+};
+</script>
+<script src="economia-pilot.js"></script>
+</body></html>
