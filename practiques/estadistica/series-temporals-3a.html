@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pràctica 3a · Sèries temporals</title>
+<style>
+:root{--bg:#f2efe9;--paper:#fbfaf7;--ink:#222629;--muted:#6d7377;--line:#d8d3ca;--char:#41474b;--char2:#596065;--accent:#2f7468;--green:#28643f;--greenbg:#e7f4eb;--red:#8e342d;--redbg:#f8e7e4;--input:#fff0b8}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}.hidden{display:none!important}
+.top{background:var(--char);color:#fff;padding:11px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:10}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800}.title{font-size:19px;font-weight:850}.sub{font-size:10.5px;color:#d7dbdd;margin-top:3px}.who{font-size:11px;color:#d7dbdd}.who strong{color:#fff}
+.shell{max-width:1280px;margin:0 auto;padding:15px;display:flex;flex-direction:column;gap:12px}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}.head{background:var(--char2);color:#fff;padding:10px 13px;font-size:11px;font-weight:850}.body{padding:14px}.hero{display:grid;grid-template-columns:1fr auto;gap:18px}.hero h1{margin:0 0 7px;font-size:25px}.hero p{margin:0;color:var(--muted);font-size:12px;line-height:1.5;max-width:850px}.badge{border:1px solid #b9cfc8;background:#f7fbf9;color:#285f55;border-radius:999px;padding:7px 10px;font-size:10.5px;font-weight:850;height:max-content}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}.datawrap{max-height:340px;overflow:auto}.tbl{width:100%;border-collapse:collapse;background:#fff;font-size:10.5px}.tbl th{position:sticky;top:0;background:#e3dfd7;padding:6px}.tbl td{padding:5px 8px;border-bottom:1px solid #eeeae3;text-align:right}.tbl td:first-child{text-align:left}.chart{height:340px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px}.chart svg{width:100%;height:100%}
+.blocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.block{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px}.block h2{font-size:14px;margin:0 0 5px}.guide{font-size:10.3px;line-height:1.42;background:#f1f5f3;border:1px solid #cbdad5;border-radius:8px;padding:8px 9px;margin:7px 0;color:#46504d}.q{display:grid;grid-template-columns:1fr 145px 72px;gap:6px;align-items:center;padding:6px 0;border-top:1px solid #eeeae3}.q:first-of-type{border-top:0}.qtext{font-size:10.7px;line-height:1.32}.ans input,.ans select{width:100%;border:1px solid #dfca77;background:var(--input);border-radius:7px;padding:7px;font-size:10.7px}.check{min-height:29px;border-radius:6px;display:grid;place-items:center;font-size:9px;font-weight:800}.check.ok{background:var(--greenbg);color:var(--green);border:1px solid #b8d8c3}.check.bad{background:var(--redbg);color:var(--red);border:1px solid #e3b9b3}.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px}.btn{border:0;border-radius:8px;padding:8px 10px;font-size:10.5px;font-weight:850;cursor:pointer}.btn.primary{background:var(--char);color:#fff}.btn.secondary{background:#f7fbf9;color:#285f55;border:1px solid #b9cfc8}.btn:disabled{opacity:.45;cursor:default}.status{font-size:10.5px;color:var(--muted)}.status.ok{color:var(--green);font-weight:800}.status.bad{color:var(--red);font-weight:800}.submit{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.grid,.blocks{grid-template-columns:1fr}}@media(max-width:620px){.q{grid-template-columns:1fr 110px 64px}}
+</style>
+</head>
+<body>
+<header class="top"><div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">PRÀCTICA 3A · SÈRIES TEMPORALS</div><div class="sub">Guiada · canvis, índexs, patrons i mitjana mòbil</div></div></div><div class="who">Sessió: <strong id="student-code">—</strong></div></header>
+<main class="shell">
+<section class="card"><div class="body hero"><div><h1>Com evoluciona l’activitat al llarg del temps?</h1><p>Treballaràs amb 24 mesos de dades laborals personalitzades. Aprendràs a distingir canvis absoluts i percentuals, punts percentuals, nombres índex, tendència, estacionalitat, irregularitats, comparacions interanuals i mitjanes mòbils.</p></div><div class="badge">A · APRENC</div></div></section>
+<section class="card"><div class="head">DADES · 24 MESOS</div><div class="body grid"><div class="datawrap"><table class="tbl"><thead><tr><th>Mes</th><th>Contractes</th><th>Afiliats</th></tr></thead><tbody id="data-body"></tbody></table></div><div class="chart"><svg id="chart" viewBox="0 0 650 320" aria-label="Sèrie temporal de contractes"></svg></div></div></section>
+<section class="card"><div class="head">RECORREGUT GUIAT</div><div class="body"><div class="blocks" id="blocks"></div></div></section>
+<section class="card"><div class="body submit"><div class="status" id="submit-status">Completa correctament els 7 blocs.</div><button class="btn primary" id="submit" type="button" disabled>Entrega la pràctica</button></div></section>
+</main>
+<script src="../../tracking.js?v=3"></script>
+<script>
+(() => {
+'use strict';
+const tracker=window.PracticeTracker,$=id=>document.getElementById(id);
+let data=[],defs=[],startedAt=Date.now(),submitted=false;const done=new Set(),attempts={};
+const MONTHS=['Gen-25','Feb-25','Mar-25','Abr-25','Mai-25','Jun-25','Jul-25','Ago-25','Set-25','Oct-25','Nov-25','Des-25','Gen-26','Feb-26','Mar-26','Abr-26','Mai-26','Jun-26','Jul-26','Ago-26','Set-26','Oct-26','Nov-26','Des-26'];
+function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let x=seed||123456789;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return(x>>>0)/4294967296}}
+function round(x,d=2){const m=10**d;return Math.round((x+Number.EPSILON)*m)/m}
+function parseNum(v){let s=String(v??'').trim().replace(/\s/g,'');if(!s)return NaN;if(s.includes(',')&&s.includes('.'))s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'');else s=s.replace(',','.');return Number(s)}
+function makeData(id){const seed=hash(id+'-3a'),r=rng(seed),season=[-30,-15,0,35,80,145,205,175,70,25,45,130],out=[];const b=780+(seed%90);for(let i=0;i<24;i++){let contracts=b+9*i+season[i%12]+Math.round((r()-.5)*24);if(i===9)contracts-=105;const affiliates=9500+(seed%700)+48*i+Math.round((r()-.5)*90);out.push({m:MONTHS[i],contracts,affiliates})}return out}
+function pct(a,b){return (b-a)/a*100}
+function mm3(i){return (data[i-1].contracts+data[i].contracts+data[i+1].contracts)/3}
+function index(v,base){return v/base*100}
+function buildDefs(){
+ const abs=data[1].contracts-data[0].contracts,pc=pct(data[0].contracts,data[1].contracts);
+ const idxC=index(data[23].contracts,data[0].contracts),idxA=index(data[23].affiliates,data[0].affiliates);
+ const winner=idxC>idxA?'Contractes':'Afiliats';
+ const mom=pct(data[16].contracts,data[17].contracts),yoy=pct(data[5].contracts,data[17].contracts);
+ defs=[
+ {t:'1 · Canvi entre dos moments',g:'Variació absoluta = final − inicial. Variació % = (final − inicial) / inicial × 100.',q:[
+  {x:'Variació absoluta de Gen-25 a Feb-25.',type:'num',a:abs,tol:.001},
+  {x:'Variació percentual de Gen-25 a Feb-25 (2 decimals).',type:'num',a:round(pc,2),tol:.011}
+ ]},
+ {t:'2 · Taxes: % o punts percentuals?',g:'Una taxa que passa de 4,0% a 4,8% augmenta 0,8 punts percentuals, però el canvi relatiu és del 20%.',q:[
+  {x:'Una taxa passa de 4,0% a 4,8%. Augment en punts percentuals.',type:'num',a:.8,tol:.001},
+  {x:'Canvi relatiu de la mateixa taxa (%).',type:'num',a:20,tol:.011}
+ ]},
+ {t:'3 · Nombres índex',g:'Fixa Gen-25 = 100. Índexₜ = valorₜ / valor_base × 100. L’índex compara evolució relativa, no nivells.',q:[
+  {x:'Índex dels contractes a Des-26, base Gen-25=100 (1 decimal).',type:'num',a:round(idxC,1),tol:.11},
+  {x:'Índex dels afiliats a Des-26, base Gen-25=100 (1 decimal).',type:'num',a:round(idxA,1),tol:.11},
+  {x:'Quina sèrie ha crescut més en termes relatius?',type:'sel',a:winner,opts:['Contractes','Afiliats']}
+ ]},
+ {t:'4 · Llegir la sèrie',g:'Mira el gràfic abans de calcular. Tendència = moviment de fons; estacionalitat = patró que es repeteix; irregularitat = xoc puntual.',q:[
+  {x:'Quina tendència general mostra la sèrie?',type:'sel',a:'Creixent',opts:['Creixent','Decreixent','Estable']},
+  {x:'Els pics d’estiu es repeteixen en els dos anys. Això suggereix...',type:'sel',a:'Estacionalitat',opts:['Estacionalitat','Només irregularitat','Cap patró temporal']},
+  {x:'La caiguda extraordinària d’Oct-25 és millor descrita com...',type:'sel',a:'Irregularitat o xoc puntual',opts:['Tendència','Estacionalitat','Irregularitat o xoc puntual']}
+ ]},
+ {t:'5 · Comparar períodes equivalents',g:'Amb estacionalitat, la comparació interanual sovint és més informativa que comparar dos mesos consecutius diferents.',q:[
+  {x:'Canvi de Mai-26 a Jun-26 (%; 1 decimal).',type:'num',a:round(mom,1),tol:.11},
+  {x:'Canvi de Jun-25 a Jun-26 (%; 1 decimal).',type:'num',a:round(yoy,1),tol:.11},
+  {x:'Per valorar l’evolució de juny en una sèrie estacional, quina comparació és més informativa?',type:'sel',a:'Jun-26 vs Jun-25',opts:['Jun-26 vs Mai-26','Jun-26 vs Jun-25']}
+ ]},
+ {t:'6 · Mitjana mòbil',g:'La mitjana mòbil centrada de 3 períodes utilitza anterior + actual + següent. Un n més gran suavitza més però perd detall.',q:[
+  {x:'MM centrada de 3 períodes a Jun-25 (2 decimals).',type:'num',a:round(mm3(5),2),tol:.011},
+  {x:'Entre n=3 i n=5, quina sèrie serà més suau?',type:'sel',a:'n=5',opts:['n=3','n=5']},
+  {x:'Quin és el principal cost d’augmentar n?',type:'sel',a:'Es perd més detall de curt termini',opts:['Es perd més detall de curt termini','La sèrie deixa de tenir unitats','La mitjana mòbil crea dades noves']}
+ ]},
+ {t:'7 · Interpretació final',g:'Una bona conclusió combina moviment general, patrons repetits, xocs i limitacions.',q:[
+  {x:'Una tendència creixent garanteix que la sèrie continuarà creixent?',type:'sel',a:'No',opts:['Sí','No']},
+  {x:'Un sol pic de juliol és suficient per afirmar estacionalitat?',type:'sel',a:'No',opts:['Sí','No']},
+  {x:'La mitjana mòbil substitueix la sèrie original?',type:'sel',a:'No',opts:['Sí','No']}
+ ]}
+ ];
+}
+function renderData(){$('data-body').innerHTML=data.map(d=>`<tr><td>${d.m}</td><td>${d.contracts.toLocaleString('ca-ES')}</td><td>${d.affiliates.toLocaleString('ca-ES')}</td></tr>`).join('')}
+function renderChart(){const svg=$('chart'),W=650,H=320,m={l:50,r:15,t:15,b:45},vals=data.map(d=>d.contracts),min=Math.min(...vals)-30,max=Math.max(...vals)+30,X=i=>m.l+i/(vals.length-1)*(W-m.l-m.r),Y=v=>m.t+(max-v)/(max-min)*(H-m.t-m.b);let s='';for(let k=0;k<=4;k++){const y=m.t+k*(H-m.t-m.b)/4;s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y}" y2="${y}" stroke="#ebe7df"/>`}s+=`<polyline fill="none" stroke="#2f7468" stroke-width="2.5" points="${vals.map((v,i)=>X(i)+','+Y(v)).join(' ')}"/>`;vals.forEach((v,i)=>{s+=`<circle cx="${X(i)}" cy="${Y(v)}" r="${i===9?5:3.4}" fill="${i===9?'#c2673d':'#33779b'}"/>`});[0,5,9,11,17,23].forEach(i=>{s+=`<text x="${X(i)}" y="${H-18}" text-anchor="middle" font-size="9" fill="#697074">${MONTHS[i]}</text>`});svg.innerHTML=s}
+function renderBlocks(){$('blocks').innerHTML=defs.map((b,bi)=>`<div class="block"><h2>${b.t}</h2><div class="guide">${b.g}</div>${b.q.map((d,qi)=>`<div class="q"><div class="qtext">${d.x}</div><div class="ans">${d.type==='sel'?`<select id="a-${bi}-${qi}"><option value="">— Tria —</option>${d.opts.map(o=>`<option>${o}</option>`).join('')}</select>`:`<input id="a-${bi}-${qi}" inputmode="decimal" placeholder="Resposta">`}</div><div class="check" id="c-${bi}-${qi}"></div></div>`).join('')}<div class="actions"><button class="btn secondary chk" data-b="${bi}" type="button">Comprova</button><span class="status" id="s-${bi}"></span></div></div>`).join('');document.querySelectorAll('.chk').forEach(x=>x.onclick=()=>checkBlock(Number(x.dataset.b)))}
+function ok(d,v){if(d.type==='sel')return v===d.a;const n=parseNum(v);return Number.isFinite(n)&&Math.abs(n-d.a)<=d.tol}
+function checkBlock(b){let all=true;defs[b].q.forEach((d,q)=>{const id=`${b}-${q}`,v=$('a-'+id).value,c=$('c-'+id);attempts[id]=(attempts[id]||0)+1;const yes=ok(d,v);c.className='check '+(yes?'ok':'bad');c.textContent=yes?'Correcte':'Revisa';if(!yes)all=false});const st=$('s-'+b);st.className='status '+(all?'ok':'bad');st.textContent=all?'Bloc completat.':'Revisa les respostes.';if(all)done.add(b);else done.delete(b);$('submit').disabled=done.size!==defs.length;$('submit-status').textContent=done.size===defs.length?'Tots els blocs completats. Ja pots entregar.':`${done.size} de ${defs.length} blocs completats.`}
+function details(){const a=[];defs.forEach((b,bi)=>b.q.forEach((d,qi)=>{const v=$(`a-${bi}-${qi}`).value;a.push({question:`${bi+1}.${qi+1}`,answer:v,correct:ok(d,v)})}));return a}
+async function submit(){if(submitted||done.size!==defs.length)return;const id=tracker.getSession()?.id||'',det=details(),payload={submissionId:tracker.makeSubmissionId('series-temporals-3a',id),id,practice:'Pràctica 3a · Sèries temporals',area:'Estadística',status:'Entregada',total:det.length,correct:det.filter(x=>x.correct).length,attempts:Object.values(attempts).reduce((a,b)=>a+b,0),progress:100,minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'guided-1',detail:{questions:det},justifications:[]};$('submit').disabled=true;$('submit').textContent='Enviant…';const res=await tracker.submit(payload);if(res.ok){submitted=true;$('submit').textContent='Pràctica entregada';$('submit-status').className='status ok';$('submit-status').textContent=res.teacher?'Mode professor: pràctica completada sense registrar entrega.':'Entrega registrada correctament.';document.querySelectorAll('input,select,.chk').forEach(x=>x.disabled=true)}else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';$('submit-status').className='status bad';$('submit-status').textContent='No s’ha pogut confirmar l’entrega.'}}
+function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;data=makeData(s.id);buildDefs();renderData();renderChart();renderBlocks();$('submit').onclick=submit}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120));else setTimeout(init,120);
+})();
+</script>
+</body>
+</html>
