@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Taules de freqüències i dispersió · Pràctica 1b</title>
+<title>Taules de freqüències i dispersió · Pràctica 1a</title>
 <style>
 :root{--bg:#f2efe9;--paper:#fbfaf7;--ink:#222629;--muted:#6d7377;--line:#d8d3ca;--char:#41474b;--char2:#596065;--green:#28643f;--greenbg:#e7f4eb;--red:#8e342d;--redbg:#f8e7e4;--input:#fff0b8}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}
@@ -22,7 +22,7 @@ button{border:0;border-radius:8px;padding:9px 11px;font-weight:800;cursor:pointe
 </head>
 <body>
 <header class="top">
-  <div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">TAULES DE FREQÜÈNCIES I DISPERSIÓ</div><div class="sub">Pràctica 1b · Excel</div></div></div>
+  <div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">TAULES DE FREQÜÈNCIES I DISPERSIÓ</div><div class="sub">Pràctica 1a · Excel</div></div></div>
   <div class="idtools"><label>ID alumne <input id="student-id" inputmode="numeric" maxlength="6" placeholder="6 dígits"></label><button class="light" id="validate-id">Validar ID</button><span class="status" id="id-status">Valida l’ID per començar.</span></div>
 </header>
 
@@ -145,7 +145,7 @@ $('submit').onclick=async()=>{
   $('submit').disabled=true;$('submit').textContent='Enviant…';setStatus('submit-status','','Guardant l’entrega…');
   const payload={
     submissionId:tracker.makeSubmissionId('freq-var',validatedId),id:validatedId,
-    practice:'Pràctica 1b · Taules de freqüències i dispersió',area:'Estadística',status:'Entregada',
+    practice:'Pràctica 1a · Taules de freqüències i dispersió',area:'Estadística',status:'Entregada',
     total:lastReport.total,correct:lastReport.correct,attempts:checkAttempts,progress:100,
     minutes:startedAt?Math.max(1,Math.round((Date.now()-startedAt)/60000)):'',
     version:'pilot-1',detail:{checks:lastReport.detail},justifications:lastReport.justifications
