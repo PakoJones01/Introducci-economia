@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Estadística descriptiva bidimensional · Pràctiques interactives</title>
+<style>
+:root{
+  --bg:#f2efe9;--paper:#fbfaf7;--panel:#fff;--ink:#222629;--muted:#6d7377;--line:#d8d3ca;
+  --char:#41474b;--char2:#596065;--accent:#2f7468;--blue:#33779b;--orange:#dc7136;--gold:#c69a42;
+  --green:#28643f;--greenbg:#e7f4eb;--red:#8e342d;--redbg:#f8e7e4;--input:#fff0b8;--shadow:0 14px 36px rgba(35,38,40,.08)
+}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit} button{cursor:pointer}.hidden{display:none!important}
+.topbar{min-height:62px;background:var(--char);color:white;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:18px;position:sticky;top:0;z-index:20}
+.brandwrap{display:flex;align-items:center;gap:12px;min-width:0}.portal-back{border:1px solid rgba(255,255,255,.24);color:#fff;text-decoration:none;border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800;white-space:nowrap}.portal-back:hover{background:rgba(255,255,255,.08)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}.brandmark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:#fff;color:var(--char);font-weight:900}
+.title{font-weight:780;font-size:20px;line-height:1.08}.subtitle{font-size:11px;color:#d7dbdd;margin-top:4px}
+.idtools{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}.student{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700}.student input{width:100px;border:1px solid #d8c36e;background:var(--input);padding:7px 8px;border-radius:7px;text-align:center;font-weight:800;outline:none}
+.validate-id{border:0;border-radius:7px;padding:7px 10px;background:#f1efea;color:#303538;font-size:11px;font-weight:850}.validate-id:disabled{opacity:.55}
+.idstatus{font-size:10.5px;border-radius:7px;padding:5px 8px;background:rgba(255,255,255,.1);color:#edf0f1;max-width:230px}.idstatus.ok{background:#e7f4eb;color:#1f5734;border:1px solid #b8d8c3}.idstatus.bad{background:#f8e7e4;color:#7d2b27;border:1px solid #e3b9b3}.idstatus.checking{background:#edf0f2;color:#3f4b51;border:1px solid #ccd3d7}
+
+.shell{max-width:1500px;margin:0 auto;padding:14px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px}
+.sidebar{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px;align-self:start;position:sticky;top:76px;box-shadow:0 5px 18px rgba(30,32,34,.03)}
+.sidehead{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;padding:4px 6px 10px}.stage-list{display:flex;flex-direction:column;gap:5px}
+.stage{border:0;background:transparent;text-align:left;padding:9px 8px;border-radius:9px;display:grid;grid-template-columns:25px 1fr;gap:7px;align-items:center;color:#4b5053}.stage:disabled{opacity:.55;cursor:default}.stage:not(:disabled):hover{background:#f0ece5}.stage.active{background:#e8efec;color:#285f55}.stage.done .num{background:var(--green);color:white}.stage.active .num{border-color:var(--accent);color:var(--accent)}
+.num{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;border:1px solid #c9c4ba;font-size:10px;font-weight:850;background:white}.stage-title{font-size:12px;font-weight:780}.stage-sub{font-size:9.5px;color:#858a8d;margin-top:2px}
+.progress-wrap{margin-top:13px;padding:11px 7px 3px;border-top:1px solid var(--line)}.progress-line{height:7px;background:#e5e1da;border-radius:999px;overflow:hidden}.progress-fill{height:100%;width:0;background:var(--accent);transition:.25s}.progress-text{font-size:10px;color:var(--muted);margin-top:6px}
+
+.main{min-width:0;display:flex;flex-direction:column;gap:12px}.hero{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:17px 19px}
+.hero-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850}.hero h1{font-size:25px;margin:5px 0 5px;letter-spacing:-.02em}.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.45;max-width:78ch}
+.hero-tools{display:flex;flex-direction:column;align-items:flex-end;gap:7px;min-width:196px}.hero-badge{background:#e7efec;color:#30675c;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;white-space:nowrap}
+.excel-btn{border:1px solid #b9cfc8;background:#f7fbf9;color:#285f55;border-radius:9px;padding:9px 11px;font-size:11px;font-weight:850;white-space:nowrap}.excel-btn:hover{background:#e8f2ee;border-color:#8fb4a9}.excel-btn:disabled{opacity:.45;cursor:default}.excel-sub{font-size:9px;color:var(--muted);text-align:right;line-height:1.25}
+
+.workspace{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(350px,.82fr);gap:12px;align-items:start}.analysis-col{min-width:0;display:flex;flex-direction:column;gap:12px}
+.data-card,.visual-card,.question-card,.summary-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 5px 18px rgba(30,32,34,.025)}
+.cardhead{height:38px;background:var(--char2);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:11px;font-weight:850;letter-spacing:.02em}
+.data-card .cardhead{background:#4d5559}.data-panel{height:190px;overflow:auto;padding:10px 12px;background:#faf8f4}
+.pair-table{width:100%;border-collapse:collapse;background:white;font-size:11px}.pair-table th{position:sticky;top:0;background:#e3dfd7;padding:6px;border-bottom:1px solid #cbc5bb;font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}.pair-table td{padding:5px 8px;border-bottom:1px solid #eeeae3;text-align:right}.pair-table td:first-child,.pair-table th:first-child{text-align:center}.pair-table tr.special td{background:#fff1df}.data-note{font-size:9.5px;color:var(--muted);padding:7px 12px;border-top:1px solid #ece8e1;background:#fbfaf7}
+.visual{height:390px;position:relative;padding:10px 12px 6px}.visual svg{width:100%;height:100%;display:block}.visual-footer{min-height:45px;border-top:1px solid #ece8e1;padding:8px 12px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.hint{font-size:10.5px;color:var(--muted);line-height:1.35}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.mini-btn{border:1px solid var(--line);background:white;color:#4f5559;border-radius:7px;padding:5px 8px;font-size:9.5px;font-weight:800}.mini-btn.active{background:#e7efec;color:#285f55;border-color:#b7ccc6}
+
+.question-card{display:flex;flex-direction:column;min-height:560px}.qhead{padding:12px 14px;border-bottom:1px solid var(--line)}.qkicker{font-size:10px;color:var(--accent);font-weight:850;text-transform:uppercase;letter-spacing:.07em}.qtitle{font-size:17px;font-weight:800;margin-top:3px}.qintro{font-size:11px;color:var(--muted);line-height:1.4;margin-top:5px}
+.qbody{padding:9px 12px;display:flex;flex-direction:column;gap:7px;flex:1;overflow:auto}.qrow{display:grid;grid-template-columns:25px minmax(0,1fr) 112px 74px;gap:6px;align-items:center;padding:7px 6px;border-bottom:1px solid #eeeae3;font-size:11px;min-height:44px}.qrow:last-child{border-bottom:0}.qno{font-weight:850;text-align:center}.qtext{line-height:1.3}.tool-tag{display:inline-block;border-radius:5px;padding:2px 5px;margin-right:5px;font-size:8px;line-height:1.15;font-weight:900;letter-spacing:.04em;vertical-align:1px}.tool-tag.excel{background:#e5f1e9;color:#2d6a43;border:1px solid #bcd7c6}.tool-tag.web{background:#e9eef2;color:#4c6676;border:1px solid #ccd8df}
+.ans input,.ans select{width:100%;border:1px solid #e1cc7c;background:var(--input);border-radius:6px;padding:7px 6px;text-align:center;outline:none;font-size:11px;font-weight:700}.ans select{text-align:left}.ans input:disabled,.ans select:disabled{background:#eeeae3;border-color:#d4cec3;color:#888}
+.check{height:100%;min-height:29px;border-radius:6px;display:grid;place-items:center;text-align:center;font-size:9.5px;font-weight:820;color:transparent}.check.ok{background:var(--greenbg);color:var(--green);border:1px solid #b8d8c3}.check.bad{background:var(--redbg);color:var(--red);border:1px solid #e3b9b3}
+.qactions{border-top:1px solid var(--line);padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}.secondary,.primary{border-radius:8px;padding:8px 11px;font-size:11px;font-weight:800}.secondary{background:white;border:1px solid var(--line);color:#4a5054}.primary{background:var(--char);border:1px solid var(--char);color:white}.primary:disabled,.secondary:disabled{opacity:.4;cursor:not-allowed}
+
+.summary-card{padding-bottom:4px}.summary-head{padding:12px 14px 8px}.summary-head strong{font-size:13px}.summary-head div{font-size:10px;color:var(--muted);margin-top:3px}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;padding:0 12px 12px}.stat{background:white;border:1px solid var(--line);border-radius:9px;padding:9px}.stat .lab{font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:.04em}.stat .val{font-size:16px;font-weight:820;margin-top:3px}.stat.locked .val{color:#aaa;font-size:13px}.stat.unlocked{border-color:#b8d1c9;background:#f8fbfa}
+.insight{margin:0 12px 10px;padding:10px 11px;background:#f0ede7;border-radius:9px;font-size:10.5px;color:#4e5356;line-height:1.4}.insight strong{color:#33383b}
+.submitbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 12px 12px}.submitstatus{font-size:10.5px;border-radius:7px;padding:6px 8px;color:var(--muted)}.submitstatus.ok{background:var(--greenbg);color:var(--green);border:1px solid #b8d8c3}.submitstatus.bad{background:var(--redbg);color:var(--red);border:1px solid #e3b9b3}
+
+.axis{stroke:#7f8588;stroke-width:1}.gridline{stroke:#ebe7df;stroke-width:1}.tick{font-size:10px;fill:#697074}.axislabel{font-size:11px;fill:#4c5255;font-weight:750}.dot{fill:var(--blue);opacity:.86}.dot.special{fill:var(--orange);stroke:#8b431e;stroke-width:1}.regline{stroke:var(--accent);stroke-width:2.2}.resid{stroke:var(--orange);stroke-width:1.6;stroke-dasharray:4 3}.guide{stroke:#9da3a6;stroke-width:1;stroke-dasharray:3 3}
+
+.locked-overlay{padding:18px;border:1px dashed #c9c4ba;border-radius:10px;background:#f8f6f2;color:#686e72;text-align:center;font-size:12px;line-height:1.5}
+@media(max-width:1050px){.shell{grid-template-columns:1fr}.sidebar{position:static}.stage-list{display:grid;grid-template-columns:repeat(4,1fr)}.workspace{grid-template-columns:1fr}.visual{height:380px}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.topbar{align-items:flex-start;flex-wrap:wrap}.idtools{justify-content:flex-start}.shell{padding:8px}.stage-list{grid-template-columns:repeat(2,1fr)}.hero{flex-direction:column}.hero-tools{align-items:flex-start}.excel-sub{text-align:left}.visual{height:330px}.qrow{grid-template-columns:24px minmax(0,1fr) 98px 66px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brandwrap">
+    <a class="portal-back" href="../../index.html?area=estadistica">← Pràctiques</a>
+    <div class="brand"><div class="brandmark">r</div><div><div class="title">ESTADÍSTICA DESCRIPTIVA BIDIMENSIONAL</div><div class="subtitle">Relació entre dues variables quantitatives</div></div></div>
+  </div>
+  <div class="idtools">
+    <label class="student">ID alumne <input id="student-id" inputmode="numeric" maxlength="6" placeholder="6 dígits" aria-label="ID alumne"></label>
+    <button class="validate-id" id="validate-id" type="button">Validar ID</button>
+    <span class="idstatus" id="id-status">Valida l’ID per començar.</span>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidehead">Recorregut</div>
+    <div class="stage-list" id="stage-list"></div>
+    <div class="progress-wrap"><div class="progress-line"><div class="progress-fill" id="progress-fill"></div></div><div class="progress-text" id="progress-text">0 de 8 blocs completats</div></div>
+  </aside>
+
+  <main class="main">
+    <section class="hero">
+      <div>
+        <div class="hero-kicker">Pràctica 2 · estadística descriptiva bidimensional</div>
+        <h1 id="hero-title">Dues variables, una relació</h1>
+        <p id="hero-text">Treballaràs amb 36 observacions aparellades: hores d’estudi setmanals i puntuació d’una prova. Les dades depenen del teu ID. Analitzaràs el núvol de punts, la covariància, la correlació, la recta de regressió, els residus i el coeficient de determinació. Les preguntes marcades EXCEL s’han de calcular al full i validar després al web.</p>
+      </div>
+      <div class="hero-tools">
+        <div class="hero-badge" id="dataset-badge">Mostra personalitzada</div>
+        <button class="excel-btn" id="download-excel" type="button" disabled>↓ Descarrega Excel</button>
+        <div class="excel-sub">Fitxer personalitzat · DADES · TREBALL · INFORME</div>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <div class="analysis-col">
+        <section class="data-card">
+          <div class="cardhead"><span>DADES APARELLADES · X i Y sempre juntes</span><span id="data-caption">—</span></div>
+          <div class="data-panel" id="data-panel"><div class="locked-overlay">Valida el teu ID per generar la mostra personalitzada.</div></div>
+          <div class="data-note" id="data-note">Cada fila representa una mateixa observació: no separis ni reordenis X i Y independentment.</div>
+        </section>
+
+        <section class="visual-card">
+          <div class="cardhead"><span>NÚVOL DE PUNTS</span><span id="visual-label">X: hores d’estudi · Y: puntuació</span></div>
+          <div class="visual"><svg id="scatter" role="img" aria-label="Núvol de punts de les dues variables"></svg></div>
+          <div class="visual-footer">
+            <div class="hint" id="visual-hint">Valida l’ID per veure el núvol de punts.</div>
+            <div class="controls">
+              <button class="mini-btn" id="toggle-line" type="button" disabled>Recta de regressió</button>
+              <button class="mini-btn" id="toggle-residual" type="button" disabled>Residual seleccionat</button>
+              <button class="mini-btn" id="toggle-outlier" type="button" disabled>Experiment: punt extrem</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="summary-card">
+          <div class="summary-head"><strong>Resum numèric</strong><div>Els resultats es desbloquegen a mesura que completes els blocs.</div></div>
+          <div class="stats" id="stats"></div>
+          <div class="insight" id="insight"><strong>Idea clau.</strong> Una correlació resumeix la intensitat d’una relació lineal, però no prova una relació causal.</div>
+          <div class="submitbar">
+            <button class="primary" id="submit-practice" type="button" disabled>Entrega la pràctica</button>
+            <span class="submitstatus" id="submit-status"></span>
+          </div>
+        </section>
+      </div>
+
+      <section class="question-card">
+        <div class="qhead">
+          <div class="qkicker" id="q-kicker">Bloc bloquejat</div>
+          <div class="qtitle" id="q-title">Valida l’ID per començar</div>
+          <div class="qintro" id="q-intro">Quan l’ID sigui correcte es generarà la teva mostra.</div>
+        </div>
+        <div class="qbody" id="qbody"><div class="locked-overlay">Encara no pots respondre.</div></div>
+        <div class="qactions">
+          <button class="secondary" id="reset-stage" type="button" disabled>Neteja respostes</button>
+          <div>
+            <button class="secondary hidden" id="prev-stage" type="button">← Anterior</button>
+            <button class="primary" id="validate-stage" type="button" disabled>Comprova</button>
+            <button class="primary hidden" id="next-stage" type="button">Següent →</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="../../tracking.js"></script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id);
+const tracker=window.PracticeTracker;
+
+const fmt=(x,d=0)=>Number(x).toLocaleString('ca-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+const round=(x,d=0)=>{const m=10**d;return Math.round((x+Number.EPSILON)*m)/m};
+const parse=s=>{if(typeof s==='number')return s;let v=String(s??'').trim().replace(/\s/g,'');if(!v)return NaN;if(v.includes(',')&&v.includes('.'))v=v.lastIndexOf(',')>v.lastIndexOf('.')?v.replace(/\./g,'').replace(',','.'):v.replace(/,/g,'');else v=v.replace(',','.');return Number(v)};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let x=seed||123456789;return ()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return (x>>>0)/4294967296}}
+function normal(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+
+function makeData(id){
+  const seed=hash(String(id).slice(-6)),r=rng(seed),family=seed%4;
+  const slope=[4.1,3.5,4.7,3.9][family];
+  const noise=[5.0,8.2,6.1,10.0][family];
+  const intercept=[43,46,39,45][family];
+  const data=[];
+  for(let i=0;i<36;i++){
+    let x=2.2+10.2*r()+0.45*normal(r);
+    x=round(clamp(x,1.5,13.5),1);
+    let y=intercept+slope*x+noise*normal(r);
+    y=round(clamp(y,35,98),1);
+    data.push({x,y});
+  }
+  // assegurem cobertura de la zona central i un punt identificable per a l'experiment
+  data[8]={x:5.0,y:round(clamp(intercept+slope*5+noise*.15,35,98),1)};
+  data[18]={x:8.0,y:round(clamp(intercept+slope*8-noise*.20,35,98),1)};
+  data[27]={x:11.0,y:round(clamp(intercept+slope*11+noise*.10,35,98),1)};
+  return {seed,family,data};
+}
+
+function calc(data){
+  const n=data.length,mx=data.reduce((s,d)=>s+d.x,0)/n,my=data.reduce((s,d)=>s+d.y,0)/n;
+  const vx=data.reduce((s,d)=>s+(d.x-mx)**2,0)/n;
+  const vy=data.reduce((s,d)=>s+(d.y-my)**2,0)/n;
+  const cov=data.reduce((s,d)=>s+(d.x-mx)*(d.y-my),0)/n;
+  const sdx=Math.sqrt(vx),sdy=Math.sqrt(vy),r=cov/(sdx*sdy);
+  const b=cov/vx,a=my-b*mx,r2=r*r;
+  return {n,mx,my,vx,vy,sdx,sdy,cov,r,a,b,r2,minx:Math.min(...data.map(d=>d.x)),maxx:Math.max(...data.map(d=>d.x)),miny:Math.min(...data.map(d=>d.y)),maxy:Math.max(...data.map(d=>d.y))};
+}
+
+function outlierData(data){
+  const a=data.map(d=>({...d}));
+  const st=calc(a);
+  a[35]={x:round(st.maxx+2.5,1),y:round(clamp(st.miny-8,20,95),1)};
+  return a;
+}
+
+function strength(r){
+  const a=Math.abs(r);
+  return a>=.8?'forta':a>=.55?'moderada':'feble';
+}
+function direction(r){return r>0?'positiva':r<0?'negativa':'nul·la'}
+
+const stages=[
+ {t:'Parelles',s:'Dues variables, una observació',intro:'Abans de calcular res, identifica què representa cada fila i resumeix separadament X i Y.'},
+ {t:'Núvol de punts',s:'Direcció, forma i intensitat',intro:'El gràfic és la primera eina: descriu el patró abans de resumir-lo amb un únic nombre.'},
+ {t:'Covariància i r',s:'Mesurar la relació lineal',intro:'La covariància informa del signe; la correlació de Pearson estandarditza la relació entre −1 i 1.'},
+ {t:'Punt extrem',s:'Sensibilitat de la correlació',intro:'Activa l’experiment del punt extrem i observa com una sola observació pot canviar la relació resumida.'},
+ {t:'Regressió',s:'Recta de mínims quadrats',intro:'Construeix la recta ŷ = a + b·x i interpreta el pendent en les unitats originals.'},
+ {t:'Predicció i residual',s:'Valor ajustat i error',intro:'Una predicció no coincideix necessàriament amb el valor observat. La diferència és el residual.'},
+ {t:'R² i extrapolació',s:'Què explica el model?',intro:'R² resumeix quina proporció de la variabilitat de Y queda associada linealment amb X en aquesta mostra.'},
+ {t:'Informe final',s:'Interpretar sense exagerar',intro:'Integra gràfic, correlació i regressió, i diferencia associació de causalitat.'}
+];
+
+let current=0,completed=new Set(),dataset=[],altered=[],stats=null,statsOut=null,validatedId='',startedAt=null,submitted=false;
+let answers={},attempts={},lastAttemptValue={},showLine=false,showResidual=false,showOutlier=false;
+
+function q(type,text,answer,unit='',options=[],excel=false,tol=null){return {type,text,answer,unit,options,excel,tol}}
+function questions(i){
+  if(!stats)return [];
+  const s=stats,so=statsOut;
+  const pred8=s.a+s.b*8;
+  const obs=dataset[18],predObs=s.a+s.b*obs.x,res=obs.y-predObs;
+  const rChange=Math.abs(so.r)<Math.abs(s.r)?'Disminueix':'Augmenta';
+  switch(i){
+    case 0:return [
+      q('num','Quantes observacions aparellades hi ha?',s.n,'parelles',[],false,0),
+      q('num','Calcula la mitjana de X (hores d’estudi).',round(s.mx,2),'h',[],true,.011),
+      q('num','Calcula la mitjana de Y (puntuació).',round(s.my,2),'punts',[],true,.011)
+    ];
+    case 1:return [
+      q('sel','Quina és la direcció principal de la relació?',direction(s.r),'',['positiva','negativa','nul·la']),
+      q('sel','La forma del patró és principalment lineal?','Sí','',['Sí','No']),
+      q('sel','Com descriuries la intensitat de la relació lineal?',strength(s.r),'',[ 'feble','moderada','forta'])
+    ];
+    case 2:return [
+      q('num','Calcula la covariància descriptiva entre X i Y (dividint per n).',round(s.cov,3),'h·punts',[],true,.0011),
+      q('num','Calcula el coeficient de correlació de Pearson r.',round(s.r,3),'',[],true,.0011),
+      q('sel','Si X passés d’hores a minuts, el valor de r canviaria?','No','',['Sí','No']),
+      q('sel','Si X passés d’hores a minuts, la covariància mantindria exactament el mateix valor numèric?','No','',['Sí','No'])
+    ];
+    case 3:return [
+      q('sel','Activa “Experiment: punt extrem”. En valor absolut, què passa amb la correlació?',rChange,'',['Augmenta','Disminueix']),
+      q('num','Quin és el nou valor de r amb el punt extrem?',round(so.r,3),'',[],true,.0011),
+      q('sel','Podem afirmar que r és completament robust davant punts extrems?','No','',['Sí','No'])
+    ];
+    case 4:return [
+      q('num','Calcula el pendent b de la recta de regressió de Y sobre X.',round(s.b,3),'punts/h',[],true,.0011),
+      q('num','Calcula l’ordenada a l’origen a.',round(s.a,3),'punts',[],true,.0011),
+      q('sel','Si b és positiu, la recta ajustada és creixent?','Sí','',['Sí','No'])
+    ];
+    case 5:return [
+      q('num','Segons la recta, quina puntuació predius per a X = 8 hores?',round(pred8,2),'punts',[],true,.011),
+      q('num',`Per a l’observació 19 (X=${fmt(obs.x,1)}, Y=${fmt(obs.y,1)}), calcula el valor predit ŷ.`,round(predObs,2),'punts',[],true,.011),
+      q('num','Calcula el residual e = y − ŷ de l’observació 19.',round(res,2),'punts',[],true,.011),
+      q('sel','Un residual positiu indica que el valor observat queda per sobre de la recta?','Sí','',['Sí','No'])
+    ];
+    case 6:return [
+      q('num','Calcula R².',round(s.r2,3),'',[],true,.0011),
+      q('num','Expressa R² com a percentatge.',round(s.r2*100,1),'%',[],false,.11),
+      q('sel','Predir la puntuació per a X = 20 hores seria interpolació o extrapolació?','Extrapolació','',['Interpolació','Extrapolació']),
+      q('sel','Una extrapolació lluny del rang observat s’ha d’interpretar amb més prudència?','Sí','',['Sí','No'])
+    ];
+    case 7:return [
+      q('sel',`La relació observada entre hores d’estudi i puntuació és ${direction(s.r)} i ${strength(s.r)}. Aquesta descripció és coherent amb r?`,'Sí','',['Sí','No']),
+      q('sel','Podem concloure només amb aquestes dades que augmentar hores d’estudi causa necessàriament l’augment de la puntuació?','No','',['Sí','No']),
+      q('sel','Per descriure bé una relació bidimensional, és preferible combinar el núvol de punts amb mesures numèriques?','Sí','',['Sí','No'])
+    ];
+  }
+  return [];
+}
+
+function setIdState(kind,text){const e=$('id-status');e.className='idstatus '+(kind||'');e.textContent=text}
+function normalizeInput(){const raw=String($('student-id').value||'').replace(/\D/g,'').slice(0,6);$('student-id').value=raw;return raw}
+
+async function validateStudent(){
+  if(!tracker){setIdState('bad','No s’ha carregat el sistema de seguiment.');return}
+  const id=normalizeInput();
+  $('validate-id').disabled=true;setIdState('checking','Comprovant ID…');
+  const res=await tracker.validateId(id);
+  $('validate-id').disabled=false;
+  if(res.ok){
+    validatedId=res.id;startedAt=Date.now();submitted=false;answers={};attempts={};lastAttemptValue={};completed.clear();current=0;
+    const g=makeData(validatedId);dataset=g.data;altered=outlierData(dataset);stats=calc(dataset);statsOut=calc(altered);
+    showLine=false;showResidual=false;showOutlier=false;
+    setIdState('ok','ID correcte · mostra generada.');
+    $('download-excel').disabled=false;$('toggle-line').disabled=false;$('toggle-residual').disabled=false;$('toggle-outlier').disabled=false;
+    enablePractice(true);renderAll();
+  }else{
+    validatedId='';dataset=[];stats=null;statsOut=null;enablePractice(false);
+    if(res.reason==='format')setIdState('bad','L’ID ha de tenir 6 dígits.');
+    else if(res.reason==='not-found')setIdState('bad','Aquest ID no és a la llista d’alumnes.');
+    else setIdState('bad','No s’ha pogut validar l’ID.');
+    renderLocked();
+  }
+}
+
+function enablePractice(on){
+  $('validate-stage').disabled=!on;$('reset-stage').disabled=!on;$('download-excel').disabled=!on;
+  document.querySelectorAll('.stage').forEach(b=>b.disabled=!on);
+}
+function invalidate(){
+  if(!validatedId)return;
+  validatedId='';dataset=[];stats=null;statsOut=null;startedAt=null;submitted=false;completed.clear();answers={};attempts={};lastAttemptValue={};
+  $('download-excel').disabled=true;$('toggle-line').disabled=true;$('toggle-residual').disabled=true;$('toggle-outlier').disabled=true;$('submit-practice').disabled=true;
+  enablePractice(false);setIdState('','Valida l’ID per començar.');renderLocked();
+}
+$('student-id').addEventListener('input',()=>{normalizeInput();invalidate()});
+$('student-id').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();validateStudent()}});
+$('validate-id').onclick=validateStudent;
+
+function renderLocked(){
+  $('data-panel').innerHTML='<div class="locked-overlay">Valida el teu ID per generar la mostra personalitzada.</div>';
+  $('q-kicker').textContent='Bloc bloquejat';$('q-title').textContent='Valida l’ID per començar';$('q-intro').textContent='Quan l’ID sigui correcte es generarà la teva mostra.';
+  $('qbody').innerHTML='<div class="locked-overlay">Encara no pots respondre.</div>';$('stats').innerHTML='';
+  $('progress-fill').style.width='0%';$('progress-text').textContent='0 de 8 blocs completats';renderStageList();drawScatter();
+}
+
+function renderStageList(){
+  const host=$('stage-list');host.innerHTML='';
+  stages.forEach((s,i)=>{
+    const b=document.createElement('button');b.className='stage'+(i===current&&validatedId?' active':'')+(completed.has(i)?' done':'');b.disabled=!validatedId;
+    b.innerHTML=`<span class="num">${i+1}</span><span><div class="stage-title">${s.t}</div><div class="stage-sub">${s.s}</div></span>`;
+    b.onclick=()=>{current=i;showOutlier=(i===3)&&showOutlier;renderAll()};host.appendChild(b);
+  });
+}
+function renderData(){
+  if(!validatedId)return;
+  const use=showOutlier?altered:dataset;
+  let h='<table class="pair-table"><thead><tr><th>#</th><th>X · hores d’estudi</th><th>Y · puntuació</th></tr></thead><tbody>';
+  use.forEach((d,i)=>{h+=`<tr class="${showOutlier&&i===35?'special':''}"><td>${i+1}</td><td>${fmt(d.x,1)}</td><td>${fmt(d.y,1)}</td></tr>`});
+  h+='</tbody></table>';$('data-panel').innerHTML=h;$('data-caption').textContent=`n = ${use.length}`;
+  $('data-note').textContent=showOutlier?'Experiment actiu: l’observació 36 s’ha substituït per un punt extrem. Torna a prémer el botó per recuperar la mostra original.':'Cada fila representa una mateixa observació: no separis ni reordenis X i Y independentment.';
+}
+function renderQuestions(){
+  if(!validatedId)return;
+  const qs=questions(current);$('q-kicker').textContent=`Bloc ${current+1} de ${stages.length}`;$('q-title').textContent=stages[current].t;$('q-intro').textContent=stages[current].intro;
+  const host=$('qbody');host.innerHTML='';
+  qs.forEach((d,j)=>{
+    const key=`${current}-${j}`,row=document.createElement('div');row.className='qrow';
+    const no=document.createElement('div');no.className='qno';no.textContent=j+1;
+    const tx=document.createElement('div');tx.className='qtext';tx.innerHTML=`<span class="tool-tag ${d.excel?'excel':'web'}">${d.excel?'EXCEL':'WEB'}</span>${d.text}`;
+    const ans=document.createElement('div');ans.className='ans';let c;
+    if(d.type==='sel'){c=document.createElement('select');c.innerHTML='<option value="">Selecciona…</option>'+d.options.map(o=>`<option value="${o}">${o}</option>`).join('')}
+    else{c=document.createElement('input');c.type='text';c.inputMode='decimal';c.autocomplete='off'}
+    c.id=`ans-${current}-${j}`;c.value=answers[key]??'';c.disabled=submitted;
+    c.addEventListener('change',()=>{answers[key]=c.value;recordAttempt(key,c.value)});
+    if(d.type!=='sel'){
+      c.addEventListener('blur',()=>{answers[key]=c.value;recordAttempt(key,c.value)});
+      c.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();c.blur()}});
+    }
+    ans.appendChild(c);
+    const chk=document.createElement('div');chk.className='check';chk.id=`chk-${current}-${j}`;
+    const unit=document.createElement('div');unit.style.display='grid';unit.style.gridTemplateColumns='1fr';unit.appendChild(chk);
+    const unitText=document.createElement('div');unitText.style.fontSize='9px';unitText.style.color='var(--muted)';unitText.style.textAlign='center';unitText.style.marginTop='2px';unitText.textContent=d.unit;unit.appendChild(unitText);
+    row.append(no,tx,ans,unit);host.appendChild(row);
+  });
+  $('prev-stage').classList.toggle('hidden',current===0);$('next-stage').classList.toggle('hidden',!completed.has(current)||current===stages.length-1);
+  $('validate-stage').disabled=submitted;$('reset-stage').disabled=submitted;
+}
+function recordAttempt(key,value){
+  const v=String(value??'').trim();if(!v||lastAttemptValue[key]===v)return;lastAttemptValue[key]=v;attempts[key]=(attempts[key]||0)+1;
+}
+function isCorrect(d,raw){
+  if(raw===''||raw==null)return false;
+  if(d.type==='sel')return raw===d.answer;
+  const v=parse(raw),a=Number(d.answer);if(!Number.isFinite(v)||!Number.isFinite(a))return false;
+  const tol=d.tol??(Number.isInteger(a)?0.001:.011);return Math.abs(v-a)<=tol;
+}
+function validateStage(){
+  const qs=questions(current);let all=true;
+  qs.forEach((d,j)=>{
+    const key=`${current}-${j}`,raw=String($(`ans-${current}-${j}`)?.value??'').trim();answers[key]=raw;recordAttempt(key,raw);
+    const ok=isCorrect(d,raw),ch=$(`chk-${current}-${j}`);ch.className='check '+(ok?'ok':'bad');ch.textContent=ok?'Correcte':'Revisa-ho';if(!ok)all=false;
+  });
+  if(all){completed.add(current);renderStageList();updateProgress();renderStats();if(current<stages.length-1){$('next-stage').classList.remove('hidden')}else{$('submit-practice').disabled=false;$('submit-status').className='submitstatus';$('submit-status').textContent='Tots els blocs estan completats. Ja pots entregar.'}}
+}
+function resetStage(){questions(current).forEach((_,j)=>{const k=`${current}-${j}`;delete answers[k];delete lastAttemptValue[k];const c=$(`ans-${current}-${j}`);if(c)c.value='';const ch=$(`chk-${current}-${j}`);if(ch){ch.className='check';ch.textContent=''}});completed.delete(current);renderStageList();updateProgress();renderStats()}
+function updateProgress(){const p=completed.size/stages.length*100;$('progress-fill').style.width=p+'%';$('progress-text').textContent=`${completed.size} de ${stages.length} blocs completats`;if(completed.size<stages.length)$('submit-practice').disabled=true}
+function renderStats(){
+  if(!stats){$('stats').innerHTML='';return}
+  const items=[
+    ['n',stats.n,0],['Mitjana X',fmt(stats.mx,2),0],['Mitjana Y',fmt(stats.my,2),0],
+    ['Covariància',fmt(stats.cov,3),2],['r',fmt(stats.r,3),2],['Pendent b',fmt(stats.b,3),4],
+    ['Intercept a',fmt(stats.a,3),4],['R²',fmt(stats.r2,3),6]
+  ];
+  $('stats').innerHTML=items.map(([lab,val,unlock])=>`<div class="stat ${completed.has(unlock)||completed.size===stages.length?'unlocked':'locked'}"><div class="lab">${lab}</div><div class="val">${completed.has(unlock)||completed.size===stages.length?val:'—'}</div></div>`).join('');
+}
+function renderAll(){
+  if(!validatedId){renderLocked();return}
+  renderStageList();renderData();renderQuestions();updateProgress();renderStats();drawScatter();
+  $('visual-hint').textContent=current===3?'Activa el punt extrem i compara el núvol i la correlació amb la mostra original.':current===4?'Activa la recta de regressió per veure el millor ajust lineal.':current===5?'Activa el residual seleccionat per veure la distància vertical entre una observació i la recta.':'El núvol de punts permet veure direcció, forma, intensitat i possibles punts especials.';
+}
+$('validate-stage').onclick=validateStage;$('reset-stage').onclick=resetStage;
+$('prev-stage').onclick=()=>{if(current>0){current--;renderAll()}};
+$('next-stage').onclick=()=>{if(current<stages.length-1&&completed.has(current)){current++;renderAll()}};
+
+$('toggle-line').onclick=()=>{showLine=!showLine;$('toggle-line').classList.toggle('active',showLine);drawScatter()};
+$('toggle-residual').onclick=()=>{showResidual=!showResidual;if(showResidual)showLine=true;$('toggle-residual').classList.toggle('active',showResidual);$('toggle-line').classList.toggle('active',showLine);drawScatter()};
+$('toggle-outlier').onclick=()=>{showOutlier=!showOutlier;$('toggle-outlier').classList.toggle('active',showOutlier);renderData();drawScatter()};
+
+function svgEl(name,attrs={}){const el=document.createElementNS('http://www.w3.org/2000/svg',name);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));return el}
+function drawScatter(){
+  const svg=$('scatter');svg.innerHTML='';const W=720,H=360,m={l:58,r:22,t:18,b:48},pw=W-m.l-m.r,ph=H-m.t-m.b;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  if(!validatedId){const t=svgEl('text',{x:W/2,y:H/2,'text-anchor':'middle','font-size':13,fill:'#858a8d'});t.textContent='Valida l’ID per generar el gràfic';svg.appendChild(t);return}
+  const use=showOutlier?altered:dataset,st=showOutlier?statsOut:stats;
+  const xs=use.map(d=>d.x),ys=use.map(d=>d.y);let xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+  const xpad=(xmax-xmin)*.12||1,ypad=(ymax-ymin)*.12||1;xmin=Math.max(0,xmin-xpad);xmax+=xpad;ymin=Math.max(0,ymin-ypad);ymax=Math.min(105,ymax+ypad);
+  const X=x=>m.l+(x-xmin)/(xmax-xmin)*pw,Y=y=>m.t+ph-(y-ymin)/(ymax-ymin)*ph;
+  for(let k=0;k<=5;k++){const xv=xmin+(xmax-xmin)*k/5,yv=ymin+(ymax-ymin)*k/5;svg.appendChild(svgEl('line',{x1:X(xv),x2:X(xv),y1:m.t,y2:m.t+ph,class:'gridline'}));svg.appendChild(svgEl('line',{x1:m.l,x2:m.l+pw,y1:Y(yv),y2:Y(yv),class:'gridline'}));const tx=svgEl('text',{x:X(xv),y:H-27,'text-anchor':'middle',class:'tick'});tx.textContent=fmt(xv,1);svg.appendChild(tx);const ty=svgEl('text',{x:m.l-8,y:Y(yv)+3,'text-anchor':'end',class:'tick'});ty.textContent=fmt(yv,0);svg.appendChild(ty)}
+  svg.appendChild(svgEl('line',{x1:m.l,x2:m.l+pw,y1:m.t+ph,y2:m.t+ph,class:'axis'}));svg.appendChild(svgEl('line',{x1:m.l,x2:m.l,y1:m.t,y2:m.t+ph,class:'axis'}));
+  const xl=svgEl('text',{x:m.l+pw/2,y:H-7,'text-anchor':'middle',class:'axislabel'});xl.textContent='Hores d’estudi setmanals (X)';svg.appendChild(xl);
+  const yl=svgEl('text',{x:14,y:m.t+ph/2,'text-anchor':'middle',class:'axislabel',transform:`rotate(-90 14 ${m.t+ph/2})`});yl.textContent='Puntuació de la prova (Y)';svg.appendChild(yl);
+  if(showLine){const y1=st.a+st.b*xmin,y2=st.a+st.b*xmax;svg.appendChild(svgEl('line',{x1:X(xmin),y1:Y(y1),x2:X(xmax),y2:Y(y2),class:'regline'}))}
+  use.forEach((d,i)=>svg.appendChild(svgEl('circle',{cx:X(d.x),cy:Y(d.y),r:i===18?5:4.2,class:'dot '+(showOutlier&&i===35?'special':'')})));
+  if(showResidual&&!showOutlier){const d=dataset[18],pred=stats.a+stats.b*d.x;svg.appendChild(svgEl('line',{x1:X(d.x),x2:X(d.x),y1:Y(d.y),y2:Y(pred),class:'resid'}));svg.appendChild(svgEl('circle',{cx:X(d.x),cy:Y(pred),r:4,fill:'#2f7468'}))}
+}
+
+function allQuestionDetail(){
+  const detail=[];let idx=1,correct=0,total=0;
+  for(let i=0;i<stages.length;i++){const qs=questions(i);for(let j=0;j<qs.length;j++){const key=`${i}-${j}`,raw=String(answers[key]??'').trim(),ok=isCorrect(qs[j],raw);detail.push({question:idx,stage:i+1,stageTitle:stages[i].t,answer:raw,correct:ok,attempts:attempts[key]||0});if(ok)correct++;total++;idx++}}
+  return {detail,correct,total};
+}
+async function submitPractice(){
+  if(submitted||completed.size<stages.length||!validatedId)return;
+  const results=allQuestionDetail();if(results.correct<results.total){$('submit-status').className='submitstatus bad';$('submit-status').textContent='Hi ha respostes que ja no consten com a correctes. Revisa els blocs.';return}
+  $('submit-practice').disabled=true;$('submit-practice').textContent='Enviant…';$('submit-status').className='submitstatus';$('submit-status').textContent='Guardant l’entrega…';
+  const payload={
+    submissionId:tracker.makeSubmissionId('descriptiva-2d',validatedId),id:validatedId,
+    practice:'Pràctica 2 · Estadística descriptiva bidimensional',area:'Estadística',status:'Entregada',
+    total:results.total,correct:results.correct,attempts:Object.values(attempts).reduce((a,b)=>a+b,0),
+    progress:100,minutes:startedAt?Math.max(1,Math.round((Date.now()-startedAt)/60000)):'',
+    version:'pilot-1',detail:{questions:results.detail},justifications:[]
+  };
+  const res=await tracker.submit(payload);
+  if(res.ok){submitted=true;$('submit-practice').textContent='Pràctica entregada';$('submit-status').className='submitstatus ok';$('submit-status').textContent='Entrega registrada correctament.';document.querySelectorAll('.ans input,.ans select').forEach(x=>x.disabled=true);$('validate-stage').disabled=true;$('reset-stage').disabled=true}
+  else{$('submit-practice').disabled=false;$('submit-practice').textContent='Entrega la pràctica';$('submit-status').className='submitstatus bad';$('submit-status').textContent='No s’ha pogut confirmar l’entrega. Torna-ho a provar.'}
+}
+$('submit-practice').onclick=submitPractice;
+
+/* XLSX minimal generat al navegador */
+const CRC_TABLE=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?0xedb88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xffffffff;for(const x of b)c=CRC_TABLE[(c^x)&255]^(c>>>8);return(c^0xffffffff)>>>0}
+function le16(n){return new Uint8Array([n&255,(n>>>8)&255])}function le32(n){return new Uint8Array([n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255])}
+function cat(parts){const len=parts.reduce((s,a)=>s+a.length,0),out=new Uint8Array(len);let p=0;for(const a of parts){out.set(a,p);p+=a.length}return out}
+function makeZip(files){const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;const now=new Date(),dt=((now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1))&65535,dd=(((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate())&65535;for(const f of files){const name=enc.encode(f.name),data=typeof f.data==='string'?enc.encode(f.data):f.data,crc=crc32(data);const local=cat([le32(0x04034b50),le16(20),le16(0),le16(0),le16(dt),le16(dd),le32(crc),le32(data.length),le32(data.length),le16(name.length),le16(0),name,data]);locals.push(local);const cen=cat([le32(0x02014b50),le16(20),le16(20),le16(0),le16(0),le16(dt),le16(dd),le32(crc),le32(data.length),le32(data.length),le16(name.length),le16(0),le16(0),le16(0),le16(0),le32(0),le32(offset),name]);centrals.push(cen);offset+=local.length}const central=cat(centrals),eocd=cat([le32(0x06054b50),le16(0),le16(0),le16(files.length),le16(files.length),le32(central.length),le32(offset),le16(0)]);return cat([...locals,central,eocd])}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function colName(n){let s='';while(n){n--;s=String.fromCharCode(65+n%26)+s;n=Math.floor(n/26)}return s}
+function worksheetXml(rows,widths,merges=[]){let out='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">';if(widths?.length){out+='<cols>'+widths.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join('')+'</cols>'}out+='<sheetData>';rows.forEach((row,ri)=>{out+=`<row r="${ri+1}">`;row.forEach((cell,ci)=>{if(cell==null||cell==='')return;const ref=colName(ci+1)+(ri+1),style=typeof cell==='object'&&cell.s?` s="${cell.s}"`:'';const v=typeof cell==='object'&&'v'in cell?cell.v:cell;if(typeof v==='number')out+=`<c r="${ref}"${style}><v>${v}</v></c>`;else out+=`<c r="${ref}" t="inlineStr"${style}><is><t>${esc(v)}</t></is></c>`});out+='</row>'});out+='</sheetData>';if(merges.length)out+=`<mergeCells count="${merges.length}">${merges.map(r=>`<mergeCell ref="${r}"/>`).join('')}</mergeCells>`;return out+'</worksheet>'}
+function excelRows(){
+  const id=validatedId,D=[];D.push([{v:'Pràctica 2 · Estadística descriptiva bidimensional',s:1},null,null]);D.push([]);D.push([{v:'ID alumne',s:2},{v:id,s:3}]);D.push([]);D.push([{v:'Observació',s:2},{v:'Hores d’estudi X',s:2},{v:'Puntuació Y',s:2}]);dataset.forEach((d,i)=>D.push([i+1,d.x,d.y]));
+  const T=[];T.push([{v:'TREBALL · calcula les mesures bidimensionals',s:1},null,null,null]);T.push([]);T.push([{v:'Mesura / tasca',s:2},{v:'Resultat',s:2},{v:'Unitat',s:2},{v:'Notes / fórmula utilitzada',s:2}]);
+  [['n','','parelles',''],['Mitjana X','','h',''],['Mitjana Y','','punts',''],['Covariància descriptiva','','h·punts','Divideix per n.'],['Correlació r','','',''],['Pendent b','','punts/h',''],['Intercept a','','punts',''],['Predicció per X=8','','punts',''],['R²','','',''],['R² (%)','','%','']].forEach(r=>T.push(r));
+  T.push([]);T.push([{v:'OBSERVACIÓ 19',s:2},null,null,null]);T.push(['X observat',dataset[18].x,'h','']);T.push(['Y observat',dataset[18].y,'punts','']);T.push(['Ŷ segons la recta','','punts','']);T.push(['Residual y−ŷ','','punts','']);
+  const I=[];I.push([{v:'INFORME FINAL · interpreta abans de concloure',s:1},null,null]);I.push([]);I.push([{v:'Aspecte',s:2},{v:'Resposta',s:2},{v:'Justificació breu',s:2}]);[['Direcció de la relació','',''],['Intensitat de la relació','',''],['Forma aproximada','',''],['Punts especials / extrems','',''],['Interpretació del pendent','',''],['Interpretació de R²','',''],['Causalitat: què podem afirmar?','',''],['Conclusió en 2-3 frases','','']].forEach(r=>I.push(r));return {D,T,I,id}
+}
+function buildXlsx(){const {D,T,I,id}=excelRows();const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><color rgb="FFFFFFFF"/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF41474B"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FF596065"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="0" fontId="1" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+  const wb=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="DADES" sheetId="1" r:id="rId1"/><sheet name="TREBALL" sheetId="2" r:id="rId2"/><sheet name="INFORME" sheetId="3" r:id="rId3"/></sheets></workbook>`;
+  const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`;
+  const wrels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
+  const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>`;
+  const files=[{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:rels},{name:'xl/workbook.xml',data:wb},{name:'xl/_rels/workbook.xml.rels',data:wrels},{name:'xl/styles.xml',data:styles},{name:'xl/worksheets/sheet1.xml',data:worksheetXml(D,[14,20,18],['A1:C1'])},{name:'xl/worksheets/sheet2.xml',data:worksheetXml(T,[28,16,14,38],['A1:D1'])},{name:'xl/worksheets/sheet3.xml',data:worksheetXml(I,[28,22,44],['A1:C1'])}];return {id,bytes:makeZip(files)}
+}
+function downloadExcel(){if(!validatedId)return;const {id,bytes}=buildXlsx(),blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`estadistica_bidimensional_${id}.xlsx`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500)}
+$('download-excel').onclick=downloadExcel;
+
+renderLocked();
+})();
+</script>
+</body>
+</html>

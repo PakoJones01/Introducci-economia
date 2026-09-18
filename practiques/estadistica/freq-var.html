@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Taules de freqüències i dispersió · Pràctica 1b</title>
+<style>
+:root{--bg:#f2efe9;--paper:#fbfaf7;--ink:#222629;--muted:#6d7377;--line:#d8d3ca;--char:#41474b;--char2:#596065;--green:#28643f;--greenbg:#e7f4eb;--red:#8e342d;--redbg:#f8e7e4;--input:#fff0b8}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button,input{font:inherit}.top{background:var(--char);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800}
+.title{font-size:19px;font-weight:850}.sub{font-size:10.5px;color:#d7dbdd;margin-top:3px}
+.idtools{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.idtools input{width:100px;background:var(--input);border:1px solid #d8c36e;border-radius:7px;padding:7px;text-align:center;font-weight:800}
+button{border:0;border-radius:8px;padding:9px 11px;font-weight:800;cursor:pointer}button:disabled{opacity:.45;cursor:default}.light{background:#f1efea;color:#303538}.dark{background:var(--char);color:#fff}
+.status{font-size:11px;border-radius:7px;padding:6px 8px}.status.ok{background:var(--greenbg);color:var(--green);border:1px solid #b8d8c3}.status.bad{background:var(--redbg);color:var(--red);border:1px solid #e3b9b3}.status.checking{background:#edf0f2;color:#3f4b51;border:1px solid #ccd3d7}
+.shell{max-width:1100px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}.head{background:var(--char2);color:white;padding:10px 13px;font-size:11px;font-weight:850}.body{padding:14px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px}.step strong{display:block;margin-bottom:5px}.step p{font-size:11.5px;line-height:1.45;color:var(--muted);margin:0}
+.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.download{display:inline-block;text-decoration:none;background:#f7fbf9;color:#285f55;border:1px solid #b9cfc8;border-radius:9px;padding:9px 11px;font-size:11px;font-weight:850;pointer-events:none;opacity:.45}.download.enabled{pointer-events:auto;opacity:1}
+.checkgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}.check{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px;font-size:10.5px}.check.ok{border-color:#b8d8c3;background:var(--greenbg);color:var(--green)}.check.bad{border-color:#e3b9b3;background:var(--redbg);color:var(--red)}
+.note{font-size:10.5px;color:var(--muted);line-height:1.4}.summary{font-weight:800;margin-top:10px}
+@media(max-width:700px){.steps,.checkgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">TAULES DE FREQÜÈNCIES I DISPERSIÓ</div><div class="sub">Pràctica 1b · Excel</div></div></div>
+  <div class="idtools"><label>ID alumne <input id="student-id" inputmode="numeric" maxlength="6" placeholder="6 dígits"></label><button class="light" id="validate-id">Validar ID</button><span class="status" id="id-status">Valida l’ID per començar.</span></div>
+</header>
+
+<main class="shell">
+  <section class="card">
+    <div class="head">QUÈ HAS DE FER</div>
+    <div class="body">
+      <div class="steps">
+        <div class="step"><strong>1 · Descarrega l’Excel</strong><p>Hi trobaràs tres distribucions. Completa a TREBALL les tres taules de freqüències amb fórmules.</p></div>
+        <div class="step"><strong>2 · Calcula la dispersió</strong><p>Per a cada distribució calcula mitjana, variància descriptiva (÷ n) i desviació típica, també amb fórmules.</p></div>
+        <div class="step"><strong>3 · Interpreta i entrega</strong><p>Respon les tres preguntes del full INTERPRETACIO, desa l’xlsx, puja’l aquí i envia’l.</p></div>
+      </div>
+      <div class="actions" style="margin-top:14px">
+        <a class="download" id="download" href="../../assets/xlsx/practica_1b_freq_var.xlsx" download>↓ Descarrega l’Excel</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="head">COMPROVACIÓ AUTOMÀTICA DEL FITXER</div>
+    <div class="body">
+      <p class="note">El fitxer es llegeix dins del navegador. Es comprova que les cel·les demanades continguin fórmules amb referències a altres cel·les i que els resultats siguin correctes.</p>
+      <div class="actions">
+        <input id="upload" type="file" accept=".xlsx,.xlsm" disabled>
+        <button class="dark" id="check-file" disabled>Comprova el fitxer</button>
+        <button class="dark" id="submit" disabled>Entrega la pràctica</button>
+        <span class="status" id="submit-status"></span>
+      </div>
+      <div class="summary" id="summary"></div>
+      <div class="checkgrid" id="results"></div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="../../tracking.js"></script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id),tracker=window.PracticeTracker;
+let validatedId='',file=null,lastReport=null,checkAttempts=0,startedAt=null,submitted=false;
+
+function setStatus(id,kind,text){const e=$(id);e.className='status '+(kind||'');e.textContent=text}
+function normalize(){const v=String($('student-id').value||'').replace(/\D/g,'').slice(0,6);$('student-id').value=v;return v}
+async function validateId(){
+  const id=normalize();$('validate-id').disabled=true;setStatus('id-status','checking','Comprovant ID…');
+  const r=await tracker.validateId(id);$('validate-id').disabled=false;
+  if(r.ok){validatedId=r.id;startedAt=Date.now();setStatus('id-status','ok','ID correcte.');$('download').classList.add('enabled');$('upload').disabled=false;resetSubmission()}
+  else{validatedId='';setStatus('id-status','bad',r.reason==='format'?'L’ID ha de tenir 6 dígits.':r.reason==='not-found'?'Aquest ID no és a la llista.':'No s’ha pogut validar l’ID.');$('download').classList.remove('enabled');$('upload').disabled=true;$('check-file').disabled=true;$('submit').disabled=true}
+}
+function resetSubmission(){submitted=false;lastReport=null;checkAttempts=0;$('submit').disabled=true;$('submit').textContent='Entrega la pràctica';$('results').innerHTML='';$('summary').textContent='';$('submit-status').textContent=''}
+$('validate-id').onclick=validateId;
+$('student-id').addEventListener('input',()=>{normalize();if(validatedId){validatedId='';$('download').classList.remove('enabled');$('upload').disabled=true;$('check-file').disabled=true;$('submit').disabled=true;setStatus('id-status','','Valida l’ID per començar.')}});
+
+$('upload').addEventListener('change',()=>{file=$('upload').files?.[0]||null;$('check-file').disabled=!file||!validatedId;$('submit').disabled=true;lastReport=null});
+$('check-file').onclick=checkFile;
+
+const blocks=[
+  {name:'Distribució 1',rows:[5,11],total:12,summary:[5,7],dataCol:'B'},
+  {name:'Distribució 2',rows:[17,23],total:24,summary:[17,19],dataCol:'D'},
+  {name:'Distribució 3',rows:[29,35],total:36,summary:[29,31],dataCol:'F'}
+];
+function cell(ws,addr){return ws?.[addr]}
+function hasRealFormula(c){return !!(c&&typeof c.f==='string'&&/[A-Z]{1,3}\$?\d+/i.test(c.f))}
+function num(v){return typeof v==='number'?v:Number(String(v??'').replace(',','.'))}
+function approx(a,b,tol=1e-6){return Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a-b)<=tol}
+function dataFromSheet(ws,col){const a=[];for(let r=4;r<=43;r++){const v=num(cell(ws,`${col}${r}`)?.v);if(Number.isFinite(v))a.push(v)}return a}
+function expected(data){
+  const n=data.length,counts={};data.forEach(x=>counts[x]=(counts[x]||0)+1);
+  let cum=0;const rows=[];for(let x=1;x<=7;x++){const ni=counts[x]||0;cum+=ni;rows.push({x,ni,fi:ni/n,Ni:cum,Fi:cum/n})}
+  const mean=data.reduce((a,b)=>a+b,0)/n,variance=data.reduce((s,x)=>s+(x-mean)**2,0)/n,sd=Math.sqrt(variance);
+  return {n,rows,mean,variance,sd};
+}
+function addCheck(report,label,ok,detail=''){report.items.push({label,ok,detail});if(ok)report.correct++}
+function formulaValue(ws,addr,exp,tol){const c=cell(ws,addr);return {formula:hasRealFormula(c),value:approx(num(c?.v),exp,tol)}}
+async function checkFile(){
+  if(!file||!validatedId)return;
+  checkAttempts++;$('check-file').disabled=true;$('results').innerHTML='';$('summary').textContent='Comprovant…';
+  try{
+    const buf=await file.arrayBuffer(),wb=XLSX.read(buf,{type:'array',cellFormula:true,cellNF:true});
+    const dws=wb.Sheets['DADES'],tws=wb.Sheets['TREBALL'],iws=wb.Sheets['INSTRUCCIONS'],rws=wb.Sheets['INTERPRETACIO'];
+    const report={items:[],correct:0,total:0,allOk:false,justifications:[],detail:[]};
+    if(!dws||!tws||!iws||!rws){addCheck(report,'Estructura del fitxer',false,'Falten fulls de la plantilla.');report.total=1;render(report);return}
+    const ver=String(cell(iws,'B9')?.v||'').trim();addCheck(report,'Plantilla correcta',ver==='freq-var-v1',ver==='freq-var-v1'?'':'Versió de plantilla no reconeguda.');
+    for(const b of blocks){
+      const data=dataFromSheet(dws,b.dataCol),e=expected(data);let tableOk=true;
+      const [r1,r2]=b.rows;
+      for(let r=r1;r<=r2;r++){
+        const er=e.rows[r-r1];
+        const checks=[
+          ['B',er.ni,1e-9],['C',er.fi,2e-4],['D',er.Ni,1e-9],['E',er.Fi,2e-4]
+        ];
+        for(const [col,ex,tol] of checks){const z=formulaValue(tws,`${col}${r}`,ex,tol);if(!(z.formula&&z.value))tableOk=false}
+      }
+      const totals=[['B',e.n,1e-9],['C',1,2e-4],['D',e.n,1e-9],['E',1,2e-4]];
+      for(const [col,ex,tol] of totals){const z=formulaValue(tws,`${col}${b.total}`,ex,tol);if(!(z.formula&&z.value))tableOk=false}
+      addCheck(report,`${b.name} · taula de freqüències`,tableOk,tableOk?'Fórmules i resultats correctes.':'Revisa nᵢ, fᵢ, Nᵢ, Fᵢ i la fila TOTAL.');
+      const metricAddr=[`H${b.summary[0]}`,`H${b.summary[0]+1}`,`H${b.summary[0]+2}`],metricExp=[e.mean,e.variance,e.sd],metricNames=['mitjana','variància','desviació típica'];
+      metricAddr.forEach((addr,j)=>{const z=formulaValue(tws,addr,metricExp[j],.002);addCheck(report,`${b.name} · ${metricNames[j]}`,z.formula&&z.value,z.formula?(z.value?'Correcte.':'La fórmula hi és però el resultat no és correcte.'):'Cal una fórmula que faci referència a altres cel·les.');});
+    }
+    const qs=[
+      'Comparació de la dispersió entre les distribucions 1 i 2',
+      'Identificació i explicació de la distribució més asimètrica',
+      'Què ens diu la comparació 1–2 sobre la mitjana'
+    ];
+    ['B3','B4','B5'].forEach((addr,j)=>{const text=String(cell(rws,addr)?.v||'').trim();report.justifications.push({question:qs[j],text});addCheck(report,`Interpretació ${j+1}`,text.length>=50,text.length>=50?'Resposta preparada per a correcció.':'Escriu una resposta una mica més desenvolupada (mínim 50 caràcters).')});
+    report.total=report.items.length;report.allOk=report.correct===report.total;
+    report.detail=report.items.map((x,i)=>({question:i+1,label:x.label,correct:x.ok}));
+    lastReport=report;render(report);$('submit').disabled=!report.allOk||submitted;
+  }catch(e){lastReport=null;$('summary').textContent='No s’ha pogut llegir el fitxer.';setStatus('submit-status','bad','Comprova que sigui un .xlsx desat correctament.')}
+  finally{$('check-file').disabled=false}
+}
+function render(report){
+  $('results').innerHTML=report.items.map(x=>`<div class="check ${x.ok?'ok':'bad'}"><strong>${x.ok?'✓':'×'} ${x.label}</strong><div>${x.detail||''}</div></div>`).join('');
+  $('summary').textContent=`${report.correct} de ${report.total} comprovacions correctes.`;
+  setStatus('submit-status',report.allOk?'ok':'bad',report.allOk?'Fitxer correcte. Ja el pots entregar.':'Encara hi ha elements per revisar.');
+}
+$('submit').onclick=async()=>{
+  if(!lastReport?.allOk||!validatedId||submitted)return;
+  $('submit').disabled=true;$('submit').textContent='Enviant…';setStatus('submit-status','','Guardant l’entrega…');
+  const payload={
+    submissionId:tracker.makeSubmissionId('freq-var',validatedId),id:validatedId,
+    practice:'Pràctica 1b · Taules de freqüències i dispersió',area:'Estadística',status:'Entregada',
+    total:lastReport.total,correct:lastReport.correct,attempts:checkAttempts,progress:100,
+    minutes:startedAt?Math.max(1,Math.round((Date.now()-startedAt)/60000)):'',
+    version:'pilot-1',detail:{checks:lastReport.detail},justifications:lastReport.justifications
+  };
+  const r=await tracker.submit(payload);
+  if(r.ok){submitted=true;$('submit').textContent='Pràctica entregada';setStatus('submit-status','ok','Entrega registrada. Les 3 interpretacions queden pendents de correcció IA.')}
+  else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('submit-status','bad','No s’ha pogut confirmar l’entrega. Torna-ho a provar.')}
+};
+})();
+</script>
+</body>
+</html>
