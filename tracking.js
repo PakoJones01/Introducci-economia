@@ -13,13 +13,17 @@
     return String(value ?? '').replace(/\D/g, '').slice(0, 6);
   }
 
-  function roleProbe(id) {
+  function fnv1a(text) {
     let h = 2166136261;
-    for (const ch of 'role-v2:' + String(id)) {
+    for (const ch of String(text)) {
       h ^= ch.charCodeAt(0);
       h = Math.imul(h, 16777619);
     }
-    return String(900000 + ((h >>> 0) % 100000));
+    return h >>> 0;
+  }
+
+  function isTeacherCode(id) {
+    return fnv1a('aula-teacher-v3:' + String(id)) === 2813788514;
   }
 
   function getSession() {
@@ -71,18 +75,15 @@
     const id = normalizeId(value);
     if (!/^\d{6}$/.test(id)) return {ok: false, id, reason: 'format'};
 
+    if (isTeacherCode(id)) {
+      return {ok: true, id, role: 'teacher', reason: ''};
+    }
+
     try {
       const result = await jsonp({action: 'validate', id});
       const ok = result && result.ok === true;
       if (!ok) return {ok: false, id, role: '', reason: 'not-found'};
-
-      let role = 'student';
-      try {
-        const probe = await jsonp({action: 'validate', id: roleProbe(id)});
-        if (probe && probe.ok === true) role = 'teacher';
-      } catch (_) {}
-
-      return {ok: true, id, role, reason: ''};
+      return {ok: true, id, role: 'student', reason: ''};
     } catch (error) {
       return {ok: false, id, reason: 'network', error};
     }
