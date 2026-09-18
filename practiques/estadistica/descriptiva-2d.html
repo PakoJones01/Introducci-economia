@@ -84,7 +84,7 @@ button,input,select{font:inherit} button{cursor:pointer}.hidden{display:none!imp
   <main class="main">
     <section class="hero">
       <div>
-        <div class="hero-kicker">Pràctica 2 · estadística descriptiva bidimensional</div>
+        <div class="hero-kicker">Pràctica 2a · estadística descriptiva bidimensional</div>
         <h1 id="hero-title">Dues variables, una relació</h1>
         <p id="hero-text">Treballaràs amb 36 observacions aparellades: hores d’estudi setmanals i puntuació d’una prova. Les dades depenen del teu ID. Analitzaràs el núvol de punts, la covariància, la correlació, la recta de regressió, els residus i el coeficient de determinació. Les preguntes marcades EXCEL s’han de calcular al full i validar després al web.</p>
       </div>
@@ -451,7 +451,7 @@ async function submitPractice(){
   $('submit-practice').disabled=true;$('submit-practice').textContent='Enviant…';$('submit-status').className='submitstatus';$('submit-status').textContent='Guardant l’entrega…';
   const payload={
     submissionId:tracker.makeSubmissionId('descriptiva-2d',validatedId),id:validatedId,
-    practice:'Pràctica 2 · Estadística descriptiva bidimensional',area:'Estadística',status:'Entregada',
+    practice:'Pràctica 2a · Estadística descriptiva bidimensional',area:'Estadística',status:'Entregada',
     total:results.total,correct:results.correct,attempts:Object.values(attempts).reduce((a,b)=>a+b,0),
     progress:100,minutes:startedAt?Math.max(1,Math.round((Date.now()-startedAt)/60000)):'',
     version:'pilot-1',detail:{questions:results.detail},justifications:[]
@@ -472,7 +472,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function colName(n){let s='';while(n){n--;s=String.fromCharCode(65+n%26)+s;n=Math.floor(n/26)}return s}
 function worksheetXml(rows,widths,merges=[]){let out='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">';if(widths?.length){out+='<cols>'+widths.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join('')+'</cols>'}out+='<sheetData>';rows.forEach((row,ri)=>{out+=`<row r="${ri+1}">`;row.forEach((cell,ci)=>{if(cell==null||cell==='')return;const ref=colName(ci+1)+(ri+1),style=typeof cell==='object'&&cell.s?` s="${cell.s}"`:'';const v=typeof cell==='object'&&'v'in cell?cell.v:cell;if(typeof v==='number')out+=`<c r="${ref}"${style}><v>${v}</v></c>`;else out+=`<c r="${ref}" t="inlineStr"${style}><is><t>${esc(v)}</t></is></c>`});out+='</row>'});out+='</sheetData>';if(merges.length)out+=`<mergeCells count="${merges.length}">${merges.map(r=>`<mergeCell ref="${r}"/>`).join('')}</mergeCells>`;return out+'</worksheet>'}
 function excelRows(){
-  const id=validatedId,D=[];D.push([{v:'Pràctica 2 · Estadística descriptiva bidimensional',s:1},null,null]);D.push([]);D.push([{v:'ID alumne',s:2},{v:id,s:3}]);D.push([]);D.push([{v:'Observació',s:2},{v:'Hores d’estudi X',s:2},{v:'Puntuació Y',s:2}]);dataset.forEach((d,i)=>D.push([i+1,d.x,d.y]));
+  const id=validatedId,D=[];D.push([{v:'Pràctica 2a · Estadística descriptiva bidimensional',s:1},null,null]);D.push([]);D.push([{v:'ID alumne',s:2},{v:id,s:3}]);D.push([]);D.push([{v:'Observació',s:2},{v:'Hores d’estudi X',s:2},{v:'Puntuació Y',s:2}]);dataset.forEach((d,i)=>D.push([i+1,d.x,d.y]));
   const T=[];T.push([{v:'TREBALL · calcula les mesures bidimensionals',s:1},null,null,null]);T.push([]);T.push([{v:'Mesura / tasca',s:2},{v:'Resultat',s:2},{v:'Unitat',s:2},{v:'Notes / fórmula utilitzada',s:2}]);
   [['n','','parelles',''],['Mitjana X','','h',''],['Mitjana Y','','punts',''],['Covariància descriptiva','','h·punts','Divideix per n.'],['Correlació r','','',''],['Pendent b','','punts/h','Gràfic XY + línia de tendència o =PENDIENTE(rang_Y;rang_X)'],['Intercept a','','punts','Equació del gràfic o =INTERSECCION.EJE(rang_Y;rang_X)'],['Predicció per X=8','','punts','Substitueix x=8 a ŷ = a + b·x'],['R²','','','Activa “Mostra el valor R² al gràfic” a la línia de tendència'],['R² (%)','','%','Multiplica R² per 100']].forEach(r=>T.push(r));
   T.push([]);T.push([{v:'OBSERVACIÓ 19',s:2},null,null,null]);T.push(['X observat',dataset[18].x,'h','']);T.push(['Y observat',dataset[18].y,'punts','']);T.push(['Ŷ segons la recta','','punts','']);T.push(['Residual y−ŷ','','punts','']);
