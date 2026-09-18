@@ -110,7 +110,7 @@
           "id": "freq-var",
           "ordre": 1,
           "visible": true,
-          "disponible": true,
+          "disponible": false,
           "codi": "Pràctica 1a",
           "titol": "Taules de freqüències i dispersió",
           "descripcio": "Construcció amb Excel de taules de freqüències, mitjana, variància i desviació típica per a tres distribucions.",
