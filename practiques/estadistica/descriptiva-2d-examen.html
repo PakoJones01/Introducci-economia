@@ -9,23 +9,120 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}button,input,select,textarea{font:inherit}.hidden{display:none!important}
 .top{background:var(--char);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800}.title{font-size:19px;font-weight:850}.sub{font-size:10.5px;color:#d7dbdd;margin-top:3px}.who{font-size:11px;color:#d7dbdd}.who strong{color:#fff}
 .shell{max-width:1180px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px}.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}.head{background:var(--char2);color:#fff;padding:10px 13px;font-size:11px;font-weight:850;letter-spacing:.02em}.body{padding:14px}
-.intro{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start}.intro h1{font-size:25px;margin:0 0 7px}.intro p{font-size:12px;line-height:1.5;color:var(--muted);margin:0;max-width:800px}.tag{border:1px solid #c6c0b5;border-radius:999px;padding:7px 10px;font-size:10.5px;font-weight:850;color:#555;background:#fff}.exam-note{background:#f0ede7;border-radius:9px;padding:10px 12px;font-size:11px;line-height:1.45;color:#4e5356}
+.intro{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start}.intro h1{font-size:25px;margin:0 0 7px}.intro p{font-size:12px;line-height:1.5;color:var(--muted);margin:0;max-width:820px}.tag{border:1px solid #c6c0b5;border-radius:999px;padding:7px 10px;font-size:10.5px;font-weight:850;color:#555;background:#fff}.exam-note{background:#f0ede7;border-radius:9px;padding:11px 13px;font-size:11px;line-height:1.52;color:#4e5356}.exam-note strong{color:#282d30}
+.deliverables{margin:8px 0 0 18px;padding:0}.deliverables li{margin:4px 0}
 .data{max-height:280px;overflow:auto;margin-top:10px}.datatable{width:100%;border-collapse:collapse;background:#fff;font-size:10.5px}.datatable th{position:sticky;top:0;background:#e3dfd7;padding:6px}.datatable td{padding:5px 8px;border-bottom:1px solid #eeeae3;text-align:right}.datatable td:first-child{text-align:center}.datatable tr.last td{background:#fff1df}
 .actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:8px;padding:9px 11px;font-weight:800;cursor:pointer;font-size:10.8px}.btn.primary{background:var(--char);color:#fff}.btn.secondary{background:#f7fbf9;color:#285f55;border:1px solid #b9cfc8}.btn:disabled{opacity:.45;cursor:default}.filemsg{font-size:10.5px;color:var(--muted)}
-.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.q{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px}.q label{display:block;font-size:11px;line-height:1.35;font-weight:700;margin-bottom:7px}.q input,.q select{width:100%;border:1px solid #dfca77;background:var(--input);border-radius:7px;padding:8px;outline:none;font-size:11px;font-weight:750}.wide{grid-column:1/-1}.wide textarea{width:100%;min-height:155px;resize:vertical;border:1px solid #dfca77;background:#fffdf4;border-radius:8px;padding:10px;font-size:11.5px;line-height:1.5;outline:none}.count{font-size:10px;color:var(--muted);margin-top:5px;text-align:right}.submitbox{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.status{font-size:11px;color:var(--muted);line-height:1.4}.status.ok{color:var(--green);font-weight:800}.status.bad{color:var(--red);font-weight:800}.score{background:#eef4f1;border:1px solid #bdd4cb;border-radius:10px;padding:10px 12px;font-size:12px;color:#2e6458}.score strong{font-size:18px}
-@media(max-width:760px){.qgrid{grid-template-columns:1fr}.intro{grid-template-columns:1fr}.wide{grid-column:auto}}
+.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.result-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px}.result-card h2{font-size:13px;margin:0 0 5px}.result-card p{font-size:10.5px;line-height:1.4;color:var(--muted);margin:0 0 9px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:7px}.field label{display:block;font-size:10px;font-weight:750;margin-bottom:5px;line-height:1.25}.field input,.field select{width:100%;border:1px solid #dfca77;background:var(--input);border-radius:7px;padding:8px;font-size:10.8px;outline:none}.full{grid-column:1/-1}
+textarea{width:100%;min-height:165px;resize:vertical;border:1px solid #dfca77;background:#fffdf4;border-radius:8px;padding:10px;font-size:11.5px;line-height:1.5;outline:none}.count{font-size:10px;color:var(--muted);margin-top:5px;text-align:right}.submitbox{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.status{font-size:11px;color:var(--muted);line-height:1.4}.status.ok{color:var(--green);font-weight:800}.status.bad{color:var(--red);font-weight:800}.score{margin-top:8px;background:#eef4f1;border:1px solid #bdd4cb;border-radius:10px;padding:10px 12px;font-size:12px;color:#2e6458}.score strong{font-size:18px}
+@media(max-width:760px){.result-grid,.fields,.intro{grid-template-columns:1fr}.full{grid-column:auto}}
 </style>
 </head>
 <body>
-<header class="top"><div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">PRÀCTICA 2C · BIDIMENSIONAL</div><div class="sub">Nivell examen · resolució autònoma</div></div></div><div class="who">Sessió: <strong id="student-code">—</strong></div></header>
+<header class="top">
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="back" href="../../index.html?area=estadistica">← Pràctiques</a>
+    <div><div class="title">PRÀCTICA 2C · BIDIMENSIONAL</div><div class="sub">Nivell examen · resolució autònoma</div></div>
+  </div>
+  <div class="who">Sessió: <strong id="student-code">—</strong></div>
+</header>
+
 <main class="shell">
-<section class="card"><div class="body intro"><div><h1>Cas global: distància i lloguer</h1><p>Analitza la relació entre la distància al centre urbà (X, km) i el lloguer mensual d’un conjunt d’habitatges (Y, €). Utilitza Excel quan ho consideris necessari i justifica les conclusions al comentari final. No hi ha pistes ni correcció intermèdia.</p></div><div class="tag">C · DEMOSTRO</div></div></section>
-<section class="card"><div class="head">DADES PERSONALITZADES</div><div class="body"><div class="exam-note"><strong>Enunciat.</strong> Elabora una anàlisi bidimensional completa. Decideix quines representacions i càlculs necessites per descriure la relació, ajustar un model lineal, valorar-ne la utilitat i detectar si alguna observació influeix de manera especial en el resultat.</div><div class="data"><table class="datatable"><thead><tr><th>Habitatge</th><th>Distància X (km)</th><th>Lloguer Y (€)</th></tr></thead><tbody id="data-body"></tbody></table></div><div class="actions"><button class="btn secondary" id="download" type="button">↓ Descarrega el teu Excel</button><span class="filemsg">DADES · ENTREGA · ANALISI</span></div></div></section>
-<section class="card"><div class="head">RESPOSTES · SENSE CORRECCIÓ INTERMÈDIA</div><div class="body"><div class="qgrid" id="questions"></div></div></section>
-<section class="card"><div class="head">FITXER EXCEL</div><div class="body"><div class="exam-note">Adjunta el fitxer que has utilitzat. En l’entrega es comprovaran les dades, l’ús de fórmules, la coherència dels resultats i l’existència d’un gràfic de dispersió XY amb recta de tendència.</div><div class="actions"><input id="excel-upload" type="file" accept=".xlsx,.xlsm"><span class="filemsg" id="filemsg">Cap fitxer seleccionat.</span></div></div></section>
-<section class="card"><div class="head">COMENTARI FINAL</div><div class="body"><div class="q wide"><label for="final-comment">Redacta una conclusió global de 5–8 línies. Integra la forma del núvol, direcció i intensitat, interpretació del pendent i R², l’efecte de l’observació 48, extrapolació i causalitat.</label><textarea id="final-comment" maxlength="1800" placeholder="Escriu una interpretació coherent, no una llista de resultats."></textarea><div class="count" id="comment-count">0 caràcters · mínim 180</div></div></div></section>
-<section class="card"><div class="body submitbox"><div><div class="status" id="submit-status">Completa totes les respostes, adjunta l’Excel i escriu el comentari abans d’entregar.</div><div class="score hidden" id="score-box"></div></div><button class="btn primary" id="submit" type="button">Entrega la pràctica</button></div></section>
+  <section class="card"><div class="body intro">
+    <div>
+      <h1>Cas global: distància i lloguer</h1>
+      <p>Disposes d’una mostra d’habitatges amb la distància al centre urbà (X, km) i el lloguer mensual (Y, €). Has de preparar una anàlisi bidimensional completa que permeti entendre la relació, valorar si un model lineal és útil i identificar qualsevol observació que condicioni especialment les conclusions.</p>
+    </div>
+    <div class="tag">C · DEMOSTRO</div>
+  </div></section>
+
+  <section class="card"><div class="head">ENCÀRREC</div><div class="body">
+    <div class="exam-note">
+      <strong>No hi ha un procediment pautat.</strong> Decideix tu quins càlculs, representacions i comprovacions necessites. L’informe final ha de permetre respondre, com a mínim, aquestes qüestions:
+      <ul class="deliverables">
+        <li>Quin patró hi ha entre X i Y i amb quina intensitat?</li>
+        <li>Quin model lineal resumeix millor la relació i com s’interpreta?</li>
+        <li>Fins a quin punt el model explica la variabilitat observada?</li>
+        <li>L’observació 48 modifica de manera rellevant la conclusió?</li>
+        <li>Quines prediccions serien prudents i quines no?</li>
+        <li>Què es pot afirmar sobre associació i què no es pot afirmar sobre causalitat?</li>
+      </ul>
+      Pots organitzar l’Excel com vulguis. No cal reproduir cap plantilla concreta.
+    </div>
+  </div></section>
+
+  <section class="card"><div class="head">DADES PERSONALITZADES</div><div class="body">
+    <div class="data"><table class="datatable"><thead><tr><th>Habitatge</th><th>Distància X (km)</th><th>Lloguer Y (€)</th></tr></thead><tbody id="data-body"></tbody></table></div>
+    <div class="actions"><button class="btn secondary" id="download" type="button">↓ Descarrega les dades</button><span class="filemsg">El fitxer conté DADES i un full ANALISI lliure.</span></div>
+  </div></section>
+
+  <section class="card"><div class="head">RESULTATS CLAU DE L’ANÀLISI</div><div class="body">
+    <div class="exam-note" style="margin-bottom:10px">Omple aquesta fitxa <strong>quan hagis acabat l’anàlisi</strong>. No hi ha correcció intermèdia. Són només els resultats clau necessaris per registrar i corregir l’entrega.</div>
+    <div class="result-grid">
+      <div class="result-card">
+        <h2>Relació lineal</h2>
+        <p>Resumeix numèricament la direcció i la intensitat de l’associació lineal.</p>
+        <div class="fields">
+          <div class="field full"><label for="r-value">Mesura lineal adequada (3 decimals)</label><input id="r-value" inputmode="decimal" placeholder="Resultat"></div>
+        </div>
+      </div>
+      <div class="result-card">
+        <h2>Model ajustat</h2>
+        <p>Escriu els dos coeficients del model lineal de Y sobre X.</p>
+        <div class="fields">
+          <div class="field"><label for="intercept">Intercept a (3 decimals)</label><input id="intercept" inputmode="decimal" placeholder="a"></div>
+          <div class="field"><label for="slope">Pendent b (3 decimals)</label><input id="slope" inputmode="decimal" placeholder="b"></div>
+        </div>
+      </div>
+      <div class="result-card">
+        <h2>Capacitat descriptiva del model</h2>
+        <p>Expressa en percentatge la proporció de variabilitat de Y associada linealment amb X.</p>
+        <div class="fields">
+          <div class="field full"><label for="r2-pct">Percentatge (1 decimal)</label><input id="r2-pct" inputmode="decimal" placeholder="%"></div>
+        </div>
+      </div>
+      <div class="result-card">
+        <h2>Predicció dins de la mostra</h2>
+        <p>Utilitza el teu model per estimar el lloguer quan X = 8 km.</p>
+        <div class="fields">
+          <div class="field full"><label for="pred-8">Lloguer predit (€; 2 decimals)</label><input id="pred-8" inputmode="decimal" placeholder="€"></div>
+        </div>
+      </div>
+      <div class="result-card">
+        <h2>Sensibilitat a l’observació 48</h2>
+        <p>Repeteix només l’anàlisi necessària per valorar si aquesta observació condiciona el resum lineal.</p>
+        <div class="fields">
+          <div class="field"><label for="r-no48">Mesura lineal sense l’observació 48 (3 decimals)</label><input id="r-no48" inputmode="decimal" placeholder="Resultat"></div>
+          <div class="field"><label for="impact">En retirar-la, la força lineal...</label><select id="impact"><option value="">— Tria —</option><option>Augmenta</option><option>Disminueix</option><option>No canvia de manera apreciable</option></select></div>
+        </div>
+      </div>
+      <div class="result-card">
+        <h2>Límit de predicció</h2>
+        <p>Valora una predicció per a un habitatge situat a 25 km del centre.</p>
+        <div class="fields">
+          <div class="field full"><label for="prediction-25">La consideraries una predicció fiable amb aquesta mostra?</label><select id="prediction-25"><option value="">— Tria —</option><option>Sí, és interpolació dins del rang observat</option><option>No, és extrapolació fora del rang observat</option></select></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="card"><div class="head">FITXER EXCEL</div><div class="body">
+    <div class="exam-note">Adjunta el fitxer que has utilitzat. Es comprovarà que conservi les dades, que hi hagi treball amb fórmules i que inclogui un <strong>gràfic de dispersió XY amb ajust lineal, equació i R²</strong>. L’organització interna del full és lliure.</div>
+    <div class="actions"><input id="excel-upload" type="file" accept=".xlsx,.xlsm"><span class="filemsg" id="filemsg">Cap fitxer seleccionat.</span></div>
+  </div></section>
+
+  <section class="card"><div class="head">COMENTARI FINAL</div><div class="body">
+    <label for="final-comment" style="font-size:11px;font-weight:800;display:block;margin-bottom:7px">Redacta una conclusió global de 5–8 línies.</label>
+    <textarea id="final-comment" maxlength="1800" placeholder="Integra el patró gràfic, la intensitat, el model, la interpretació dels coeficients i R², l’observació 48, els límits de predicció i la diferència entre associació i causalitat."></textarea>
+    <div class="count" id="comment-count">0 caràcters · mínim 180</div>
+  </div></section>
+
+  <section class="card"><div class="body submitbox">
+    <div><div class="status" id="submit-status">Completa la fitxa final, adjunta l’Excel i escriu el comentari abans d’entregar.</div><div class="score hidden" id="score-box"></div></div>
+    <button class="btn primary" id="submit" type="button">Entrega la pràctica</button>
+  </div></section>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="../../tracking.js?v=3"></script>
@@ -33,45 +130,210 @@
 (() => {
 'use strict';
 const tracker=window.PracticeTracker,$=id=>document.getElementById(id);
-let data=[],stats=null,statsNo48=null,qdefs=[],selectedFile=null,startedAt=Date.now(),submitted=false;
+let data=[],stats=null,statsNo48=null,selectedFile=null,startedAt=Date.now(),submitted=false;
+
 function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
 function rng(seed){let x=seed||123456789;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return(x>>>0)/4294967296}}
 function normal(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
 function round(x,d=2){const m=10**d;return Math.round((x+Number.EPSILON)*m)/m}
 function parseNum(v){let s=String(v??'').trim().replace(/\s/g,'');if(!s)return NaN;if(s.includes(',')&&s.includes('.'))s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'');else s=s.replace(',','.');return Number(s)}
-function makeData(id){const seed=hash(id+'-2c'),r=rng(seed),a=[],slope=-(38+(seed%7)*2.3),intercept=1660+(seed%8)*18,noise=65+(seed%5)*8;for(let i=0;i<47;i++){const x=round(1.5+16.5*r(),1);let y=intercept+slope*x+noise*normal(r);y=round(Math.max(520,Math.min(1700,y)),0);a.push({x,y})}const x48=round(17.5+(seed%4)*.3,1),expected=intercept+slope*x48;a.push({x:x48,y:round(Math.min(1600,expected+420+(seed%5)*18),0)});return a}
-function calc(a){const n=a.length,mx=a.reduce((s,d)=>s+d.x,0)/n,my=a.reduce((s,d)=>s+d.y,0)/n,vx=a.reduce((s,d)=>s+(d.x-mx)**2,0)/n,vy=a.reduce((s,d)=>s+(d.y-my)**2,0)/n,cov=a.reduce((s,d)=>s+(d.x-mx)*(d.y-my),0)/n,sdx=Math.sqrt(vx),sdy=Math.sqrt(vy),r=cov/(sdx*sdy),b=cov/vx,A=my-b*mx,r2=r*r;return{n,mx,my,vx,vy,cov,r,b,a:A,r2,minx:Math.min(...a.map(d=>d.x)),maxx:Math.max(...a.map(d=>d.x))}}
-function strength(r){const z=Math.abs(r);return z>=.8?'forta':z>=.55?'moderada':'feble'}
 function direction(r){return r>0?'positiva':r<0?'negativa':'nul·la'}
-function check(d,v){if(d.type==='select')return String(v||'')===d.a;const x=parseNum(v);return Number.isFinite(x)&&Math.abs(x-d.a)<=d.tol}
-function buildQuestions(){const obs=data[11],predObs=stats.a+stats.b*obs.x,res=obs.y-predObs,pred8=stats.a+stats.b*8,impact=Math.abs(statsNo48.r)>Math.abs(stats.r)?'Augmenta':'Disminueix';const slopeMeaning=`Per cada km addicional, el lloguer predit disminueix aproximadament ${round(Math.abs(stats.b),1)} €`;qdefs=[
- {q:'1. Nombre d’observacions aparellades (n).',type:'num',a:stats.n,tol:.001},
- {q:'2. Covariància descriptiva entre X i Y, dividint per n (3 decimals).',type:'num',a:round(stats.cov,3),tol:.0011},
- {q:'3. Coeficient de correlació de Pearson r (3 decimals).',type:'num',a:round(stats.r,3),tol:.0011},
- {q:'4. Pendent b de la regressió de Y sobre X (3 decimals).',type:'num',a:round(stats.b,3),tol:.0011},
- {q:'5. Intercept a de la recta (3 decimals).',type:'num',a:round(stats.a,3),tol:.0011},
- {q:'6. Coeficient de determinació R² (3 decimals).',type:'num',a:round(stats.r2,3),tol:.0011},
- {q:'7. Predicció del lloguer per X = 8 km (2 decimals).',type:'num',a:round(pred8,2),tol:.011},
- {q:`8. Valor predit per a l’habitatge 12 (X=${obs.x} km, Y=${obs.y} €) (2 decimals).`,type:'num',a:round(predObs,2),tol:.011},
- {q:'9. Residual de l’habitatge 12, y − ŷ (2 decimals).',type:'num',a:round(res,2),tol:.011},
- {q:'10. Recalcula r eliminant temporalment l’observació 48 (3 decimals).',type:'num',a:round(statsNo48.r,3),tol:.0011},
- {q:'11. En eliminar l’observació 48, què passa amb |r|?',type:'select',a:impact,opts:['Augmenta','Disminueix','No canvia']},
- {q:'12. Direcció principal de la relació.',type:'select',a:direction(stats.r),opts:['positiva','negativa','nul·la']},
- {q:'13. Intensitat de la relació lineal segons |r|.',type:'select',a:strength(stats.r),opts:['feble','moderada','forta']},
- {q:'14. Interpretació correcta del pendent.',type:'select',a:slopeMeaning,opts:[slopeMeaning,`Per cada km addicional, el lloguer predit augmenta aproximadament ${round(Math.abs(stats.b),1)} €`,'El pendent és una correlació i no té unitats']},
- {q:`15. Un R² de ${round(stats.r2,3)} significa que aproximadament el ${round(stats.r2*100,1)}% de la variabilitat de Y queda associada linealment amb X en aquesta mostra.`,type:'select',a:'Sí',opts:['Sí','No']},
- {q:'16. Predir el lloguer per X = 25 km és una extrapolació.',type:'select',a:'Sí',opts:['Sí','No']},
- {q:'17. Amb aquesta mostra podem afirmar per si sola que augmentar la distància causa una reducció del lloguer.',type:'select',a:'No',opts:['Sí','No']},
- {q:'18. Representació gràfica principal adequada per estudiar aquesta relació.',type:'select',a:'Núvol de punts (XY)',opts:['Núvol de punts (XY)','Diagrama de sectors','Histograma d’una sola variable']}
-]}
-function render(){const tb=$('data-body');tb.innerHTML=data.map((d,i)=>`<tr class="${i===47?'last':''}"><td>${i+1}</td><td>${d.x.toLocaleString('ca-ES')}</td><td>${d.y.toLocaleString('ca-ES')}</td></tr>`).join('');$('questions').innerHTML=qdefs.map((d,i)=>{const control=d.type==='select'?`<select id="ans-${i}"><option value="">— Tria —</option>${d.opts.map(o=>`<option>${o}</option>`).join('')}</select>`:`<input id="ans-${i}" inputmode="decimal" placeholder="Resposta">`;return`<div class="q"><label for="ans-${i}">${d.q}</label>${control}</div>`}).join('')}
-function makeWorkbook(){const id=tracker.getSession()?.id||'',wb=XLSX.utils.book_new();const d=[['Pràctica 2c · Estadística descriptiva bidimensional'],[],['ID alumne',id],[],['Habitatge','Distància X (km)','Lloguer Y (€)'],...data.map((v,i)=>[i+1,v.x,v.y])];const e=[['ENTREGA · resultats finals'],['Utilitza fórmules o referències sempre que sigui possible.'],[],['Mesura','Resultat'],['n',''],['Covariància descriptiva',''],['r',''],['Pendent b',''],['Intercept a',''],['R²',''],['Predicció X=8',''],['Predicció habitatge 12',''],['Residual habitatge 12',''],['r sense observació 48','']];const a=[['ANÀLISI LLIURE'],['Construeix aquí els càlculs auxiliars i el gràfic XY amb la recta de tendència, equació i R².']];XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),'DADES');XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(e),'ENTREGA');XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(a),'ANALISI');wb.Sheets.DADES['!cols']=[{wch:12},{wch:20},{wch:18}];wb.Sheets.ENTREGA['!cols']=[{wch:31},{wch:19}];wb.Sheets.ANALISI['!cols']=[{wch:90}];XLSX.writeFile(wb,`estadistica_2c_${id}.xlsx`)}
-async function inspectWorkbook(){const rep={readable:false,dataPreserved:false,formulaCount:0,excelCorrect:0,excelTotal:10,chart:false};if(!selectedFile)return rep;const buf=await selectedFile.arrayBuffer();try{const wb=XLSX.read(buf,{type:'array',cellFormula:true}),d=wb.Sheets.DADES,e=wb.Sheets.ENTREGA;if(!d||!e)return rep;rep.readable=true;rep.dataPreserved=data.every((v,i)=>Number(d['B'+(i+6)]?.v)===v.x&&Number(d['C'+(i+6)]?.v)===v.y);const obs=data[11],expected=[stats.n,stats.cov,stats.r,stats.b,stats.a,stats.r2,stats.a+stats.b*8,stats.a+stats.b*obs.x,obs.y-(stats.a+stats.b*obs.x),statsNo48.r];for(let i=0;i<expected.length;i++){const cell=e['B'+(i+5)];if(cell?.f)rep.formulaCount++;const x=Number(cell?.v),tol=i===0?.001:(i>=6&&i<=8?.03:.003);if(Number.isFinite(x)&&Math.abs(x-expected[i])<=tol)rep.excelCorrect++}if(window.JSZip){const zip=await JSZip.loadAsync(buf);rep.chart=Object.keys(zip.files).some(n=>new RegExp('^xl/charts/chart\\d+\\.xml$','i').test(n))}}catch(_){}return rep}
-async function submitExam(){if(submitted)return;const values=qdefs.map((_,i)=>String($('ans-'+i)?.value||'').trim()),comment=$('final-comment').value.trim();if(values.some(v=>!v)){setStatus('bad','Falten respostes. Revisa el formulari abans d’entregar.');return}if(!selectedFile){setStatus('bad','Adjunta el fitxer Excel abans d’entregar.');return}if(comment.length<180){setStatus('bad','El comentari final ha de tenir com a mínim 180 caràcters.');return}$('submit').disabled=true;$('submit').textContent='Corregint…';setStatus('','Analitzant les respostes i el fitxer Excel…');const workbook=await inspectWorkbook();if(!workbook.readable){$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut llegir l’Excel. Desa’l com a .xlsx o .xlsm i torna-ho a provar.');return}
- const detail=qdefs.map((d,i)=>({question:i+1,answer:values[i],correct:check(d,values[i])})),correctN=detail.filter(x=>x.correct).length;const objectiveScore=correctN/qdefs.length*7;const excelScore=(workbook.dataPreserved?.4:0)+(Math.min(workbook.formulaCount,8)/8*.7)+(workbook.excelCorrect/workbook.excelTotal*.5)+(workbook.chart?.4:0);const autoScore=round(objectiveScore+excelScore,2);const id=tracker.getSession()?.id||'',impact=Math.abs(statsNo48.r)>Math.abs(stats.r)?'augmenta':'disminueix';const context=`Valora el comentari final de la pràctica 2c. Dades correctes: n=${stats.n}; covariància=${round(stats.cov,3)}; r=${round(stats.r,3)} (${direction(stats.r)}, ${strength(stats.r)}); recta ŷ=${round(stats.a,3)}+${round(stats.b,3)}x; R²=${round(stats.r2,3)}; r sense l’observació 48=${round(statsNo48.r,3)}, per tant |r| ${impact} en retirar-la. L’interval X observat és aproximadament [${round(stats.minx,1)}, ${round(stats.maxx,1)}]. Avalua si l’alumne integra núvol de punts, direcció/intensitat, pendent, R², influència de l’observació 48, extrapolació i diferència entre associació i causalitat. Aquesta part val 1 punt.`;
- const payload={submissionId:tracker.makeSubmissionId('descriptiva-2d-examen',id),id,practice:'Pràctica 2c · Estadística descriptiva bidimensional',area:'Estadística',status:'Entregada',total:qdefs.length,correct:correctN,attempts:1,progress:100,minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'exam-2d-1',detail:{autoScoreOutOf9:autoScore,objectiveCorrect:correctN,objectiveTotal:qdefs.length,workbook,statistics:{cov:round(stats.cov,3),r:round(stats.r,3),slope:round(stats.b,3),intercept:round(stats.a,3),r2:round(stats.r2,3),rWithout48:round(statsNo48.r,3)},answers:detail},justifications:[{question:context,text:comment}]};$('submit').textContent='Enviant…';setStatus('','Guardant l’entrega i la correcció inicial…');const res=await tracker.submit(payload);if(res.ok){submitted=true;document.querySelectorAll('#questions input,#questions select,#final-comment,#excel-upload').forEach(x=>x.disabled=true);$('submit').disabled=true;$('submit').textContent='Pràctica entregada';setStatus('ok',res.teacher?'Mode professor: correcció simulada; no s’ha registrat cap entrega.':'Entrega registrada correctament.');$('score-box').classList.remove('hidden');$('score-box').innerHTML=`<strong>${autoScore.toLocaleString('ca-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} / 9</strong> · primera correcció automàtica. El comentari final s’ha enviat també a la correcció amb IA (1 punt).`}else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut confirmar l’entrega. Torna-ho a provar.')}}
+function strength(r){const z=Math.abs(r);return z>=.8?'forta':z>=.55?'moderada':'feble'}
+
+function makeData(id){
+  const seed=hash(id+'-2c-global'),r=rng(seed),a=[];
+  const slope=-(38+(seed%7)*2.3),intercept=1660+(seed%8)*18,noise=65+(seed%5)*8;
+  for(let i=0;i<47;i++){
+    const x=round(1.5+16.5*r(),1);
+    let y=intercept+slope*x+noise*normal(r);
+    y=round(Math.max(520,Math.min(1700,y)),0);
+    a.push({x,y});
+  }
+  const x48=round(17.5+(seed%4)*.3,1),expected=intercept+slope*x48;
+  a.push({x:x48,y:round(Math.min(1600,expected+420+(seed%5)*18),0)});
+  return a;
+}
+
+function calc(a){
+  const n=a.length,mx=a.reduce((s,d)=>s+d.x,0)/n,my=a.reduce((s,d)=>s+d.y,0)/n;
+  const vx=a.reduce((s,d)=>s+(d.x-mx)**2,0)/n,vy=a.reduce((s,d)=>s+(d.y-my)**2,0)/n;
+  const cov=a.reduce((s,d)=>s+(d.x-mx)*(d.y-my),0)/n,sdx=Math.sqrt(vx),sdy=Math.sqrt(vy);
+  const r=cov/(sdx*sdy),b=cov/vx,A=my-b*mx,r2=r*r;
+  return{n,mx,my,vx,vy,cov,r,b,a:A,r2,minx:Math.min(...a.map(d=>d.x)),maxx:Math.max(...a.map(d=>d.x))}
+}
+
+function renderData(){
+  $('data-body').innerHTML=data.map((d,i)=>`<tr class="${i===47?'last':''}"><td>${i+1}</td><td>${d.x.toLocaleString('ca-ES')}</td><td>${d.y.toLocaleString('ca-ES')}</td></tr>`).join('');
+}
+
+function makeWorkbook(){
+  const id=tracker.getSession()?.id||'',wb=XLSX.utils.book_new();
+  const d=[['Pràctica 2c · Estadística descriptiva bidimensional'],[],['ID alumne',id],[],['Habitatge','Distància X (km)','Lloguer Y (€)'],...data.map((v,i)=>[i+1,v.x,v.y])];
+  const a=[
+    ['ANÀLISI LLIURE'],
+    ['Organitza aquest full com consideris més adequat.'],
+    ['Construeix els càlculs, comprovacions i representacions necessaris per respondre l’encàrrec.'],
+    ['El fitxer final ha d’incloure un gràfic de dispersió XY amb ajust lineal, equació i R².']
+  ];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(d),'DADES');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(a),'ANALISI');
+  wb.Sheets.DADES['!cols']=[{wch:12},{wch:20},{wch:18}];
+  wb.Sheets.ANALISI['!cols']=[{wch:95}];
+  XLSX.writeFile(wb,`estadistica_2c_${id}.xlsx`);
+}
+
+function expected(){
+  const r=stats.r,a=stats.a,b=stats.b,r2pct=stats.r2*100,p8=a+b*8,rNo=statsNo48.r;
+  const delta=Math.abs(rNo)-Math.abs(r);
+  const impact=Math.abs(delta)<.01?'No canvia de manera apreciable':delta>0?'Augmenta':'Disminueix';
+  return{r,a,b,r2pct,p8,rNo,impact,p25:'No, és extrapolació fora del rang observat'};
+}
+
+function collectAnswers(){
+  return{
+    r:parseNum($('r-value').value),
+    a:parseNum($('intercept').value),
+    b:parseNum($('slope').value),
+    r2pct:parseNum($('r2-pct').value),
+    p8:parseNum($('pred-8').value),
+    rNo:parseNum($('r-no48').value),
+    impact:$('impact').value,
+    p25:$('prediction-25').value
+  };
+}
+
+function objectiveDetail(){
+  const e=expected(),a=collectAnswers();
+  const checks=[
+    ['Mesura lineal',a.r,e.r,.0011],
+    ['Intercept',a.a,e.a,.0011],
+    ['Pendent',a.b,e.b,.0011],
+    ['R² (%)',a.r2pct,e.r2pct,.11],
+    ['Predicció X=8',a.p8,e.p8,.011],
+    ['Mesura lineal sense observació 48',a.rNo,e.rNo,.0011]
+  ].map(([q,v,truth,tol])=>({question:q,answer:Number.isFinite(v)?v:'',correct:Number.isFinite(v)&&Math.abs(v-truth)<=tol}));
+  checks.push({question:'Efecte de retirar l’observació 48',answer:a.impact,correct:a.impact===e.impact});
+  checks.push({question:'Predicció a X=25',answer:a.p25,correct:a.p25===e.p25});
+  return checks;
+}
+
+function allFilled(){
+  const ids=['r-value','intercept','slope','r2-pct','pred-8','r-no48','impact','prediction-25'];
+  return ids.every(id=>String($(id).value||'').trim());
+}
+
+async function inspectWorkbook(){
+  const rep={readable:false,dataPreserved:false,formulaCount:0,chart:false,linearTrendline:false,showsEquation:false,showsR2:false};
+  if(!selectedFile||!window.XLSX)return rep;
+  const buf=await selectedFile.arrayBuffer();
+  try{
+    const wb=XLSX.read(buf,{type:'array',cellFormula:true});
+    const d=wb.Sheets.DADES;if(!d)return rep;
+    rep.readable=true;
+    rep.dataPreserved=data.every((v,i)=>Number(d['B'+(i+6)]?.v)===v.x&&Number(d['C'+(i+6)]?.v)===v.y);
+    Object.values(wb.Sheets).forEach(sh=>Object.entries(sh).forEach(([k,cell])=>{if(!k.startsWith('!')&&cell&&cell.f)rep.formulaCount++}));
+    if(window.JSZip){
+      const zip=await JSZip.loadAsync(buf);
+      const names=Object.keys(zip.files).filter(n=>new RegExp('^xl/charts/chart\\d+\\.xml$','i').test(n));
+      rep.chart=names.length>0;
+      for(const name of names){
+        const xml=await zip.file(name).async('string');
+        if(/trendlineType[^>]*val=["']linear["']/i.test(xml))rep.linearTrendline=true;
+        if(/dispEq[^>]*val=["']1["']/i.test(xml))rep.showsEquation=true;
+        if(/dispRSq[^>]*val=["']1["']/i.test(xml))rep.showsR2=true;
+      }
+    }
+  }catch(_){}
+  return rep;
+}
+
+function excelScore(rep){
+  let s=0;
+  if(rep.dataPreserved)s+=.4;
+  s+=Math.min(rep.formulaCount,6)/6*1.0;
+  if(rep.chart)s+=.5;
+  if(rep.linearTrendline)s+=.4;
+  if(rep.showsEquation)s+=.35;
+  if(rep.showsR2)s+=.35;
+  return round(s,2);
+}
+
 function setStatus(kind,text){$('submit-status').className='status '+(kind||'');$('submit-status').textContent=text}
-function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;data=makeData(s.id);stats=calc(data);statsNo48=calc(data.slice(0,47));buildQuestions();render();$('download').onclick=makeWorkbook;$('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.'};$('final-comment').oninput=()=>{$('comment-count').textContent=`${$('final-comment').value.trim().length} caràcters · mínim 180`};$('submit').onclick=submitExam}
+
+async function submitExam(){
+  if(submitted)return;
+  const comment=$('final-comment').value.trim();
+  if(!allFilled()){setStatus('bad','Falten resultats clau a la fitxa final.');return}
+  if(!selectedFile){setStatus('bad','Adjunta el fitxer Excel abans d’entregar.');return}
+  if(comment.length<180){setStatus('bad','El comentari final ha de tenir com a mínim 180 caràcters.');return}
+
+  $('submit').disabled=true;$('submit').textContent='Corregint…';
+  setStatus('','Analitzant els resultats i el fitxer Excel…');
+
+  const workbook=await inspectWorkbook();
+  if(!workbook.readable){
+    $('submit').disabled=false;$('submit').textContent='Entrega la pràctica';
+    setStatus('bad','No s’ha pogut llegir l’Excel. Desa’l com a .xlsx o .xlsm i torna-ho a provar.');return;
+  }
+
+  const detail=objectiveDetail(),correctN=detail.filter(x=>x.correct).length;
+  const objectiveScore=correctN/detail.length*6;
+  const xScore=excelScore(workbook);
+  const autoScore=round(objectiveScore+xScore,2);
+
+  const id=tracker.getSession()?.id||'',e=expected();
+  const context=
+    `Valora el comentari final de la pràctica 2c com una interpretació global d’un cas bidimensional. `+
+    `Resultats correctes: n=${stats.n}; r=${round(stats.r,3)} (${direction(stats.r)}, ${strength(stats.r)}); `+
+    `recta ŷ=${round(stats.a,3)}+${round(stats.b,3)}x; R²=${round(stats.r2,3)} (${round(stats.r2*100,1)}%); `+
+    `predicció per X=8: ${round(e.p8,2)}; r sense l’observació 48=${round(statsNo48.r,3)} i, en retirar-la, la força lineal ${e.impact.toLowerCase()}; `+
+    `rang X observat aproximat=[${round(stats.minx,1)}, ${round(stats.maxx,1)}], de manera que X=25 és extrapolació. `+
+    `Avalua si integra coherentment el patró gràfic, intensitat i direcció, interpretació del pendent, significat de R², influència de l’observació 48, prudència en extrapolació i diferència entre associació i causalitat. `+
+    `No exigeixis que enumeri tots els valors. Aquesta part val 1 punt.`;
+
+  const payload={
+    submissionId:tracker.makeSubmissionId('descriptiva-2d-examen',id),
+    id,practice:'Pràctica 2c · Estadística descriptiva bidimensional',area:'Estadística',status:'Entregada',
+    total:detail.length,correct:correctN,attempts:1,progress:100,
+    minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'exam-2d-global-2',
+    detail:{
+      autoScoreOutOf9:autoScore,
+      objectiveScoreOutOf6:round(objectiveScore,2),
+      excelScoreOutOf3:xScore,
+      objectiveCorrect:correctN,objectiveTotal:detail.length,
+      workbook,
+      statistics:{r:round(stats.r,3),slope:round(stats.b,3),intercept:round(stats.a,3),r2:round(stats.r2,3),rWithout48:round(statsNo48.r,3),xMin:round(stats.minx,1),xMax:round(stats.maxx,1)},
+      answers:detail
+    },
+    justifications:[{question:context,text:comment}]
+  };
+
+  $('submit').textContent='Enviant…';setStatus('','Guardant l’entrega i la primera correcció…');
+  const res=await tracker.submit(payload);
+  if(res.ok){
+    submitted=true;
+    document.querySelectorAll('input,select,textarea').forEach(x=>x.disabled=true);
+    $('submit').disabled=true;$('submit').textContent='Pràctica entregada';
+    setStatus('ok',res.teacher?'Mode professor: correcció simulada; no s’ha registrat cap entrega.':'Entrega registrada correctament.');
+    $('score-box').classList.remove('hidden');
+    $('score-box').innerHTML=
+      `<strong>${autoScore.toLocaleString('ca-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} / 9</strong> · primera correcció automàtica. `+
+      `El comentari final s’ha enviat també a la correcció amb IA (1 punt).`;
+  }else{
+    $('submit').disabled=false;$('submit').textContent='Entrega la pràctica';
+    setStatus('bad','No s’ha pogut confirmar l’entrega. Torna-ho a provar.');
+  }
+}
+
+function init(){
+  const s=tracker.getSession();if(!s)return;
+  $('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;
+  data=makeData(s.id);stats=calc(data);statsNo48=calc(data.slice(0,47));renderData();
+  $('download').onclick=makeWorkbook;
+  $('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.'};
+  $('final-comment').oninput=()=>{$('comment-count').textContent=`${$('final-comment').value.trim().length} caràcters · mínim 180`};
+  $('submit').onclick=submitExam;
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120));else setTimeout(init,120);
 })();
 </script>
