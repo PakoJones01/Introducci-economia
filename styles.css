@@ -220,3 +220,13 @@ a.back-btn{text-decoration:none;display:inline-block}
   .hub-mark{width:52px;height:52px;border-radius:14px}
   .session-bar{margin:-8px 0 14px}
 }
+
+
+/* Statistics practices grouped by topic */
+.practice-grid.topic-layout{display:block;margin-top:24px}
+.practice-topic{margin-top:24px}
+.practice-topic:first-child{margin-top:0}
+.topic-heading{font-size:12px;font-weight:850;letter-spacing:.045em;text-transform:uppercase;color:var(--muted);padding:0 2px 9px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.topic-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.intro-topic{padding-bottom:4px}
+@media(max-width:900px){.topic-cards{grid-template-columns:1fr}}
