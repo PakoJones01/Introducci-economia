@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aula Interactiva</title>
-<link rel="stylesheet" href="styles.css?v=2" />
+<link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
 <section id="login-view" class="login-view">
@@ -25,6 +25,10 @@
 <section id="hub-view" class="hidden">
   <div class="hub-shell">
     <div class="session-bar">
+      <div id="teacher-tools" class="teacher-tools hidden">
+        <a class="teacher-tool-link" href="https://docs.google.com/spreadsheets/d/1EEpkuCvVn-VBsLdfcz1L8QCs5pmxOhkDfGXyRyixhW4/edit#gid=310001" target="_blank" rel="noopener">Control</a>
+        <a class="teacher-tool-link" href="https://docs.google.com/spreadsheets/d/1EEpkuCvVn-VBsLdfcz1L8QCs5pmxOhkDfGXyRyixhW4/edit#gid=310002" target="_blank" rel="noopener">Notes</a>
+      </div>
       <span id="session-role">Alumne</span>
       <strong id="session-id"></strong>
       <button id="logout-button" type="button">Sortir</button>
@@ -46,6 +50,6 @@
 </section>
 
 <script src="tracking.js?v=5"></script>
-<script src="portal.js?v=4"></script>
+<script src="portal.js?v=5"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "versio": 2,
+  "versio": 3,
   "ajuda": "Els apunts publicats poden ser PDF o pàgines HTML. visible controla si la targeta es mostra a l’alumnat; el professor pot previsualitzar també apunts ocults. disponible controla si l’alumnat els pot obrir.",
   "arees": {
     "economia": {
@@ -10,14 +10,14 @@
       "subtitol": "Materials de teoria de l’assignatura. Els temes s’aniran incorporant progressivament.",
       "apunts": [
         {
-          "id": "intro-suez-ever-given",
+          "id": "introduccio-economia",
           "ordre": 0,
           "visible": false,
           "disponible": false,
           "codi": "Introducció",
-          "titol": "El canal de Suez i l’Ever Given",
-          "descripcio": "Transició introductòria per connectar decisions, recursos i conseqüències a partir del bloqueig del canal de Suez.",
-          "fitxer": "apunts/economia/introduccio-suez.html"
+          "titol": "Introducció",
+          "descripcio": "Principis bàsics de l’economia: escassetat, decisions, cost d’oportunitat, incentius, mercats, Estat, productivitat, inflació, flux circular i frontera de possibilitats de producció.",
+          "fitxer": "https://drive.google.com/file/d/1Sd3n0kDncQ_MxItJVrt1ZigcfI25WlPP/view?usp=drivesdk"
         }
       ]
     },
