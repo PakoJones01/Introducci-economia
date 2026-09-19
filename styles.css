@@ -230,3 +230,8 @@ a.back-btn{text-decoration:none;display:inline-block}
 .topic-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .intro-topic{padding-bottom:4px}
 @media(max-width:900px){.topic-cards{grid-template-columns:1fr}}
+
+.teacher-tools{display:flex;align-items:center;gap:6px;margin-right:auto}
+.teacher-tool-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);background:var(--paper);color:var(--charcoal);border-radius:8px;padding:6px 10px;font-size:10.5px;font-weight:800}
+.teacher-tool-link:hover{background:#ece8e1}
+@media(max-width:720px){.teacher-tools{width:100%;order:2}.session-bar{flex-wrap:wrap}}
