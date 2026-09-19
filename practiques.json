@@ -1,6 +1,6 @@
 {
-  "versio": 3,
-  "ajuda": "Canvia visible a false per amagar una targeta. Canvia disponible a true/false per activar o desactivar l'accés. ordre controla la posició.",
+  "versio": 4,
+  "ajuda": "visible controla la visibilitat per a l’alumnat; el professor pot previsualitzar també les pràctiques ocultes. disponible controla si l’alumnat hi pot entrar.",
   "arees": {
     "economia": {
       "nom": "Economia",
@@ -12,7 +12,7 @@
         {
           "id": "fpp",
           "ordre": 1,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 1",
           "titol": "Frontera de possibilitats de producció",
@@ -23,7 +23,7 @@
         {
           "id": "oferta",
           "ordre": 2,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 2a",
           "titol": "Funció i corba d’oferta",
@@ -34,7 +34,7 @@
         {
           "id": "demanda",
           "ordre": 3,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 2b",
           "titol": "Funció i corba de demanda",
@@ -45,7 +45,7 @@
         {
           "id": "equilibri",
           "ordre": 4,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 2c",
           "titol": "Equilibri de mercat",
@@ -56,7 +56,7 @@
         {
           "id": "elasticitat",
           "ordre": 5,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 3",
           "titol": "Elasticitat de la demanda",
@@ -76,24 +76,28 @@
         {
           "id": "descriptiva-1d",
           "ordre": 2,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 1b",
-          "titol": "Estadística descriptiva unidimensional",
+          "titol": "Unidimensional · aplicada amb Excel",
           "descripcio": "Dades, distribucions, mesures de centre i dispersió, quartils, valors extrems i interpretació amb Excel.",
           "fitxer": "practiques/estadistica/descriptiva-1d.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 1,
+          "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
         },
         {
           "id": "descriptiva-2d",
           "ordre": 3,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 2a",
-          "titol": "Estadística descriptiva bidimensional · guiada",
+          "titol": "Bidimensional · guiada",
           "descripcio": "Parelles de dades, núvol de punts, covariància, correlació, regressió, residuals, R² i extrapolació amb guia pas a pas i suport d’Excel.",
           "fitxer": "practiques/estadistica/descriptiva-2d.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 2,
+          "temaTitol": "Tema 2 · Estadística descriptiva bidimensional"
         },
         {
           "id": "excel-zero",
@@ -104,84 +108,100 @@
           "titol": "Primer contacte amb Excel",
           "descripcio": "Fórmules, referències relatives i absolutes, funcions bàsiques, ordenar, filtrar i crear un primer gràfic.",
           "fitxer": "practiques/estadistica/excel-zero.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 0,
+          "temaTitol": "Introducció · Excel"
         },
         {
           "id": "freq-var",
           "ordre": 1,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 1a",
-          "titol": "Taules de freqüències i dispersió",
+          "titol": "Unidimensional · guiada",
           "descripcio": "Construcció amb Excel de taules de freqüències, mitjana, variància i desviació típica per a tres distribucions.",
           "fitxer": "practiques/estadistica/freq-var.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 1,
+          "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
         },
         {
           "id": "descriptiva-1d-examen",
           "ordre": 2.5,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 1c",
-          "titol": "Estadística unidimensional · nivell examen",
+          "titol": "Unidimensional · pràctica final",
           "descripcio": "Cas global sense procediment pautat: l’alumne decideix mesures, representacions i anàlisi, construeix l’Excel i redacta una conclusió global.",
           "fitxer": "practiques/estadistica/descriptiva-1d-examen.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 1,
+          "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
         },
         {
           "id": "descriptiva-2d-aplicada",
           "ordre": 4,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 2b",
-          "titol": "Estadística bidimensional · aplicada amb Excel",
+          "titol": "Bidimensional · aplicada amb Excel",
           "descripcio": "Anàlisi aplicada amb dades individualitzades, gràfic XY, covariància, correlació, regressió, predicció, residuals, R² i interpretació final.",
           "fitxer": "practiques/estadistica/descriptiva-2d-aplicada.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 2,
+          "temaTitol": "Tema 2 · Estadística descriptiva bidimensional"
         },
         {
           "id": "descriptiva-2d-examen",
           "ordre": 5,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 2c",
-          "titol": "Estadística bidimensional · nivell examen",
+          "titol": "Bidimensional · pràctica final",
           "descripcio": "Cas global sense procediment pautat: l’alumne decideix l’anàlisi, construeix l’Excel i sintetitza relació, model, punt influent, predicció i causalitat.",
           "fitxer": "practiques/estadistica/descriptiva-2d-examen.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 2,
+          "temaTitol": "Tema 2 · Estadística descriptiva bidimensional"
         },
         {
           "id": "series-temporals-3a",
           "ordre": 6,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 3a",
           "titol": "Sèries temporals · guiada",
           "descripcio": "Variacions absolutes i percentuals, punts percentuals, nombres índex, tendència, estacionalitat, comparacions temporals i mitjanes mòbils amb guia pas a pas.",
           "fitxer": "practiques/estadistica/series-temporals-3a.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 3,
+          "temaTitol": "Tema 3 · Evolució temporal, nombres índex i sèries temporals"
         },
         {
           "id": "series-temporals-3b",
           "ordre": 7,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 3b",
           "titol": "Sèries temporals · aplicada amb Excel",
           "descripcio": "Cas laboral amb 24 mesos de dades, índexs base 100, comparacions interanuals, mitjanes mòbils, gràfics i interpretació final.",
           "fitxer": "practiques/estadistica/series-temporals-3b.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 3,
+          "temaTitol": "Tema 3 · Evolució temporal, nombres índex i sèries temporals"
         },
         {
           "id": "series-temporals-3c",
           "ordre": 8,
-          "visible": true,
+          "visible": false,
           "disponible": false,
           "codi": "Pràctica 3c",
-          "titol": "Sèries temporals · nivell examen",
+          "titol": "Sèries temporals · pràctica final",
           "descripcio": "Cas global de 36 mesos sense procediment pautat: recomptes i taxes, patrons temporals, índexs, suavització i conclusió amb Excel lliure.",
           "fitxer": "practiques/estadistica/series-temporals-3c.html",
-          "pdf": null
+          "pdf": null,
+          "tema": 3,
+          "temaTitol": "Tema 3 · Evolució temporal, nombres índex i sèries temporals"
         }
       ]
     }
