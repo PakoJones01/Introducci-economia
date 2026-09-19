@@ -288,7 +288,7 @@ async function submitExam(){
 
 function init(){
   const s=tracker.getSession();if(!s)return;
-  $('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;
+  $('student-code').textContent=s.role==='teacher'?'Professor':s.id;
   dataset=makeData(s.id);stats=calc(dataset);renderData();
   $('download').onclick=makeWorkbook;
   $('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.'};
