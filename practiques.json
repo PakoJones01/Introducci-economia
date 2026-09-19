@@ -1,5 +1,5 @@
 {
-  "versio": 8,
+  "versio": 9,
   "ajuda": "visible controla la visibilitat per a l’alumnat; disponible és l’interruptor general d’accés. Opcionalment, obertura i tancament (ISO 8601 amb zona horària, p. ex. 2026-09-20T08:00:00+02:00) limiten automàticament l’accés. El professor pot previsualitzar les pràctiques fora de termini.",
   "arees": {
     "economia": {
@@ -319,6 +319,32 @@
           "pdf": null,
           "tema": 6,
           "temaTitol": "Tema 6 · Intervals de confiança i contrastos d’hipòtesis"
+        },
+        {
+          "id": "aplicacions-7a",
+          "ordre": 18,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 7a",
+          "titol": "Indicadors laborals i demogràfics",
+          "descripcio": "Activitat breu per calcular i interpretar taxes d'activitat, atur, absentisme i incidència.",
+          "fitxer": "practiques/estadistica/aplicacions-7a.html",
+          "pdf": null,
+          "tema": 7,
+          "temaTitol": "Tema 7 · Aplicacions laborals i demogràfiques"
+        },
+        {
+          "id": "aplicacions-7b",
+          "ordre": 19,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 7b",
+          "titol": "Cas final integrador",
+          "descripcio": "Un únic cas empresarial amb 8 preguntes que integra percentatges, índexs, taxes, correlació, mostreig i inferència.",
+          "fitxer": "practiques/estadistica/aplicacions-7b.html",
+          "pdf": null,
+          "tema": 7,
+          "temaTitol": "Tema 7 · Aplicacions laborals i demogràfiques"
         }
       ]
     }
