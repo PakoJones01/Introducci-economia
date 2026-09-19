@@ -1,5 +1,5 @@
 {
-  "versio": 5,
+  "versio": 6,
   "ajuda": "visible controla la visibilitat per a l’alumnat; disponible és l’interruptor general d’accés. Opcionalment, obertura i tancament (ISO 8601 amb zona horària, p. ex. 2026-09-20T08:00:00+02:00) limiten automàticament l’accés. El professor pot previsualitzar les pràctiques fora de termini.",
   "arees": {
     "economia": {
@@ -74,32 +74,6 @@
       "subtitol": "Laboratoris de dades per calcular, visualitzar i interpretar estadístics amb suport d’Excel.",
       "practiques": [
         {
-          "id": "descriptiva-1d",
-          "ordre": 2,
-          "visible": false,
-          "disponible": false,
-          "codi": "Pràctica 1b",
-          "titol": "Unidimensional · aplicada amb Excel",
-          "descripcio": "Dades, distribucions, mesures de centre i dispersió, quartils, valors extrems i interpretació amb Excel.",
-          "fitxer": "practiques/estadistica/descriptiva-1d.html",
-          "pdf": null,
-          "tema": 1,
-          "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
-        },
-        {
-          "id": "descriptiva-2d",
-          "ordre": 3,
-          "visible": false,
-          "disponible": false,
-          "codi": "Pràctica 2a",
-          "titol": "Bidimensional · guiada",
-          "descripcio": "Parelles de dades, núvol de punts, covariància, correlació, regressió, residuals, R² i extrapolació amb guia pas a pas i suport d’Excel.",
-          "fitxer": "practiques/estadistica/descriptiva-2d.html",
-          "pdf": null,
-          "tema": 2,
-          "temaTitol": "Tema 2 · Estadística descriptiva bidimensional"
-        },
-        {
           "id": "excel-zero",
           "ordre": 0,
           "visible": true,
@@ -126,6 +100,19 @@
           "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
         },
         {
+          "id": "descriptiva-1d",
+          "ordre": 2,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 1b",
+          "titol": "Unidimensional · aplicada amb Excel",
+          "descripcio": "Dades, distribucions, mesures de centre i dispersió, quartils, valors extrems i interpretació amb Excel.",
+          "fitxer": "practiques/estadistica/descriptiva-1d.html",
+          "pdf": null,
+          "tema": 1,
+          "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
+        },
+        {
           "id": "descriptiva-1d-examen",
           "ordre": 2.5,
           "visible": false,
@@ -137,6 +124,19 @@
           "pdf": null,
           "tema": 1,
           "temaTitol": "Tema 1 · Estadística descriptiva unidimensional"
+        },
+        {
+          "id": "descriptiva-2d",
+          "ordre": 3,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 2a",
+          "titol": "Bidimensional · guiada",
+          "descripcio": "Parelles de dades, núvol de punts, covariància, correlació, regressió, residuals, R² i extrapolació amb guia pas a pas i suport d’Excel.",
+          "fitxer": "practiques/estadistica/descriptiva-2d.html",
+          "pdf": null,
+          "tema": 2,
+          "temaTitol": "Tema 2 · Estadística descriptiva bidimensional"
         },
         {
           "id": "descriptiva-2d-aplicada",
@@ -202,6 +202,45 @@
           "pdf": null,
           "tema": 3,
           "temaTitol": "Tema 3 · Evolució temporal, nombres índex i sèries temporals"
+        },
+        {
+          "id": "probabilitat-4a",
+          "ordre": 9,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 4a",
+          "titol": "Probabilitat i distribucions · guiada",
+          "descripcio": "Experiment aleatori, esdeveniments, probabilitat simple, complement, condicionada, independència, binomial i normal amb guia pas a pas.",
+          "fitxer": "practiques/estadistica/probabilitat-4a.html",
+          "pdf": null,
+          "tema": 4,
+          "temaTitol": "Tema 4 · Probabilitat i distribucions"
+        },
+        {
+          "id": "probabilitat-4b",
+          "ordre": 10,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 4b",
+          "titol": "Probabilitat i distribucions · aplicada amb Excel",
+          "descripcio": "Cas laboral amb taules de probabilitat, probabilitat condicionada, binomial, normal, elecció del model i interpretació aplicada amb Excel.",
+          "fitxer": "practiques/estadistica/probabilitat-4b.html",
+          "pdf": null,
+          "tema": 4,
+          "temaTitol": "Tema 4 · Probabilitat i distribucions"
+        },
+        {
+          "id": "probabilitat-4c",
+          "ordre": 11,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 4c",
+          "titol": "Probabilitat i distribucions · pràctica final",
+          "descripcio": "Cas global sense procediment pautat: l’alumne decideix si cal probabilitat simple, condicionada, binomial o normal i redacta una conclusió prudent.",
+          "fitxer": "practiques/estadistica/probabilitat-4c.html",
+          "pdf": null,
+          "tema": 4,
+          "temaTitol": "Tema 4 · Probabilitat i distribucions"
         }
       ]
     }
