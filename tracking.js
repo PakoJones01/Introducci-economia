@@ -268,15 +268,31 @@
     const controls = findLegacyIdControls();
     if (!controls) return;
     const {input, button} = controls;
+    const teacher = session.role === 'teacher';
     input.value = session.id;
     input.readOnly = true;
+
+    if (teacher) {
+      input.style.visibility = 'hidden';
+      input.setAttribute('aria-hidden', 'true');
+    }
+
     setTimeout(() => {
       button.click();
       setTimeout(() => {
         input.readOnly = true;
         button.hidden = true;
         const wrap = input.closest('label');
-        if (wrap) wrap.firstChild && (wrap.firstChild.textContent = session.role === 'teacher' ? 'Professor ' : 'ID alumne ');
+        if (teacher) {
+          input.hidden = true;
+          input.style.visibility = '';
+          if (wrap?.firstChild) wrap.firstChild.textContent = 'Professor ';
+          document.querySelectorAll('#id-status,.idstatus').forEach(el => {
+            el.textContent = String(el.textContent || '').replaceAll(session.id, 'Professor');
+          });
+        } else if (wrap?.firstChild) {
+          wrap.firstChild.textContent = 'ID alumne ';
+        }
       }, 120);
     }, 40);
   }
