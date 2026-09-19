@@ -41,8 +41,8 @@
         {
           "id": "tema-2-descriptiva-bidimensional",
           "ordre": 2,
-          "visible": true,
-          "disponible": true,
+          "visible": false,
+          "disponible": false,
           "codi": "Tema 2",
           "titol": "Estadística descriptiva bidimensional",
           "descripcio": "Dues variables, diagrama de dispersió, covariància, correlació, regressió lineal, residus, R², predicció i interpretació.",
@@ -51,8 +51,8 @@
         {
           "id": "tema-3-series-temporals",
           "ordre": 3,
-          "visible": true,
-          "disponible": true,
+          "visible": false,
+          "disponible": false,
           "codi": "Tema 3",
           "titol": "Evolució temporal, nombres índex i sèries temporals",
           "descripcio": "Variacions absolutes i percentuals, punts percentuals, nombres índex, tendència, estacionalitat, comparabilitat i mitjanes mòbils.",
