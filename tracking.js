@@ -275,6 +275,7 @@
     if (teacher) {
       input.style.visibility = 'hidden';
       input.setAttribute('aria-hidden', 'true');
+      document.querySelectorAll('#id-status,.idstatus').forEach(el => { el.hidden = true; });
     }
 
     setTimeout(() => {
