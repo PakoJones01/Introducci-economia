@@ -1,6 +1,6 @@
 {
-  "versio": 1,
-  "ajuda": "Els apunts publicats són PDF. visible controla si la targeta es mostra i disponible si es pot obrir.",
+  "versio": 2,
+  "ajuda": "Els apunts publicats poden ser PDF o pàgines HTML. visible controla si la targeta es mostra a l’alumnat; el professor pot previsualitzar també apunts ocults. disponible controla si l’alumnat els pot obrir.",
   "arees": {
     "economia": {
       "nom": "Economia",
@@ -8,7 +8,18 @@
       "eyebrow": "Introducció a l'economia",
       "titol": "Apunts",
       "subtitol": "Materials de teoria de l’assignatura. Els temes s’aniran incorporant progressivament.",
-      "apunts": []
+      "apunts": [
+        {
+          "id": "intro-suez-ever-given",
+          "ordre": 0,
+          "visible": false,
+          "disponible": false,
+          "codi": "Introducció",
+          "titol": "El canal de Suez i l’Ever Given",
+          "descripcio": "Transició introductòria per connectar decisions, recursos i conseqüències a partir del bloqueig del canal de Suez.",
+          "fitxer": "apunts/economia/introduccio-suez.html"
+        }
+      ]
     },
     "estadistica": {
       "nom": "Estadística",

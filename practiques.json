@@ -12,8 +12,8 @@
         {
           "id": "fpp",
           "ordre": 1,
-          "visible": false,
-          "disponible": false,
+          "visible": true,
+          "disponible": true,
           "codi": "Pràctica 1",
           "titol": "Frontera de possibilitats de producció",
           "descripcio": "Escassetat, eficiència, moviments i desplaçaments de la FPP i cost d'oportunitat.",
