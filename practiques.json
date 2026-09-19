@@ -1,5 +1,5 @@
 {
-  "versio": 7,
+  "versio": 8,
   "ajuda": "visible controla la visibilitat per a l’alumnat; disponible és l’interruptor general d’accés. Opcionalment, obertura i tancament (ISO 8601 amb zona horària, p. ex. 2026-09-20T08:00:00+02:00) limiten automàticament l’accés. El professor pot previsualitzar les pràctiques fora de termini.",
   "arees": {
     "economia": {
@@ -280,6 +280,45 @@
           "pdf": null,
           "tema": 5,
           "temaTitol": "Tema 5 · Mostreig i estimació"
+        },
+        {
+          "id": "inferencia-6a",
+          "ordre": 15,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 6a",
+          "titol": "Intervals i contrastos · guiada",
+          "descripcio": "Activitat breu per interpretar intervals de confiança, formular H₀/H₁ i prendre decisions amb el p-valor.",
+          "fitxer": "practiques/estadistica/inferencia-6a.html",
+          "pdf": null,
+          "tema": 6,
+          "temaTitol": "Tema 6 · Intervals de confiança i contrastos d’hipòtesis"
+        },
+        {
+          "id": "inferencia-6b",
+          "ordre": 16,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 6b",
+          "titol": "Intervals i contrastos · aplicada",
+          "descripcio": "Quatre problemes senzills amb un interval de confiança i contrastos d’una mitjana seguint la recepta del tema.",
+          "fitxer": "practiques/estadistica/inferencia-6b.html",
+          "pdf": null,
+          "tema": 6,
+          "temaTitol": "Tema 6 · Intervals de confiança i contrastos d’hipòtesis"
+        },
+        {
+          "id": "inferencia-6c",
+          "ordre": 17,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 6c",
+          "titol": "Intervals i contrastos · final breu",
+          "descripcio": "Tres casos curts sense pistes per comprovar que l’alumne sap calcular i prendre una decisió bàsica.",
+          "fitxer": "practiques/estadistica/inferencia-6c.html",
+          "pdf": null,
+          "tema": 6,
+          "temaTitol": "Tema 6 · Intervals de confiança i contrastos d’hipòtesis"
         }
       ]
     }
