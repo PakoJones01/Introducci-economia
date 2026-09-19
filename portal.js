@@ -80,6 +80,7 @@
     $('session-role').textContent = teacher ? 'Professor' : 'ID';
     $('session-id').textContent = teacher ? '' : session.id;
     $('session-id').hidden = teacher;
+    $('teacher-tools').classList.toggle('hidden', !teacher);
     render();
   }
 
