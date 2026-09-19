@@ -70,7 +70,7 @@ function normalize(){const v=String($('student-id').value||'').replace(/\D/g,'')
 async function validateId(){
   const id=normalize();$('validate-id').disabled=true;setStatus('id-status','checking','Comprovant ID…');
   const r=await tracker.validateId(id);$('validate-id').disabled=false;
-  if(r.ok){validatedId=r.id;startedAt=Date.now();setStatus('id-status','ok','ID correcte.');$('download').classList.add('enabled');$('upload').disabled=false;resetSubmission()}
+  if(r.ok){validatedId=r.id;startedAt=Date.now();setStatus('id-status','ok','ID correcte.');const dl=$('download');dl.href='../../assets/xlsx/practica_1b_freq_var.xlsx?id='+encodeURIComponent(validatedId);dl.setAttribute('data-student-id',validatedId);dl.classList.add('enabled');$('upload').disabled=false;resetSubmission()}
   else{validatedId='';setStatus('id-status','bad',r.reason==='format'?'L’ID ha de tenir 6 dígits.':r.reason==='not-found'?'Aquest ID no és a la llista.':'No s’ha pogut validar l’ID.');$('download').classList.remove('enabled');$('upload').disabled=true;$('check-file').disabled=true;$('submit').disabled=true}
 }
 function resetSubmission(){submitted=false;lastReport=null;checkAttempts=0;$('submit').disabled=true;$('submit').textContent='Entrega la pràctica';$('results').innerHTML='';$('summary').textContent='';$('submit-status').textContent=''}
