@@ -47,6 +47,7 @@
   const qs = new URLSearchParams(location.search);
   let area = qs.get('area') === 'estadistica' ? 'estadistica' : 'economia';
   let mode = qs.get('mode') === 'apunts' ? 'apunts' : 'practiques';
+  let serverTimeOffsetMs = 0;
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
@@ -117,6 +118,36 @@
     setTimeout(() => showPortal(result.session), 120);
   }
 
+  function parseAccessTime(value) {
+    if (!value) return null;
+    const ms = Date.parse(value);
+    return Number.isFinite(ms) ? ms : null;
+  }
+
+  function currentAccessTime() {
+    return Date.now() + serverTimeOffsetMs;
+  }
+
+  function practiceAvailability(p) {
+    const opensAt = parseAccessTime(p.obertura);
+    const closesAt = parseAccessTime(p.tancament);
+    const now = currentAccessTime();
+
+    if (p.disponible !== true) return {open:false, state:'upcoming', opensAt, closesAt};
+    if (opensAt !== null && now < opensAt) return {open:false, state:'upcoming', opensAt, closesAt};
+    if (closesAt !== null && now >= closesAt) return {open:false, state:'closed', opensAt, closesAt};
+    return {open:true, state:'open', opensAt, closesAt};
+  }
+
+  function formatAccessDate(ms) {
+    if (!Number.isFinite(ms)) return '';
+    return new Intl.DateTimeFormat('ca-ES', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+      timeZone: 'Europe/Madrid'
+    }).format(new Date(ms));
+  }
+
   function render() {
     const session = tracker.getSession();
     if (!session) {
@@ -158,10 +189,28 @@
     }
 
     function cardHtml(p) {
-      const published = p.disponible === true;
+      const availability = isApunts
+        ? {open: p.disponible === true, state: p.disponible === true ? 'open' : 'upcoming', opensAt:null, closesAt:null}
+        : practiceAvailability(p);
+      const published = availability.open;
       const canOpen = published || teacher;
       const preview = teacher && !published;
-      const status = preview ? 'Professor' : published ? 'Disponible' : 'Properament';
+      const status = preview
+        ? 'Professor'
+        : availability.state === 'closed'
+          ? 'Tancada'
+          : published
+            ? 'Disponible'
+            : 'Properament';
+      const timing = !isApunts
+        ? availability.state === 'upcoming' && availability.opensAt
+          ? ` · Obre ${formatAccessDate(availability.opensAt)}`
+          : availability.state === 'open' && availability.closesAt
+            ? ` · Fins ${formatAccessDate(availability.closesAt)}`
+            : availability.state === 'closed' && availability.closesAt
+              ? ` · Tancada ${formatAccessDate(availability.closesAt)}`
+              : ''
+        : '';
 
       let buttons = '';
       if (isApunts) {
@@ -182,7 +231,7 @@
 
       return `<article class="practice-card ${canOpen ? 'active' : 'disabled'} ${preview ? 'teacher-preview' : ''}">
         <div>
-          <div class="card-kicker">${esc(p.codi)} · ${status}</div>
+          <div class="card-kicker">${esc(p.codi)} · ${status}${esc(timing)}</div>
           <div class="card-title">${esc(p.titol)}</div>
           <div class="card-desc">${esc(p.descripcio)}</div>
         </div>
@@ -260,7 +309,15 @@
   });
 
   fetch('practiques.json', {cache:'no-store'})
-    .then(r => { if (!r.ok) throw new Error('practiques'); return r.json(); })
+    .then(r => {
+      if (!r.ok) throw new Error('practiques');
+      const serverDate = r.headers.get('Date');
+      if (serverDate) {
+        const serverMs = Date.parse(serverDate);
+        if (Number.isFinite(serverMs)) serverTimeOffsetMs = serverMs - Date.now();
+      }
+      return r.json();
+    })
     .then(c => { if (c?.arees) configs.practiques = c; render(); })
     .catch(() => render());
 
