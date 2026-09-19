@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pràctica 4c · Probabilitat i distribucions final</title>
+<style>
+:root{--bg:#f4f1eb;--paper:#fbfaf7;--ink:#202427;--muted:#6f7478;--line:#d8d4cc;--char:#44484c;--accent:#2f7468;--pale:#e8f2ee;--warn:#fff6d9}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif}.top{background:var(--char);color:white;padding:14px 20px;display:flex;justify-content:space-between;gap:16px;align-items:center}.top a{color:white;text-decoration:none;border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:7px 10px;font-size:12px;font-weight:800}.wrap{max-width:1120px;margin:0 auto;padding:22px}.hero,.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:850}.hero h1{margin:6px 0 8px;font-size:30px}.hero p,.card p,.card li{line-height:1.55;color:#3f4549}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card h2{margin:0 0 10px;font-size:21px}.tag{display:inline-block;background:var(--pale);color:#285f55;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;margin-bottom:8px}.formula{font-family:Consolas,monospace;background:#eee9df;border:1px solid #d7d1c7;border-radius:6px;padding:2px 5px}.task{background:white;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}.task strong{display:block;margin-bottom:5px}.answer{background:var(--warn);border-left:4px solid #d6a327;padding:9px 11px;border-radius:0 8px 8px 0;margin-top:8px;font-size:13px}.footer{font-size:12px;color:var(--muted);margin-top:18px}@media(max-width:800px){.grid{grid-template-columns:1fr}.top{display:block}.top a{display:inline-block;margin-top:8px}}</style>
+</head>
+<body>
+<header class="top"><div><strong>Pràctica 4c · Probabilitat i distribucions</strong><br><small>Pràctica final</small></div><a href="../../index.html?area=estadistica">← Portal</a></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Tema 4 · Cas global</div><h1>Pràctica final: triar el mètode adequat</h1><p>Objectiu: resoldre un cas sense procediment pautat. L’alumne ha de decidir si cal probabilitat simple, condicionada, binomial o normal, fer els càlculs i redactar una interpretació correcta.</p></section>
+<section class="card"><h2>Context</h2><p>Una mútua laboral analitza dades de persones treballadores. Té informació sobre formació preventiva, incidències, dies de baixa, puntuació d’un test de risc i mida dels equips. L’objectiu és elaborar un informe breu de risc probabilístic.</p><div class="answer">Aquesta pràctica no diu pas a pas quina fórmula aplicar. Primer cal classificar cada pregunta.</div></section>
+<div class="grid">
+<section class="card"><span class="tag">Part 1</span><h2>Probabilitats bàsiques</h2><p>A partir d’una taula de freqüències, l’alumne calcula probabilitats simples i complements.</p><div class="task"><strong>Preguntes</strong>Quina és la probabilitat d’incidència? Quina és la probabilitat de no incidència? Quina categoria és més freqüent?</div></section>
+<section class="card"><span class="tag">Part 2</span><h2>Condicionada i independència</h2><p>A partir d’una taula formació × incidència, ha de calcular probabilitats dins de subgrups.</p><div class="task"><strong>Preguntes</strong>Calcula P(incidència | formació) i P(incidència | no formació). Valora si els esdeveniments semblen independents.</div></section>
+<section class="card"><span class="tag">Part 3</span><h2>Binomial</h2><p>Un equip té n persones. Si la probabilitat individual d’incidència és p, es modela el nombre d’incidències amb una binomial.</p><div class="task"><strong>Preguntes</strong>Identifica n i p, calcula la probabilitat d’exactament x incidències i la probabilitat d’almenys x incidències.</div></section>
+<section class="card"><span class="tag">Part 4</span><h2>Normal</h2><p>La puntuació del test de risc es considera aproximadament normal, amb mitjana i desviació típica donades.</p><div class="task"><strong>Preguntes</strong>Calcula una probabilitat acumulada, una probabilitat complementària i una probabilitat entre dos valors. Explica quan cal tipificar.</div></section>
+<section class="card"><span class="tag">Part 5</span><h2>Elecció del model</h2><p>L’alumne ha d’explicar per què ha escollit cada mètode.</p><ul><li>Recompte d’èxits → binomial.</li><li>Variable contínua → normal.</li><li>Subgrup conegut → condicionada.</li><li>Una proporció directa → probabilitat simple.</li></ul></section>
+<section class="card"><span class="tag">Part 6</span><h2>Conclusió</h2><p>La conclusió ha de traduir els resultats a llenguatge aplicat i evitar exageracions.</p><div class="task"><strong>Redacció</strong>Escriu 8–10 línies amb els principals riscos detectats, les probabilitats més rellevants i les limitacions de l’anàlisi.</div></section>
+</div>
+<section class="card"><h2>Criteris d’avaluació</h2><ul><li>Identifica correctament el tipus de probabilitat o distribució.</li><li>Calcula amb coherència i mostra el procediment mínim.</li><li>Interpreta els resultats en paraules.</li><li>No confon associació amb causalitat.</li><li>Reconeix les limitacions del model utilitzat.</li></ul></section>
+<div class="footer">Disseny inicial de pràctica. Visible=false i disponible=false fins que s’obri oficialment.</div>
+</main>
+<script src="../../tracking.js?v=6"></script>
+</body>
+</html>
