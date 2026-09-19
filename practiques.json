@@ -1,5 +1,5 @@
 {
-  "versio": 6,
+  "versio": 7,
   "ajuda": "visible controla la visibilitat per a l’alumnat; disponible és l’interruptor general d’accés. Opcionalment, obertura i tancament (ISO 8601 amb zona horària, p. ex. 2026-09-20T08:00:00+02:00) limiten automàticament l’accés. El professor pot previsualitzar les pràctiques fora de termini.",
   "arees": {
     "economia": {
@@ -241,6 +241,45 @@
           "pdf": null,
           "tema": 4,
           "temaTitol": "Tema 4 · Probabilitat i distribucions"
+        },
+        {
+          "id": "mostreig-5a",
+          "ordre": 12,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 5a",
+          "titol": "Mostreig i biaixos · guiada",
+          "descripcio": "Població, mostra, unitat estadística, mostreig probabilístic i no probabilístic, representativitat i biaixos amb guia pas a pas.",
+          "fitxer": "practiques/estadistica/mostreig-5a.html",
+          "pdf": null,
+          "tema": 5,
+          "temaTitol": "Tema 5 · Mostreig i estimació"
+        },
+        {
+          "id": "mostreig-5b",
+          "ordre": 13,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 5b",
+          "titol": "De la mostra a l’estimació · guiada",
+          "descripcio": "Estimació puntual, mitjanes i proporcions, error mostral i error estàndard amb càlculs individualitzats.",
+          "fitxer": "practiques/estadistica/mostreig-5b.html",
+          "pdf": null,
+          "tema": 5,
+          "temaTitol": "Tema 5 · Mostreig i estimació"
+        },
+        {
+          "id": "mostreig-5c",
+          "ordre": 14,
+          "visible": false,
+          "disponible": false,
+          "codi": "Pràctica 5c",
+          "titol": "Mostreig i estimació · pràctica final",
+          "descripcio": "Problemes individualitzats sense pistes sobre estimació puntual, precisió i error estàndard. Sense intervals de confiança.",
+          "fitxer": "practiques/estadistica/mostreig-5c.html",
+          "pdf": null,
+          "tema": 5,
+          "temaTitol": "Tema 5 · Mostreig i estimació"
         }
       ]
     }
