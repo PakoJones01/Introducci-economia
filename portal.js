@@ -76,8 +76,10 @@
   function showPortal(session) {
     $('login-view').classList.add('hidden');
     $('hub-view').classList.remove('hidden');
-    $('session-role').textContent = session.role === 'teacher' ? 'Professor' : 'ID';
-    $('session-id').textContent = session.id;
+    const teacher = session.role === 'teacher';
+    $('session-role').textContent = teacher ? 'Professor' : 'ID';
+    $('session-id').textContent = teacher ? '' : session.id;
+    $('session-id').hidden = teacher;
     render();
   }
 
@@ -145,7 +147,7 @@
 
     const source = isApunts ? (a.apunts || []) : (a.practiques || []);
     const list = source
-      .filter(p => p.visible !== false)
+      .filter(p => teacher || p.visible !== false)
       .sort((x, y) => (x.ordre || 0) - (y.ordre || 0));
     const grid = $('practice-grid');
 
@@ -154,7 +156,7 @@
       return;
     }
 
-    grid.innerHTML = list.map(p => {
+    function cardHtml(p) {
       const published = p.disponible === true;
       const canOpen = published || teacher;
       const preview = teacher && !published;
@@ -188,7 +190,36 @@
           <div class="action-buttons">${buttons}</div>
         </div>
       </article>`;
-    }).join('');
+    }
+
+    if (!isApunts && area === 'estadistica') {
+      const groups = new Map();
+      list.forEach(p => {
+        const tema = Number.isFinite(Number(p.tema)) ? Number(p.tema) : 99;
+        if (!groups.has(tema)) groups.set(tema, []);
+        groups.get(tema).push(p);
+      });
+
+      grid.classList.add('topic-layout');
+      grid.innerHTML = [...groups.entries()]
+        .sort((x, y) => x[0] - y[0])
+        .map(([tema, items]) => {
+          items.sort((x, y) => (x.ordre || 0) - (y.ordre || 0));
+          if (tema === 0) {
+            return `<section class="practice-topic intro-topic">
+              <div class="topic-cards single-card">${items.map(cardHtml).join('')}</div>
+            </section>`;
+          }
+          const heading = items[0]?.temaTitol || `Tema ${tema}`;
+          return `<section class="practice-topic">
+            <div class="topic-heading">${esc(heading)}</div>
+            <div class="topic-cards">${items.map(cardHtml).join('')}</div>
+          </section>`;
+        }).join('');
+    } else {
+      grid.classList.remove('topic-layout');
+      grid.innerHTML = list.map(cardHtml).join('');
+    }
 
     grid.querySelectorAll('.material-link').forEach(link => {
       link.addEventListener('click', () => {

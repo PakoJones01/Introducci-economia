@@ -30,7 +30,7 @@
 </main>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="../../tracking.js?v=3"></script>
+<script src="../../tracking.js?v=5"></script>
 <script>
 (() => {
 'use strict';
@@ -80,7 +80,7 @@ async function submit(){if(submitted)return;const detail=allDetail(),comment=$('
  const id=tracker.getSession()?.id||'';const context=`Valora el comentari final de la pràctica 3b. La sèrie de contractes té una tendència general creixent, estacionalitat amb pics d’estiu, una irregularitat destacada a Nov-25 i oscil·lacions de curt termini. L’alumne ha treballat també índexs base 100, comparacions interanuals i mitjanes mòbils n=3 i n=5. Avalua si interpreta coherentment tendència, estacionalitat, irregularitat, comparabilitat, índexs i l’efecte de suavitzar, i si evita afirmar que una tendència garanteix el futur.`;
  const payload={submissionId:tracker.makeSubmissionId('series-temporals-3b',id),id,practice:'Pràctica 3b · Sèries temporals',area:'Estadística',status:'Entregada',total:detail.length,correct:detail.filter(x=>x.correct).length,attempts:1,progress:100,minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'applied-1',detail:{questions:detail,workbook:wb},justifications:[{question:context,text:comment}]};$('submit').textContent='Enviant…';const res=await tracker.submit(payload);if(res.ok){submitted=true;document.querySelectorAll('input,select,textarea,.chk').forEach(x=>x.disabled=true);$('submit').disabled=true;$('submit').textContent='Pràctica entregada';setStatus('ok',res.teacher?'Mode professor: pràctica completada sense registrar entrega.':'Entrega registrada. El comentari s’ha enviat també a la primera correcció amb IA.')}else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut confirmar l’entrega.')}}
 function setStatus(k,t){$('submit-status').className='status '+(k||'');$('submit-status').textContent=t}
-function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;data=makeData(s.id);buildDefs();renderData();renderSteps();$('download').onclick=makeWorkbook;$('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.';$('excel-status').textContent=''};$('comment').oninput=()=>{$('count').textContent=`${$('comment').value.trim().length} caràcters · mínim 180`};$('submit').onclick=submit}
+function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor':s.id;data=makeData(s.id);buildDefs();renderData();renderSteps();$('download').onclick=makeWorkbook;$('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.';$('excel-status').textContent=''};$('comment').oninput=()=>{$('count').textContent=`${$('comment').value.trim().length} caràcters · mínim 180`};$('submit').onclick=submit}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120));else setTimeout(init,120);
 })();
 </script>

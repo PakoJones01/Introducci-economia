@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pràctica 3c · Sèries temporals · nivell examen</title>
+<title>Pràctica 3c · Sèries temporals · pràctica final</title>
 <style>
 :root{--bg:#f2efe9;--paper:#fbfaf7;--ink:#222629;--muted:#6d7377;--line:#d8d3ca;--char:#41474b;--char2:#596065;--green:#28643f;--greenbg:#e7f4eb;--red:#8e342d;--redbg:#f8e7e4;--input:#fff0b8}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg)}button,input,select,textarea{font:inherit}.hidden{display:none!important}
@@ -18,7 +18,7 @@ textarea{width:100%;min-height:170px;resize:vertical;border:1px solid #dfca77;ba
 </style>
 </head>
 <body>
-<header class="top"><div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">PRÀCTICA 3C · SÈRIES TEMPORALS</div><div class="sub">Nivell examen · resolució autònoma</div></div></div><div class="who">Sessió: <strong id="student-code">—</strong></div></header>
+<header class="top"><div style="display:flex;align-items:center;gap:12px"><a class="back" href="../../index.html?area=estadistica">← Pràctiques</a><div><div class="title">PRÀCTICA 3C · SÈRIES TEMPORALS</div><div class="sub">Pràctica final · resolució autònoma</div></div></div><div class="who">Sessió: <strong id="student-code">—</strong></div></header>
 <main class="shell">
 <section class="card"><div class="body intro"><div><h1>Cas global: ha empitjorat realment l’absentisme?</h1><p>La direcció d’una empresa observa que el nombre mensual d’absències ha augmentat i afirma que l’absentisme està empitjorant. Disposes de 36 mesos de recomptes d’absències i mida de la plantilla. Has de valorar aquesta afirmació amb una anàlisi temporal completa.</p></div><div class="tag">C · DEMOSTRO</div></div></section>
 <section class="card"><div class="head">ENCÀRREC</div><div class="body"><div class="note"><strong>No hi ha un procediment pautat.</strong> Decideix tu quines variables derivades, gràfics, comparacions i mesures necessites. La teva anàlisi ha de permetre valorar:
@@ -38,7 +38,7 @@ textarea{width:100%;min-height:170px;resize:vertical;border:1px solid #dfca77;ba
 </main>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="../../tracking.js?v=3"></script>
+<script src="../../tracking.js?v=5"></script>
 <script>
 (() => {
 'use strict';
@@ -69,7 +69,7 @@ async function inspectWorkbook(){const rep={readable:false,dataPreserved:false,f
 function excelScore(rep){let s=0;if(rep.dataPreserved)s+=.5;s+=Math.min(rep.formulaCount,10)/10*1.5;s+=Math.min(rep.chartCount,2)/2*1;return round(s,2)}
 function setStatus(k,t){$('submit-status').className='status '+(k||'');$('submit-status').textContent=t}
 async function submit(){if(submitted)return;const comment=$('comment').value.trim();if(!allFilled()){setStatus('bad','Falten resultats clau.');return}if(!selectedFile){setStatus('bad','Adjunta el fitxer Excel.');return}if(comment.length<180){setStatus('bad','El comentari final ha de tenir com a mínim 180 caràcters.');return}$('submit').disabled=true;$('submit').textContent='Corregint…';const wb=await inspectWorkbook();if(!wb.readable){$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut llegir l’Excel.');return}const det=detail(),correct=det.filter(x=>x.correct).length,obj=correct/det.length*6,xScore=excelScore(wb),auto=round(obj+xScore,2),e=expected(),id=tracker.getSession()?.id||'';const context=`Valora el comentari final de la pràctica 3c. Resultats correctes: el recompte d’absències canvia ${round(e.countChange,1)}% entre Gen-24 i Des-26, mentre que la taxa canvia ${round(e.rateChange,1)}%; índex final de la taxa base Gen-24=100: ${round(e.idx,1)}; canvi Gen-25→Gen-26: ${round(e.janpp,2)} punts percentuals; MM3 centrada a Jun-26: ${round(e.mm3,2)}. El recompte i la taxa no porten a la mateixa conclusió perquè la plantilla creix. La taxa mostra una tendència de fons lleugerament decreixent, estacionalitat anual i un xoc clar a Set-25. Avalua si distingeix recomptes i taxes, descriu tendència/estacionalitat/irregularitat, utilitza comparacions temporals adequades, interpreta índexs i suavització, i respon prudentment a l’afirmació inicial. Aquesta part val 1 punt.`;const payload={submissionId:tracker.makeSubmissionId('series-temporals-3c',id),id,practice:'Pràctica 3c · Sèries temporals',area:'Estadística',status:'Entregada',total:det.length,correct,attempts:1,progress:100,minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'exam-time-1',detail:{autoScoreOutOf9:auto,objectiveScoreOutOf6:round(obj,2),excelScoreOutOf3:xScore,workbook:wb,answers:det,expected:{countChange:round(e.countChange,1),rateChange:round(e.rateChange,1),rateIndex:round(e.idx,1),janPP:round(e.janpp,2),mm3:round(e.mm3,2)}},justifications:[{question:context,text:comment}]};$('submit').textContent='Enviant…';setStatus('','Guardant l’entrega i la primera correcció…');const res=await tracker.submit(payload);if(res.ok){submitted=true;document.querySelectorAll('input,select,textarea').forEach(x=>x.disabled=true);$('submit').disabled=true;$('submit').textContent='Pràctica entregada';setStatus('ok',res.teacher?'Mode professor: correcció simulada; no s’ha registrat cap entrega.':'Entrega registrada correctament.');$('score-box').classList.remove('hidden');$('score-box').innerHTML=`<strong>${auto.toLocaleString('ca-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} / 9</strong> · primera correcció automàtica. El comentari final s’ha enviat a la correcció amb IA (1 punt).`}else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';setStatus('bad','No s’ha pogut confirmar l’entrega.')}}
-function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;data=makeData(s.id);renderData();$('download').onclick=makeWorkbook;$('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.'};$('comment').oninput=()=>{$('count').textContent=`${$('comment').value.trim().length} caràcters · mínim 180`};$('submit').onclick=submit}
+function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor':s.id;data=makeData(s.id);renderData();$('download').onclick=makeWorkbook;$('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.'};$('comment').oninput=()=>{$('count').textContent=`${$('comment').value.trim().length} caràcters · mínim 180`};$('submit').onclick=submit}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120));else setTimeout(init,120);
 })();
 </script>

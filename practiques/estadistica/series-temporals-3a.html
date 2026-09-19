@@ -22,7 +22,7 @@
 <section class="card"><div class="head">RECORREGUT GUIAT</div><div class="body"><div class="blocks" id="blocks"></div></div></section>
 <section class="card"><div class="body submit"><div class="status" id="submit-status">Completa correctament els 7 blocs.</div><button class="btn primary" id="submit" type="button" disabled>Entrega la pràctica</button></div></section>
 </main>
-<script src="../../tracking.js?v=3"></script>
+<script src="../../tracking.js?v=5"></script>
 <script>
 (() => {
 'use strict';
@@ -85,7 +85,7 @@ function ok(d,v){if(d.type==='sel')return v===d.a;const n=parseNum(v);return Num
 function checkBlock(b){let all=true;defs[b].q.forEach((d,q)=>{const id=`${b}-${q}`,v=$('a-'+id).value,c=$('c-'+id);attempts[id]=(attempts[id]||0)+1;const yes=ok(d,v);c.className='check '+(yes?'ok':'bad');c.textContent=yes?'Correcte':'Revisa';if(!yes)all=false});const st=$('s-'+b);st.className='status '+(all?'ok':'bad');st.textContent=all?'Bloc completat.':'Revisa les respostes.';if(all)done.add(b);else done.delete(b);$('submit').disabled=done.size!==defs.length;$('submit-status').textContent=done.size===defs.length?'Tots els blocs completats. Ja pots entregar.':`${done.size} de ${defs.length} blocs completats.`}
 function details(){const a=[];defs.forEach((b,bi)=>b.q.forEach((d,qi)=>{const v=$(`a-${bi}-${qi}`).value;a.push({question:`${bi+1}.${qi+1}`,answer:v,correct:ok(d,v)})}));return a}
 async function submit(){if(submitted||done.size!==defs.length)return;const id=tracker.getSession()?.id||'',det=details(),payload={submissionId:tracker.makeSubmissionId('series-temporals-3a',id),id,practice:'Pràctica 3a · Sèries temporals',area:'Estadística',status:'Entregada',total:det.length,correct:det.filter(x=>x.correct).length,attempts:Object.values(attempts).reduce((a,b)=>a+b,0),progress:100,minutes:Math.max(1,Math.round((Date.now()-startedAt)/60000)),version:'guided-1',detail:{questions:det},justifications:[]};$('submit').disabled=true;$('submit').textContent='Enviant…';const res=await tracker.submit(payload);if(res.ok){submitted=true;$('submit').textContent='Pràctica entregada';$('submit-status').className='status ok';$('submit-status').textContent=res.teacher?'Mode professor: pràctica completada sense registrar entrega.':'Entrega registrada correctament.';document.querySelectorAll('input,select,.chk').forEach(x=>x.disabled=true)}else{$('submit').disabled=false;$('submit').textContent='Entrega la pràctica';$('submit-status').className='status bad';$('submit-status').textContent='No s’ha pogut confirmar l’entrega.'}}
-function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;data=makeData(s.id);buildDefs();renderData();renderChart();renderBlocks();$('submit').onclick=submit}
+function init(){const s=tracker.getSession();if(!s)return;$('student-code').textContent=s.role==='teacher'?'Professor':s.id;data=makeData(s.id);buildDefs();renderData();renderChart();renderBlocks();$('submit').onclick=submit}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120));else setTimeout(init,120);
 })();
 </script>

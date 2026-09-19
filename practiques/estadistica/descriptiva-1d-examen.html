@@ -22,7 +22,7 @@ textarea{width:100%;min-height:165px;resize:vertical;border:1px solid #dfca77;ba
 <header class="top">
   <div style="display:flex;align-items:center;gap:12px">
     <a class="back" href="../../index.html?area=estadistica">← Pràctiques</a>
-    <div><div class="title">PRÀCTICA 1C · UNIDIMENSIONAL</div><div class="sub">Nivell examen · resolució autònoma</div></div>
+    <div><div class="title">PRÀCTICA 1C · UNIDIMENSIONAL</div><div class="sub">Pràctica final · resolució autònoma</div></div>
   </div>
   <div class="who">Sessió: <strong id="student-code">—</strong></div>
 </header>
@@ -105,7 +105,7 @@ textarea{width:100%;min-height:165px;resize:vertical;border:1px solid #dfca77;ba
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="../../tracking.js?v=3"></script>
+<script src="../../tracking.js?v=5"></script>
 <script>
 (() => {
 'use strict';
@@ -288,7 +288,7 @@ async function submitExam(){
 
 function init(){
   const s=tracker.getSession();if(!s)return;
-  $('student-code').textContent=s.role==='teacher'?'Professor · '+s.id:s.id;
+  $('student-code').textContent=s.role==='teacher'?'Professor':s.id;
   dataset=makeData(s.id);stats=calc(dataset);renderData();
   $('download').onclick=makeWorkbook;
   $('excel-upload').onchange=e=>{selectedFile=e.target.files?.[0]||null;$('filemsg').textContent=selectedFile?selectedFile.name:'Cap fitxer seleccionat.'};
