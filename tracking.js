@@ -1,13 +1,16 @@
 (() => {
   'use strict';
 
-  if (window.PracticeTracker?.version === 'v2') return;
+  if (window.PracticeTracker?.version === 'v3') return;
 
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzwnq5YjykYa80K1RtK6aTWyc5iLqQJD0KEAcPvhHEKOE-pHxGKj_be-bXfCqs7R8R_/exec';
   const SESSION_KEY = 'aula-interactiva-session-v2';
   let jsonpSeq = 0;
   let practiceStartedAt = Date.now();
   let leaveLogged = false;
+  let serverTimeOffsetMs = 0;
+  let practiceClosesAt = null;
+  let accessTimer = null;
 
   function normalizeId(value) {
     return String(value ?? '').replace(/\D/g, '').slice(0, 6);
@@ -298,14 +301,113 @@
     }, 40);
   }
 
-  function guardPractice() {
-    if (!location.pathname.includes('/practiques/')) return;
-    const session = getSession();
-    if (!session) {
-      redirectToPortal();
-      return;
+  function normalizeRepoPath(value) {
+    return String(value || '')
+      .split('?')[0]
+      .split('#')[0]
+      .replace(/^\/+/, '')
+      .replace(/\/+$/, '');
+  }
+
+  function parseAccessTime(value) {
+    if (!value) return null;
+    const ms = Date.parse(value);
+    return Number.isFinite(ms) ? ms : null;
+  }
+
+  function currentAccessTime() {
+    return Date.now() + serverTimeOffsetMs;
+  }
+
+  function accessState(practice, nowMs = currentAccessTime()) {
+    if (!practice || practice.disponible !== true) {
+      return {open: false, reason: 'unavailable', opensAt: null, closesAt: null};
     }
 
+    const opensAt = parseAccessTime(practice.obertura);
+    const closesAt = parseAccessTime(practice.tancament);
+
+    if (opensAt !== null && nowMs < opensAt) {
+      return {open: false, reason: 'not-open-yet', opensAt, closesAt};
+    }
+    if (closesAt !== null && nowMs >= closesAt) {
+      return {open: false, reason: 'closed', opensAt, closesAt};
+    }
+    return {open: true, reason: '', opensAt, closesAt};
+  }
+
+  function formatAccessDate(ms) {
+    if (!Number.isFinite(ms)) return '';
+    return new Intl.DateTimeFormat('ca-ES', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+      timeZone: 'Europe/Madrid'
+    }).format(new Date(ms));
+  }
+
+  function showBlockedPractice(reason, whenMs = null) {
+    if (accessTimer) {
+      clearInterval(accessTimer);
+      accessTimer = null;
+    }
+
+    const heading = reason === 'not-open-yet'
+      ? 'Aquesta pràctica encara no està oberta'
+      : reason === 'closed'
+        ? 'Aquesta pràctica està tancada'
+        : reason === 'verification'
+          ? 'No s’ha pogut verificar l’accés'
+          : 'Aquesta pràctica no està disponible';
+
+    const detail = reason === 'not-open-yet' && whenMs
+      ? `S’obrirà el ${formatAccessDate(whenMs)}.`
+      : reason === 'closed' && whenMs
+        ? `L’accés es va tancar el ${formatAccessDate(whenMs)}.`
+        : reason === 'verification'
+          ? 'Torna al portal i prova-ho de nou.'
+          : 'Consulta el portal de l’assignatura per veure les pràctiques disponibles.';
+
+    document.title = heading;
+    document.body.innerHTML = `
+      <main style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#f4f1eb;color:#202427;font-family:Inter,Segoe UI,Arial,sans-serif">
+        <section style="width:min(560px,100%);background:#fbfaf7;border:1px solid #d8d4cc;border-radius:16px;padding:30px;box-shadow:0 12px 32px rgba(38,40,42,.08)">
+          <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:800;color:#6f7478">Aula Interactiva</div>
+          <h1 style="font-size:25px;line-height:1.15;margin:10px 0 10px">${heading}</h1>
+          <p style="font-size:14px;line-height:1.55;color:#5b6065;margin:0 0 22px">${detail}</p>
+          <a href="../../index.html" style="display:inline-block;background:#44484c;color:#fff;text-decoration:none;border-radius:9px;padding:10px 14px;font-weight:750;font-size:13px">Tornar al portal</a>
+        </section>
+      </main>`;
+  }
+
+  async function loadPracticeAccess() {
+    try {
+      const response = await fetch('../../practiques.json', {cache: 'no-store'});
+      if (!response.ok) throw new Error('config');
+
+      const serverDate = response.headers.get('Date');
+      if (serverDate) {
+        const serverMs = Date.parse(serverDate);
+        if (Number.isFinite(serverMs)) serverTimeOffsetMs = serverMs - Date.now();
+      }
+
+      const config = await response.json();
+      const current = normalizeRepoPath(location.pathname);
+      const areas = Object.values(config?.arees || {});
+
+      for (const area of areas) {
+        const found = (area?.practiques || []).find(p => {
+          const target = normalizeRepoPath(p.fitxer);
+          return target && (current === target || current.endsWith('/' + target));
+        });
+        if (found) return found;
+      }
+      return null;
+    } catch (_) {
+      return undefined;
+    }
+  }
+
+  function startPractice(session) {
     hydrateLegacyId(session);
     practiceStartedAt = Date.now();
     leaveLogged = false;
@@ -328,6 +430,62 @@
         progress: estimateProgress()
       });
     }, {once: true});
+
+    if (Number.isFinite(practiceClosesAt)) {
+      accessTimer = setInterval(() => {
+        if (currentAccessTime() >= practiceClosesAt) {
+          if (!leaveLogged) {
+            leaveLogged = true;
+            logActivityBeacon('LEAVE_PRACTICE', {
+              practice: meta.practice,
+              area: meta.area,
+              title: meta.title,
+              minutes: (Date.now() - practiceStartedAt) / 60000,
+              progress: estimateProgress(),
+              extra: {reason: 'access-closed'}
+            });
+          }
+          showBlockedPractice('closed', practiceClosesAt);
+        }
+      }, 15000);
+    }
+  }
+
+  async function guardPractice() {
+    if (!location.pathname.includes('/practiques/')) return;
+
+    const session = getSession();
+    if (!session) {
+      redirectToPortal();
+      return;
+    }
+
+    if (session.role === 'teacher') {
+      startPractice(session);
+      return;
+    }
+
+    const practice = await loadPracticeAccess();
+    if (practice === undefined) {
+      showBlockedPractice('verification');
+      return;
+    }
+    if (!practice) {
+      showBlockedPractice('unavailable');
+      return;
+    }
+
+    const state = accessState(practice);
+    if (!state.open) {
+      showBlockedPractice(
+        state.reason,
+        state.reason === 'not-open-yet' ? state.opensAt : state.closesAt
+      );
+      return;
+    }
+
+    practiceClosesAt = state.closesAt;
+    startPractice(session);
   }
 
   if (document.readyState === 'loading') {
@@ -337,7 +495,7 @@
   }
 
   window.PracticeTracker = Object.freeze({
-    version: 'v2',
+    version: 'v3',
     endpoint: ENDPOINT,
     normalizeId,
     validateId,
